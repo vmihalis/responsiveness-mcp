@@ -88,37 +88,37 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SHOT-01 | TBD | Pending |
-| SHOT-02 | TBD | Pending |
-| SHOT-03 | TBD | Pending |
-| SHOT-04 | TBD | Pending |
-| DEV-01 | TBD | Pending |
-| DEV-02 | TBD | Pending |
-| DEV-03 | TBD | Pending |
-| CLI-01 | TBD | Pending |
-| CLI-02 | TBD | Pending |
-| CLI-03 | TBD | Pending |
-| CLI-04 | TBD | Pending |
-| OUT-01 | TBD | Pending |
-| OUT-02 | TBD | Pending |
-| OUT-03 | TBD | Pending |
-| OUT-04 | TBD | Pending |
-| OUT-05 | TBD | Pending |
-| OUT-06 | TBD | Pending |
-| LOAD-01 | TBD | Pending |
-| LOAD-02 | TBD | Pending |
-| LOAD-03 | TBD | Pending |
-| LOAD-04 | TBD | Pending |
-| LOAD-05 | TBD | Pending |
-| UX-01 | TBD | Pending |
-| UX-02 | TBD | Pending |
-| UX-03 | TBD | Pending |
+| SHOT-01 | Phase 3 | Pending |
+| SHOT-02 | Phase 5 | Pending |
+| SHOT-03 | Phase 4 | Pending |
+| SHOT-04 | Phase 5 | Pending |
+| DEV-01 | Phase 2 | Pending |
+| DEV-02 | Phase 6 | Pending |
+| DEV-03 | Phase 8 | Pending |
+| CLI-01 | Phase 8 | Pending |
+| CLI-02 | Phase 8 | Pending |
+| CLI-03 | Phase 8 | Pending |
+| CLI-04 | Phase 8 | Pending |
+| OUT-01 | Phase 6 | Pending |
+| OUT-02 | Phase 7 | Pending |
+| OUT-03 | Phase 7 | Pending |
+| OUT-04 | Phase 7 | Pending |
+| OUT-05 | Phase 7 | Pending |
+| OUT-06 | Phase 10 | Pending |
+| LOAD-01 | Phase 3 | Pending |
+| LOAD-02 | Phase 4 | Pending |
+| LOAD-03 | Phase 4 | Pending |
+| LOAD-04 | Phase 3 | Pending |
+| LOAD-05 | Phase 8 | Pending |
+| UX-01 | Phase 9 | Pending |
+| UX-02 | Phase 9 | Pending |
+| UX-03 | Phase 9 | Pending |
 
 **Coverage:**
 - v1 requirements: 24 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 24
+- Mapped to phases: 24
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2025-01-20*
-*Last updated: 2025-01-20 after initial definition*
+*Last updated: 2025-01-20 after roadmap creation*

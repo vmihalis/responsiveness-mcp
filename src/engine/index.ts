@@ -11,5 +11,5 @@ export { DEFAULT_TIMEOUT } from './types.js';
 // Classes
 export { BrowserManager } from './browser.js';
 
-// Functions (capturer will be implemented in next plan)
+// Functions
 export { captureScreenshot } from './capturer.js';

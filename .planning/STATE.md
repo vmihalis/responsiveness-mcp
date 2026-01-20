@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Instantly verify responsive design without manual testing
-**Current focus:** v2.0 Open Source Release — rebrand, npm, landing page, docs
+**Current focus:** Phase 11 - npm Package Prep
 
 ---
 
@@ -13,73 +13,71 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 
 | Metric | Value |
 |--------|-------|
-| Current Milestone | v2.0 Web Platform |
-| Phases Complete | 0/? (defining requirements) |
-| Requirements Complete | 0/? (defining) |
+| Current Milestone | v2.0 Open Source Release |
+| Phases Complete | 0/6 |
+| Requirements Complete | 0/21 |
 
 ---
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-01-20 — Milestone v2.0 started
+Phase: 11 of 16 (npm Package Prep)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-01-20 — Roadmap created for v2.0
+
+Progress: [..........] 0%
 
 ---
 
-## Milestones
+## Performance Metrics
 
-| Version | Name | Status | Date |
-|---------|------|--------|------|
-| v1.0 | MVP CLI | SHIPPED | 2026-01-20 |
-| v2.0 | Web Platform | In Progress | - |
+**Velocity:**
+- Total plans completed: 0 (v2.0)
+- Average duration: -
+- Total execution time: -
 
-See `.planning/MILESTONES.md` for full history.
+**By Phase:**
 
----
+| Phase | Plans | Total | Avg/Plan |
+|-------|-------|-------|----------|
+| - | - | - | - |
 
-## Accumulated Decisions
+**Recent Trend:**
+- Last 5 plans: -
+- Trend: N/A (milestone starting)
 
-See PROJECT.md Key Decisions table for full list.
-
-Key v1.0 decisions (carried forward):
-- Playwright over Puppeteer
-- CSS-only lightbox for report
-- Base64 data URIs for self-contained HTML
-- p-limit for parallel execution
-- Vitest for testing
+*Updated after each plan completion*
 
 ---
 
-## Blockers/Concerns Carried Forward
+## Accumulated Context
 
-None
+### Decisions
 
----
+Decisions logged in PROJECT.md Key Decisions table.
 
-## Tech Debt (from v1.0 audit)
+v2.0 decisions:
+- Stack: Vanilla HTML/CSS for landing, VitePress for docs
+- Flat structure (no monorepo migration)
+- VHS for terminal recording
 
-Non-critical items to address in future:
-- Legacy organizeFiles() function (output/organizer.ts)
-- Unused getCategoryDir() export
-- validateConfig() not used in production
-- displayCaptureSummary() only used in tests
+### Pending Todos
+
+None yet.
+
+### Blockers/Concerns
+
+None yet.
 
 ---
 
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: v2.0 milestone initialization
+Stopped at: Roadmap v2.0 created
 Resume file: None
 
 ---
 
-## Next Action
-
-Complete requirements definition, then roadmap creation.
-
----
-
-*Last updated: 2026-01-20 after v2.0 milestone started*
+*Last updated: 2026-01-20 after roadmap creation*

@@ -84,33 +84,33 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NPM-01 | TBD | Pending |
-| NPM-02 | TBD | Pending |
-| NPM-03 | TBD | Pending |
-| NPM-04 | TBD | Pending |
-| NPM-05 | TBD | Pending |
-| NPM-06 | TBD | Pending |
-| NPM-07 | TBD | Pending |
-| DEMO-01 | TBD | Pending |
-| README-01 | TBD | Pending |
-| README-02 | TBD | Pending |
-| README-03 | TBD | Pending |
-| README-04 | TBD | Pending |
-| LAND-01 | TBD | Pending |
-| LAND-02 | TBD | Pending |
-| LAND-03 | TBD | Pending |
-| LAND-04 | TBD | Pending |
-| LAND-05 | TBD | Pending |
-| DOCS-01 | TBD | Pending |
-| DOCS-02 | TBD | Pending |
-| DOCS-03 | TBD | Pending |
-| DOCS-04 | TBD | Pending |
+| NPM-01 | Phase 11 | Pending |
+| NPM-02 | Phase 11 | Pending |
+| NPM-03 | Phase 11 | Pending |
+| NPM-04 | Phase 11 | Pending |
+| NPM-05 | Phase 11 | Pending |
+| NPM-06 | Phase 16 | Pending |
+| NPM-07 | Phase 16 | Pending |
+| DEMO-01 | Phase 12 | Pending |
+| README-01 | Phase 13 | Pending |
+| README-02 | Phase 13 | Pending |
+| README-03 | Phase 13 | Pending |
+| README-04 | Phase 13 | Pending |
+| LAND-01 | Phase 14 | Pending |
+| LAND-02 | Phase 14 | Pending |
+| LAND-03 | Phase 14 | Pending |
+| LAND-04 | Phase 14 | Pending |
+| LAND-05 | Phase 14 | Pending |
+| DOCS-01 | Phase 15 | Pending |
+| DOCS-02 | Phase 15 | Pending |
+| DOCS-03 | Phase 15 | Pending |
+| DOCS-04 | Phase 15 | Pending |
 
 **Coverage:**
 - v2.0 requirements: 21 total
-- Mapped to phases: 0
-- Unmapped: 21 (pending roadmap)
+- Mapped to phases: 21
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-20*
-*Last updated: 2026-01-20 after initial definition*
+*Last updated: 2026-01-20 after roadmap creation*

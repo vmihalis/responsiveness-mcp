@@ -6,7 +6,7 @@ import { Command } from 'commander';
  */
 export function createProgram(): Command {
   const program = new Command()
-    .name('responsive-capture')
+    .name('screenie')
     .description('Capture responsive screenshots across 50+ device viewports')
     .version('1.0.0')
 
@@ -47,12 +47,12 @@ export function createProgram(): Command {
       'after',
       `
 Examples:
-  $ responsive-capture http://localhost:3000
-  $ responsive-capture http://localhost:3000 /about
-  $ responsive-capture https://example.com --pages /home /about /contact
-  $ responsive-capture http://localhost:3000 --phones-only --concurrency 5
-  $ responsive-capture http://localhost:3000 --wait 1000 --output ./my-screenshots
-  $ responsive-capture http://localhost:3000 --no-open  # CI mode, don't open browser
+  $ screenie http://localhost:3000
+  $ screenie http://localhost:3000 /about
+  $ screenie https://example.com --pages /home /about /contact
+  $ screenie http://localhost:3000 --phones-only --concurrency 5
+  $ screenie http://localhost:3000 --wait 1000 --output ./my-screenshots
+  $ screenie http://localhost:3000 --no-open  # CI mode, don't open browser
 `
     );
 

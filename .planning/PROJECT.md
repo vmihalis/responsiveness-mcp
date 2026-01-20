@@ -1,12 +1,23 @@
-# Responsive Screenshot Tool
+# Screenie
 
 ## What This Is
 
-A CLI tool that automates responsive design testing by capturing full-page screenshots of a web page across 57 device dimensions. It organizes screenshots into device categories (phones, tablets, PC/laptops), generates a self-contained HTML report with grid layout and lightbox viewer, and opens it automatically for quick visual review. Built with Playwright for reliable rendering and parallel execution.
+A responsive design testing tool available as both a CLI and web application at screenie.xyz. Captures full-page screenshots across 57 device dimensions, organizes them by category (phones, tablets, desktops), and generates HTML reports for quick visual review. Users can either clone the GitHub repo to run locally or paste a URL on the website to get instant results.
 
 ## Core Value
 
-Instantly verify that a web app looks correct across all device sizes without manual testing — run one command, review one report.
+Instantly verify that a web app looks correct across all device sizes without manual testing — run one command or paste one URL, review one report.
+
+## Current Milestone: v2.0 Web Platform
+
+**Goal:** Transform Screenie from a CLI tool into a public web platform with documentation, enabling anyone to verify responsive designs via screenie.xyz or the npm package.
+
+**Target features:**
+- Web application at screenie.xyz where users paste a URL and get screenshot reports
+- Full documentation site with guides, examples, and API reference
+- Simple, clean UI for the web tool
+- Basic rate limiting to prevent abuse
+- Backend that runs Playwright for web users
 
 ## Requirements
 
@@ -40,29 +51,44 @@ Instantly verify that a web app looks correct across all device sizes without ma
 
 ### Active
 
-- [ ] Config file support (.responsiverc.json)
-- [ ] Custom viewport definitions via config
-- [ ] Output directory flag (--output)
-- [ ] URL list from file input
-- [ ] Element hiding via CSS selector (--hide)
-- [ ] Dark mode capture (--dark-mode)
+- [ ] Web application at screenie.xyz
+- [ ] URL input form with device selection
+- [ ] Backend API running Playwright
+- [ ] View results inline on website
+- [ ] Download HTML report from website
+- [ ] Basic rate limiting (requests per IP per hour)
+- [ ] Full documentation site (VitePress/similar)
+- [ ] Getting started guide
+- [ ] CLI reference documentation
+- [ ] API reference for programmatic usage
+- [ ] Example gallery showing reports
+
+### Future (v2.1+)
+
+- Config file support (.responsiverc.json)
+- Custom viewport definitions via config
+- Output directory flag (--output)
+- URL list from file input
+- Element hiding via CSS selector (--hide)
+- Dark mode capture (--dark-mode)
 
 ### Out of Scope
 
 - Visual regression/diff comparison — Percy/Applitools territory
 - Real device cloud testing — BrowserStack domain
 - Interactive browser/DevTools — Responsively App niche
-- SaaS/cloud service — keep tool simple, no infrastructure
-- GUI/Electron app — CLI integrates with dev workflows
+- User accounts/authentication — keep it simple, no login required
+- Saved history — stateless, run and download
 - Cross-browser (Firefox/Safari) — Chrome sufficient for layout verification
 - PDF/video export — focus on screenshots + HTML
 
 ## Context
 
-Shipped v1.0 with 5,954 LOC TypeScript.
+v1.0 shipped with 5,954 LOC TypeScript, 291 tests passing.
 Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest.
-57 device presets covering current flagship phones (iPhone 15/16, Pixel 8, Galaxy S24), tablets (iPad Pro, Galaxy Tab), and common desktop/laptop resolutions.
-291 tests passing (unit, integration, E2E).
+57 device presets covering flagship phones (iPhone 15/16, Pixel 8, Galaxy S24), tablets (iPad Pro, Galaxy Tab), and common desktop resolutions.
+
+v2.0 adds a web platform layer. The existing CLI core remains unchanged — the website wraps the same screenshot engine with a web frontend and API.
 
 ## Constraints
 
@@ -87,4 +113,4 @@ Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest.
 | Error returns vs throws | Batch operations continue on individual failures | Good |
 
 ---
-*Last updated: 2026-01-20 after v1.0 milestone*
+*Last updated: 2026-01-20 after v2.0 milestone started*

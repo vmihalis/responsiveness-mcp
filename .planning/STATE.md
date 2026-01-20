@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Instantly verify responsive design without manual testing
-**Current focus:** Planning next milestone
+**Current focus:** v2.0 Web Platform — screenie.xyz + documentation
 
 ---
 
@@ -13,19 +13,18 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 
 | Metric | Value |
 |--------|-------|
-| Current Milestone | v1.0 SHIPPED |
-| Next Milestone | v1.1 (not started) |
-| Phases Complete | 10/10 (v1.0) |
-| Requirements Complete | 24/24 (v1.0) |
+| Current Milestone | v2.0 Web Platform |
+| Phases Complete | 0/? (defining requirements) |
+| Requirements Complete | 0/? (defining) |
 
 ---
 
 ## Current Position
 
-Phase: Ready for next milestone
-Plan: Not started
-Status: v1.0 complete, ready to plan v1.1
-Last activity: 2026-01-20 — v1.0 milestone complete
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-01-20 — Milestone v2.0 started
 
 ---
 
@@ -33,8 +32,8 @@ Last activity: 2026-01-20 — v1.0 milestone complete
 
 | Version | Name | Status | Date |
 |---------|------|--------|------|
-| v1.0 | MVP | SHIPPED | 2026-01-20 |
-| v1.1 | TBD | Not started | - |
+| v1.0 | MVP CLI | SHIPPED | 2026-01-20 |
+| v2.0 | Web Platform | In Progress | - |
 
 See `.planning/MILESTONES.md` for full history.
 
@@ -44,7 +43,7 @@ See `.planning/MILESTONES.md` for full history.
 
 See PROJECT.md Key Decisions table for full list.
 
-Key v1.0 decisions:
+Key v1.0 decisions (carried forward):
 - Playwright over Puppeteer
 - CSS-only lightbox for report
 - Base64 data URIs for self-contained HTML
@@ -72,21 +71,15 @@ Non-critical items to address in future:
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: v1.0 milestone completion
+Stopped at: v2.0 milestone initialization
 Resume file: None
 
 ---
 
 ## Next Action
 
-Run `/gsd:new-milestone` to start v1.1 planning.
-
-Suggested v1.1 scope (from v2 requirements):
-- Config file support (.responsiverc.json)
-- Custom viewport definitions
-- Output directory flag (--output)
-- Element hiding via CSS selector (--hide)
+Complete requirements definition, then roadmap creation.
 
 ---
 
-*Last updated: 2026-01-20 after v1.0 milestone completion*
+*Last updated: 2026-01-20 after v2.0 milestone started*

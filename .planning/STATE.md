@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2025-01-20)
 
 **Core value:** Instantly verify responsive design without manual testing
-**Current focus:** Phase 8 - CLI Interface (next)
+**Current focus:** Phase 8 - CLI Interface (in progress)
 
 ---
 
@@ -13,7 +13,7 @@ See: .planning/PROJECT.md (updated 2025-01-20)
 
 | Metric | Value |
 |--------|-------|
-| Current Phase | 7 (complete) |
+| Current Phase | 8 (in progress) |
 | Phases Complete | 7/10 |
 | Requirements Complete | 15/24 |
 | Overall Progress | 70% |
@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2025-01-20)
 
 ## Current Position
 
-Phase: 7 of 10 (HTML Report)
-Plan: 2 of 2 in current phase
-Status: Phase complete
-Last activity: 2026-01-20 - Completed Plan 07-02
+Phase: 8 of 10 (CLI Interface)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-20 - Completed Plan 08-01
 
-Progress: [==============================] 2/2 plans in phase 7
+Progress: [==========                    ] 1/3 plans in phase 8
 
 ---
 
@@ -42,7 +42,7 @@ Progress: [==============================] 2/2 plans in phase 7
 | 5 | Parallel Execution | Complete | 2/2 plans |
 | 6 | File Output | Complete | 2/2 plans |
 | 7 | HTML Report | Complete | 2/2 plans |
-| 8 | CLI Interface | Pending | 0% |
+| 8 | CLI Interface | In Progress | 1/3 plans |
 | 9 | UX Polish | Pending | 0% |
 | 10 | Integration | Pending | 0% |
 
@@ -99,6 +99,10 @@ Progress: [==============================] 2/2 plans in phase 7
 | 07-01 | Thumbnail aspect ratio 16/10 | Good balance for page tops with object-fit cover |
 | 07-02 | Test private functions via public exports | Verify template output indirectly through generateReport |
 | 07-02 | Consistent temp directory pattern | .test-output-reporter with cleanup matches organizer.test.ts |
+| 08-01 | Validation throws with helpful error messages | Include examples in error messages for better UX |
+| 08-01 | Device filters combine via union | --phones-only --tablets-only = phones + tablets |
+| 08-01 | --pages takes precedence over path argument | Clear priority when both provided |
+| 08-01 | createProgram factory for testability | Allows testing without global state
 
 ---
 
@@ -111,7 +115,7 @@ None
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 07-02-PLAN.md (HTML report tests)
+Stopped at: Completed 08-01-PLAN.md (CLI foundation)
 Resume file: None
 
 ---
@@ -152,12 +156,13 @@ Resume file: None
 | 2026-01-20 | Plan 07-01 completed | HTML report infrastructure (4 commits) |
 | 2026-01-20 | Plan 07-02 completed | HTML report tests (3 commits, 71 tests) |
 | 2026-01-20 | Phase 7 complete | All 2 plans executed, 168 total tests passing |
+| 2026-01-20 | Plan 08-01 completed | CLI foundation (3 commits, types/validation/commands) |
 
 ---
 
 ## Next Action
 
-`/gsd:plan-phase 08` - Plan CLI Interface phase
+`/gsd:execute-phase 08-02` - Execute CLI action handler plan
 
 ---
 *Last updated: 2026-01-20*

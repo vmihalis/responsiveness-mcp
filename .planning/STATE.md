@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Instantly verify responsive design without manual testing
-**Current focus:** Phase 14 - Landing Page complete, ready for Phase 15
+**Current focus:** Phase 15 complete, ready for Phase 16 (Publish)
 
 ---
 

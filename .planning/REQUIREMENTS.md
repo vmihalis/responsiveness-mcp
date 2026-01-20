@@ -30,18 +30,18 @@ Requirements for open source release. Each maps to roadmap phases.
 
 ### Landing Page
 
-- [ ] **LAND-01**: Landing page has hero section with tagline explaining what Screenie does
-- [ ] **LAND-02**: Landing page displays demo GIF/video
-- [ ] **LAND-03**: Landing page has copy-to-clipboard install command
-- [ ] **LAND-04**: Landing page has links to GitHub, npm, and documentation
-- [ ] **LAND-05**: Landing page deployed to screenie.xyz via Netlify
+- [x] **LAND-01**: Landing page has hero section with tagline explaining what Screenie does
+- [x] **LAND-02**: Landing page displays demo GIF/video
+- [x] **LAND-03**: Landing page has copy-to-clipboard install command
+- [x] **LAND-04**: Landing page has links to GitHub, npm, and documentation
+- [x] **LAND-05**: Landing page deployed to Vercel
 
 ### Documentation
 
-- [ ] **DOCS-01**: VitePress documentation site set up
-- [ ] **DOCS-02**: Documentation includes getting started guide
-- [ ] **DOCS-03**: Documentation includes CLI reference with all flags and options
-- [ ] **DOCS-04**: Documentation deployed to docs.screenie.xyz via Netlify
+- [x] **DOCS-01**: VitePress documentation site set up
+- [x] **DOCS-02**: Documentation includes getting started guide
+- [x] **DOCS-03**: Documentation includes CLI reference with all flags and options
+- [x] **DOCS-04**: Documentation deployed to Vercel
 
 ## Future Requirements
 
@@ -96,15 +96,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | README-02 | Phase 13 | Complete |
 | README-03 | Phase 13 | Complete |
 | README-04 | Phase 13 | Complete |
-| LAND-01 | Phase 14 | Pending |
-| LAND-02 | Phase 14 | Pending |
-| LAND-03 | Phase 14 | Pending |
-| LAND-04 | Phase 14 | Pending |
-| LAND-05 | Phase 14 | Pending |
-| DOCS-01 | Phase 15 | Pending |
-| DOCS-02 | Phase 15 | Pending |
-| DOCS-03 | Phase 15 | Pending |
-| DOCS-04 | Phase 15 | Pending |
+| LAND-01 | Phase 14 | Complete |
+| LAND-02 | Phase 14 | Complete |
+| LAND-03 | Phase 14 | Complete |
+| LAND-04 | Phase 14 | Complete |
+| LAND-05 | Phase 14 | Complete |
+| DOCS-01 | Phase 15 | Complete |
+| DOCS-02 | Phase 15 | Complete |
+| DOCS-03 | Phase 15 | Complete |
+| DOCS-04 | Phase 15 | Complete |
 
 **Coverage:**
 - v2.0 requirements: 21 total
@@ -113,4 +113,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 13 completion*
+*Last updated: 2026-01-20 after Phase 15 completion*

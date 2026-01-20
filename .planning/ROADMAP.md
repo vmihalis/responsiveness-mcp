@@ -26,7 +26,7 @@ See `.planning/milestones/v1.0-cli/` for complete history.
 - [x] **Phase 12: Demo Creation** - Record CLI demo GIF with VHS
 - [x] **Phase 13: README Polish** - Update README with demo, badges, features
 - [x] **Phase 14: Landing Page** - Build and deploy landing page (Vercel)
-- [ ] **Phase 15: Documentation** - Set up VitePress docs.screenie.xyz
+- [x] **Phase 15: Documentation** - Set up VitePress documentation (Vercel)
 - [ ] **Phase 16: Publish** - npm publish with provenance signing
 
 ## Phase Details
@@ -96,12 +96,12 @@ Plans:
   1. VitePress site builds without errors
   2. Getting started guide has copy-pasteable commands that work
   3. CLI reference documents all flags shown in `screenie --help`
-  4. docs.screenie.xyz resolves and serves documentation via Netlify
+  4. Documentation accessible via Vercel deployment
 **Plans**: 2 plans
 
 Plans:
-- [ ] 15-01-PLAN.md — Set up VitePress with config and create all documentation pages
-- [ ] 15-02-PLAN.md — Deploy documentation to Netlify
+- [x] 15-01-PLAN.md — Set up VitePress with config and create all documentation pages
+- [x] 15-02-PLAN.md — Deploy documentation to Vercel
 
 ### Phase 16: Publish
 **Goal**: Package is live on npm and discoverable via search
@@ -128,7 +128,7 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 | 12. Demo Creation | 1/1 | ✓ Complete | 2026-01-20 |
 | 13. README Polish | 1/1 | ✓ Complete | 2026-01-20 |
 | 14. Landing Page | 2/2 | ✓ Complete | 2026-01-20 |
-| 15. Documentation | 0/2 | Planned | - |
+| 15. Documentation | 2/2 | ✓ Complete | 2026-01-20 |
 | 16. Publish | 0/? | Not started | - |
 
 ---

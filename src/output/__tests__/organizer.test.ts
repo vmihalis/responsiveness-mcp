@@ -285,3 +285,253 @@ describe('writeScreenshot', () => {
     expect(pcPath).toContain('pc-laptops');
   });
 });
+
+// Test fixture helpers
+const createTestDevice = (
+  name: string,
+  category: Device['category'],
+  width = 100,
+  height = 200
+): Device => ({
+  name,
+  width,
+  height,
+  deviceScaleFactor: 1,
+  category,
+});
+
+const createTestResult = (
+  deviceName: string,
+  success: boolean,
+  buffer?: Buffer
+): ExecutionResult => ({
+  success,
+  deviceName,
+  buffer: buffer ?? (success ? Buffer.from('PNG test data') : undefined),
+  attempts: 1,
+});
+
+describe('saveAllScreenshots', () => {
+  beforeEach(async () => {
+    await rm(TEST_BASE_DIR, { recursive: true, force: true });
+  });
+
+  afterEach(async () => {
+    await rm(TEST_BASE_DIR, { recursive: true, force: true });
+  });
+
+  it('saves all successful results to correct categories', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'save-all-test',
+    });
+
+    const devices: Device[] = [
+      createTestDevice('iPhone 14', 'phones', 393, 852),
+      createTestDevice('iPad Pro', 'tablets', 1024, 1366),
+      createTestDevice('MacBook Pro', 'pc-laptops', 1440, 900),
+    ];
+
+    const results: ExecutionResult[] = [
+      createTestResult('iPhone 14', true),
+      createTestResult('iPad Pro', true),
+      createTestResult('MacBook Pro', true),
+    ];
+
+    const saveResult = await saveAllScreenshots(results, devices, outputDir);
+
+    expect(saveResult.savedCount).toBe(3);
+    expect(saveResult.failedCount).toBe(0);
+    expect(saveResult.results.length).toBe(3);
+
+    // Verify files exist in correct folders
+    const phoneFiles = await readdir(join(outputDir, 'phones'));
+    const tabletFiles = await readdir(join(outputDir, 'tablets'));
+    const pcFiles = await readdir(join(outputDir, 'pc-laptops'));
+
+    expect(phoneFiles.length).toBe(1);
+    expect(tabletFiles.length).toBe(1);
+    expect(pcFiles.length).toBe(1);
+  });
+
+  it('skips failed results (no buffer)', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'skip-failed-test',
+    });
+
+    const devices: Device[] = [
+      createTestDevice('Phone 1', 'phones'),
+      createTestDevice('Phone 2', 'phones'),
+      createTestDevice('Phone 3', 'phones'),
+    ];
+
+    const results: ExecutionResult[] = [
+      createTestResult('Phone 1', true),
+      createTestResult('Phone 2', false), // Failed - no buffer
+      createTestResult('Phone 3', true),
+    ];
+
+    const saveResult = await saveAllScreenshots(results, devices, outputDir);
+
+    expect(saveResult.savedCount).toBe(2);
+    expect(saveResult.failedCount).toBe(1);
+
+    const phoneFiles = await readdir(join(outputDir, 'phones'));
+    expect(phoneFiles.length).toBe(2);
+  });
+
+  it('handles empty results array', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'empty-test',
+    });
+
+    const saveResult = await saveAllScreenshots([], [], outputDir);
+
+    expect(saveResult.savedCount).toBe(0);
+    expect(saveResult.failedCount).toBe(0);
+    expect(saveResult.results).toEqual([]);
+    expect(saveResult.outputDir).toBe(outputDir);
+  });
+
+  it('handles all failures (no files written)', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'all-failed-test',
+    });
+
+    const devices: Device[] = [
+      createTestDevice('Device A', 'phones'),
+      createTestDevice('Device B', 'tablets'),
+    ];
+
+    const results: ExecutionResult[] = [
+      createTestResult('Device A', false),
+      createTestResult('Device B', false),
+    ];
+
+    const saveResult = await saveAllScreenshots(results, devices, outputDir);
+
+    expect(saveResult.savedCount).toBe(0);
+    expect(saveResult.failedCount).toBe(2);
+
+    // Folders exist but are empty
+    const phoneFiles = await readdir(join(outputDir, 'phones'));
+    const tabletFiles = await readdir(join(outputDir, 'tablets'));
+    expect(phoneFiles.length).toBe(0);
+    expect(tabletFiles.length).toBe(0);
+  });
+
+  it('matches device by name for correct category placement', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'match-test',
+    });
+
+    // Devices in different order than results
+    const devices: Device[] = [
+      createTestDevice('Tablet Device', 'tablets'),
+      createTestDevice('Phone Device', 'phones'),
+      createTestDevice('PC Device', 'pc-laptops'),
+    ];
+
+    const results: ExecutionResult[] = [
+      createTestResult('PC Device', true),
+      createTestResult('Phone Device', true),
+      createTestResult('Tablet Device', true),
+    ];
+
+    const saveResult = await saveAllScreenshots(results, devices, outputDir);
+
+    expect(saveResult.savedCount).toBe(3);
+
+    // Verify correct placement
+    const phoneFiles = await readdir(join(outputDir, 'phones'));
+    const tabletFiles = await readdir(join(outputDir, 'tablets'));
+    const pcFiles = await readdir(join(outputDir, 'pc-laptops'));
+
+    expect(phoneFiles.some((f) => f.includes('phone-device'))).toBe(true);
+    expect(tabletFiles.some((f) => f.includes('tablet-device'))).toBe(true);
+    expect(pcFiles.some((f) => f.includes('pc-device'))).toBe(true);
+  });
+
+  it('reports error for device not found in device list', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'device-not-found',
+    });
+
+    const devices: Device[] = [createTestDevice('Known Device', 'phones')];
+
+    const results: ExecutionResult[] = [
+      createTestResult('Known Device', true),
+      createTestResult('Unknown Device', true), // No matching device
+    ];
+
+    const saveResult = await saveAllScreenshots(results, devices, outputDir);
+
+    expect(saveResult.savedCount).toBe(1);
+    expect(saveResult.failedCount).toBe(1);
+
+    const failedResult = saveResult.results.find(
+      (r) => r.deviceName === 'Unknown Device'
+    );
+    expect(failedResult?.success).toBe(false);
+    expect(failedResult?.error).toContain('Device not found');
+  });
+
+  it('returns outputDir in result', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'output-dir-test',
+    });
+
+    const saveResult = await saveAllScreenshots([], [], outputDir);
+
+    expect(saveResult.outputDir).toBe(outputDir);
+  });
+
+  it('includes filepath in successful save results', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'filepath-result-test',
+    });
+
+    const devices: Device[] = [createTestDevice('Test Phone', 'phones', 300, 600)];
+    const results: ExecutionResult[] = [createTestResult('Test Phone', true)];
+
+    const saveResult = await saveAllScreenshots(results, devices, outputDir);
+
+    const successResult = saveResult.results[0];
+    expect(successResult?.success).toBe(true);
+    expect(successResult?.filepath).toContain('phones');
+    expect(successResult?.filepath).toContain('test-phone-300x600.png');
+  });
+
+  it('handles result with success=false but has buffer (still skips)', async () => {
+    const outputDir = await createOutputDirectory({
+      baseDir: TEST_BASE_DIR,
+      timestamp: 'success-false-buffer',
+    });
+
+    const devices: Device[] = [createTestDevice('Edge Case Device', 'phones')];
+
+    // Weird state: success=false but buffer exists
+    const results: ExecutionResult[] = [
+      {
+        success: false,
+        deviceName: 'Edge Case Device',
+        buffer: Buffer.from('data'), // Has buffer but marked as failed
+        attempts: 3,
+        error: 'Timed out after 3 retries',
+      },
+    ];
+
+    const saveResult = await saveAllScreenshots(results, devices, outputDir);
+
+    // Should respect success=false and not save
+    expect(saveResult.savedCount).toBe(0);
+    expect(saveResult.failedCount).toBe(1);
+  });
+});

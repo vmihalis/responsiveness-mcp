@@ -445,3 +445,256 @@ describe('HTML Template Output', () => {
     });
   });
 });
+
+// ============================================================================
+// Integration Tests
+// ============================================================================
+
+// Test helpers
+function createTestResult(
+  name: string,
+  success: boolean,
+  buffer?: Buffer
+): ExecutionResult {
+  return {
+    success,
+    deviceName: name,
+    buffer,
+    attempts: 1,
+  };
+}
+
+function createTestDevice(
+  name: string,
+  category: DeviceCategory,
+  width = 393,
+  height = 852
+): Device {
+  return {
+    name,
+    width,
+    height,
+    deviceScaleFactor: 3,
+    category,
+  };
+}
+
+describe('prepareScreenshotsForReport', () => {
+  it('converts ExecutionResult[] to ScreenshotForReport[]', () => {
+    const devices: Device[] = [
+      createTestDevice('iPhone 15 Pro', 'phones', 393, 852),
+    ];
+    const results: ExecutionResult[] = [
+      createTestResult('iPhone 15 Pro', true, Buffer.from('PNG data')),
+    ];
+
+    const screenshots = prepareScreenshotsForReport(results, devices);
+
+    expect(screenshots.length).toBe(1);
+    expect(screenshots[0]?.deviceName).toBe('iPhone 15 Pro');
+    expect(screenshots[0]?.category).toBe('phones');
+    expect(screenshots[0]?.width).toBe(393);
+    expect(screenshots[0]?.height).toBe(852);
+    expect(screenshots[0]?.dataUri).toMatch(/^data:image\/png;base64,/);
+  });
+
+  it('skips failed results (success: false)', () => {
+    const devices: Device[] = [
+      createTestDevice('Device A', 'phones'),
+      createTestDevice('Device B', 'phones'),
+    ];
+    const results: ExecutionResult[] = [
+      createTestResult('Device A', true, Buffer.from('data')),
+      createTestResult('Device B', false, undefined),
+    ];
+
+    const screenshots = prepareScreenshotsForReport(results, devices);
+
+    expect(screenshots.length).toBe(1);
+    expect(screenshots[0]?.deviceName).toBe('Device A');
+  });
+
+  it('skips results without buffer', () => {
+    const devices: Device[] = [createTestDevice('Device', 'phones')];
+    const results: ExecutionResult[] = [
+      {
+        success: true,
+        deviceName: 'Device',
+        buffer: undefined, // No buffer
+        attempts: 1,
+      },
+    ];
+
+    const screenshots = prepareScreenshotsForReport(results, devices);
+
+    expect(screenshots.length).toBe(0);
+  });
+
+  it('skips results with unknown device names', () => {
+    const devices: Device[] = [createTestDevice('Known Device', 'phones')];
+    const results: ExecutionResult[] = [
+      createTestResult('Known Device', true, Buffer.from('data')),
+      createTestResult('Unknown Device', true, Buffer.from('data')),
+    ];
+
+    const screenshots = prepareScreenshotsForReport(results, devices);
+
+    expect(screenshots.length).toBe(1);
+    expect(screenshots[0]?.deviceName).toBe('Known Device');
+  });
+
+  it('returns correct deviceName, category, width, height, dataUri for each', () => {
+    const devices: Device[] = [
+      { name: 'iPad Pro', width: 1024, height: 1366, deviceScaleFactor: 2, category: 'tablets' },
+      { name: 'MacBook Pro', width: 1728, height: 1117, deviceScaleFactor: 2, category: 'pc-laptops' },
+    ];
+    const results: ExecutionResult[] = [
+      createTestResult('iPad Pro', true, Buffer.from('ipad-data')),
+      createTestResult('MacBook Pro', true, Buffer.from('macbook-data')),
+    ];
+
+    const screenshots = prepareScreenshotsForReport(results, devices);
+
+    expect(screenshots.length).toBe(2);
+
+    const ipad = screenshots.find((s) => s.deviceName === 'iPad Pro');
+    expect(ipad).toBeDefined();
+    expect(ipad?.category).toBe('tablets');
+    expect(ipad?.width).toBe(1024);
+    expect(ipad?.height).toBe(1366);
+    expect(ipad?.dataUri).toContain('base64');
+
+    const macbook = screenshots.find((s) => s.deviceName === 'MacBook Pro');
+    expect(macbook).toBeDefined();
+    expect(macbook?.category).toBe('pc-laptops');
+    expect(macbook?.width).toBe(1728);
+    expect(macbook?.height).toBe(1117);
+  });
+
+  it('handles empty arrays', () => {
+    const screenshots = prepareScreenshotsForReport([], []);
+    expect(screenshots.length).toBe(0);
+  });
+
+  it('handles all failed results', () => {
+    const devices: Device[] = [
+      createTestDevice('A', 'phones'),
+      createTestDevice('B', 'tablets'),
+    ];
+    const results: ExecutionResult[] = [
+      createTestResult('A', false, undefined),
+      createTestResult('B', false, undefined),
+    ];
+
+    const screenshots = prepareScreenshotsForReport(results, devices);
+
+    expect(screenshots.length).toBe(0);
+  });
+});
+
+describe('generateReport', () => {
+  beforeEach(async () => {
+    await mkdir(TEST_OUTPUT_DIR, { recursive: true });
+  });
+
+  afterEach(async () => {
+    await rm(TEST_OUTPUT_DIR, { recursive: true, force: true });
+  });
+
+  it('creates report.html file in output directory', async () => {
+    const reportPath = await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+
+    expect(reportPath).toBe(join(TEST_OUTPUT_DIR, 'report.html'));
+
+    // Verify file exists by reading it
+    const content = await readFile(reportPath, 'utf-8');
+    expect(content).toBeDefined();
+    expect(content.length).toBeGreaterThan(0);
+  });
+
+  it('returns correct file path', async () => {
+    const reportPath = await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+
+    expect(reportPath).toContain(TEST_OUTPUT_DIR);
+    expect(reportPath).toContain('report.html');
+    expect(reportPath).toBe(join(TEST_OUTPUT_DIR, 'report.html'));
+  });
+
+  it('file contains valid HTML (DOCTYPE, html tags)', async () => {
+    const reportPath = await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+    const html = await readFile(reportPath, 'utf-8');
+
+    expect(html).toMatch(/^<!DOCTYPE html>/);
+    expect(html).toContain('<html');
+    expect(html).toContain('</html>');
+    expect(html).toContain('<head>');
+    expect(html).toContain('</head>');
+    expect(html).toContain('<body>');
+    expect(html).toContain('</body>');
+  });
+
+  it('file is non-empty', async () => {
+    const reportPath = await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+    const html = await readFile(reportPath, 'utf-8');
+
+    expect(html.length).toBeGreaterThan(1000); // HTML with CSS should be substantial
+  });
+
+  it('works with empty screenshots array (produces valid HTML)', async () => {
+    const reportPath = await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+    const html = await readFile(reportPath, 'utf-8');
+
+    expect(html).toContain('<!DOCTYPE html>');
+    expect(html).toContain('<h1>Responsive Screenshots</h1>');
+    // No thumbnail cards when empty
+    expect(html).not.toContain('class="thumbnail-card"');
+    // But still has header and structure
+    expect(html).toContain('class="report-header"');
+  });
+
+  it('includes screenshots when provided', async () => {
+    const screenshots: ScreenshotForReport[] = [
+      {
+        deviceName: 'Test Phone',
+        category: 'phones',
+        width: 375,
+        height: 812,
+        dataUri: 'data:image/png;base64,ABC123',
+      },
+    ];
+
+    const reportPath = await generateReport(mockReportData, screenshots, TEST_OUTPUT_DIR);
+    const html = await readFile(reportPath, 'utf-8');
+
+    expect(html).toContain('Test Phone');
+    expect(html).toContain('375 x 812');
+    expect(html).toContain('data:image/png;base64,ABC123');
+    expect(html).toContain('class="thumbnail-card"');
+  });
+
+  it('handles multiple screenshots across categories', async () => {
+    const screenshots: ScreenshotForReport[] = [
+      { deviceName: 'Phone', category: 'phones', width: 375, height: 812, dataUri: 'data:phone' },
+      { deviceName: 'Tablet', category: 'tablets', width: 768, height: 1024, dataUri: 'data:tablet' },
+      { deviceName: 'Desktop', category: 'pc-laptops', width: 1920, height: 1080, dataUri: 'data:desktop' },
+    ];
+
+    const reportPath = await generateReport(mockReportData, screenshots, TEST_OUTPUT_DIR);
+    const html = await readFile(reportPath, 'utf-8');
+
+    // All devices present
+    expect(html).toContain('Phone');
+    expect(html).toContain('Tablet');
+    expect(html).toContain('Desktop');
+
+    // All categories have sections
+    expect(html).toContain('<h2>Phones</h2>');
+    expect(html).toContain('<h2>Tablets</h2>');
+    expect(html).toContain('<h2>Desktop & Laptops</h2>');
+
+    // All lightboxes present
+    expect(html).toContain('id="lb-phone-375x812"');
+    expect(html).toContain('id="lb-tablet-768x1024"');
+    expect(html).toContain('id="lb-desktop-1920x1080"');
+  });
+});

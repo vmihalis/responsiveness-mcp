@@ -23,10 +23,10 @@ Requirements for open source release. Each maps to roadmap phases.
 
 ### README
 
-- [ ] **README-01**: README includes demo GIF showing tool in action
-- [ ] **README-02**: README includes quick install command (npx screenie)
-- [ ] **README-03**: README includes badges (version, license, npm downloads)
-- [ ] **README-04**: README includes feature list with key capabilities
+- [x] **README-01**: README includes demo GIF showing tool in action
+- [x] **README-02**: README includes quick install command (npx screenie)
+- [x] **README-03**: README includes badges (version, license, npm downloads)
+- [x] **README-04**: README includes feature list with key capabilities
 
 ### Landing Page
 
@@ -92,10 +92,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NPM-06 | Phase 16 | Pending |
 | NPM-07 | Phase 16 | Pending |
 | DEMO-01 | Phase 12 | Complete |
-| README-01 | Phase 13 | Pending |
-| README-02 | Phase 13 | Pending |
-| README-03 | Phase 13 | Pending |
-| README-04 | Phase 13 | Pending |
+| README-01 | Phase 13 | Complete |
+| README-02 | Phase 13 | Complete |
+| README-03 | Phase 13 | Complete |
+| README-04 | Phase 13 | Complete |
 | LAND-01 | Phase 14 | Pending |
 | LAND-02 | Phase 14 | Pending |
 | LAND-03 | Phase 14 | Pending |
@@ -113,4 +113,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 12 completion*
+*Last updated: 2026-01-20 after Phase 13 completion*

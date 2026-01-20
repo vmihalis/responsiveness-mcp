@@ -15,7 +15,7 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 |--------|-------|
 | Current Milestone | v2.0 Open Source Release |
 | Phases Complete | 3/6 |
-| Requirements Complete | 7/21 |
+| Requirements Complete | 10/21 |
 
 ---
 
@@ -26,7 +26,7 @@ Plan: 1 of 1 complete
 Status: Phase 13 complete and verified
 Last activity: 2026-01-20 - Completed 13-01-PLAN.md (README polish)
 
-Progress: [####......] ~33%
+Progress: [#####.....] ~50%
 
 ---
 

@@ -82,10 +82,11 @@ Plans:
   2. Install command copies to clipboard with single click
   3. Demo GIF plays automatically above the fold
   4. screenie.xyz resolves and serves the landing page via Netlify
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 14-01: TBD
+- [ ] 14-01-PLAN.md — Create landing page with assets and Netlify configuration
+- [ ] 14-02-PLAN.md — Deploy to Netlify with custom domain setup
 
 ### Phase 15: Documentation
 **Goal**: Developers can find answers to CLI questions without reading source
@@ -125,11 +126,11 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 | 11. npm Package Prep | 2/2 | ✓ Complete | 2026-01-20 |
 | 12. Demo Creation | 1/1 | ✓ Complete | 2026-01-20 |
 | 13. README Polish | 1/1 | ✓ Complete | 2026-01-20 |
-| 14. Landing Page | 0/? | Not started | - |
+| 14. Landing Page | 0/2 | Planned | - |
 | 15. Documentation | 0/? | Not started | - |
 | 16. Publish | 0/? | Not started | - |
 
 ---
 
 *Created: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 13 completion*
+*Last updated: 2026-01-20 after Phase 14 planning*

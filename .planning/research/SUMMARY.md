@@ -1,70 +1,99 @@
 # Research Summary
 
+**Project:** Screenie v2.0 Open Source Release
+**Domain:** CLI Tool Publishing + Web Properties
+**Researched:** 2026-01-20
+**Confidence:** HIGH
+
+---
+
 ## Stack Recommendation
 
-| Layer | Choice | Version |
-|-------|--------|---------|
-| Runtime | Node.js | 20 LTS |
-| Language | TypeScript | ^5.4 |
-| Browser Automation | Playwright | ^1.51 |
-| CLI Framework | Commander.js | ^12.0 |
-| Concurrency | p-limit | ^6.0 |
-| Build | tsup | ^8.0 |
-| Dev Runner | tsx | ^4.0 |
-| Progress UX | ora + picocolors | latest |
+| Component | Choice | Rationale |
+|-----------|--------|-----------|
+| Landing Page | Vanilla HTML/CSS | Zero deps, instant load, appropriate for single-page CLI marketing |
+| Documentation | VitePress ^1.6.4 | Vite-powered, Vue ecosystem, de facto standard for JS/TS project docs |
+| Hosting | Netlify | Official Vite partner, generous free tier, static-site focused |
+| Demo Assets | VHS (Charmbracelet) | Scriptable, reproducible terminal recordings, high quality GIF output |
+| Package Manager | pnpm | Already in use, excellent workspace support for monorepo |
 
-**Key Decision**: Playwright over Puppeteer — built-in device registry with 100+ presets, native parallel browser contexts (3-5x faster), better full-page screenshot handling.
+**Key Decision**: Use vanilla HTML/CSS for landing (not Astro) and VitePress for docs (not Starlight). This is simpler than the ARCHITECTURE.md Astro/Starlight recommendation because screenie.xyz is a single static page that does not need a framework.
 
 ---
 
 ## Features Summary
 
-### Table Stakes (Must Have)
-- Full-page screenshot capture
-- Multiple viewport/resolution support with parallel execution
-- Pre-built device profiles (50+)
-- Simple CLI with clear file naming
-- Configurable output directory
-- PNG format support
+### Landing Page — Table Stakes
+- Clear value proposition ("Capture responsive screenshots from your terminal")
+- Installation command front and center (`npm install -g screenie`)
+- Demo GIF showing tool in action
+- Feature list with icons
+- GitHub link + MIT license badge
 
-### Differentiators (Competitive Advantage)
-- HTML report generation with grid view
-- Folder organization by device category (phones/tablets/pc-laptops)
-- Wait/delay configuration
-- Element hiding (cookie banners, popups)
-- Progress indicators
+### Documentation — Table Stakes
+- Installation guide (npm global, npx, local)
+- Quick start example (30-second path to first success)
+- CLI reference (all commands and flags)
+- Configuration options (env vars, config file)
+- Troubleshooting section (common errors)
+- CHANGELOG.md
+
+### npm Package — Table Stakes
+- Semantic versioning at 2.0.0
+- `repository`, `bugs`, `homepage` fields in package.json
+- `files` field whitelist (dist/, README, LICENSE)
+- `engines` field (>=20)
+- `prepublishOnly` script (build + test)
 
 ### Anti-Features (Don't Build)
-- Visual regression/diff comparison — Percy/Applitools territory
-- Real device cloud testing — BrowserStack domain
-- Interactive browser/DevTools — Responsively App niche
-- SaaS/cloud service
-- GUI/Electron app
+- Newsletter popup — interrupts evaluation, not appropriate for CLI tool
+- Enterprise/pricing section — confuses OSS positioning
+- Marketing fluff — developers distrust vague claims
+- Animation overload — slow loading, distracting
+- Live web playground — HIGH complexity, defer to v2+
 
 ---
 
 ## Architecture Overview
 
-### Components
-1. **CLI Parser** — Commander.js, validates URL/path input
-2. **Device Registry** — 50+ presets categorized by phones/tablets/pc-laptops
-3. **Screenshot Engine** — Browser Manager + Page Capturer + Parallel Executor
-4. **Output Manager** — File Organizer + HTML Report Generator
-5. **Configuration Loader** — Merges CLI args with defaults
+### Repository Structure
 
-### Key Architectural Decisions
-- **Single browser, multiple contexts** — One Chromium instance, isolated contexts per device
-- **Parallel with concurrency limit** — Default 10 concurrent captures
-- **Full-page screenshots** — Complete page coverage, Playwright handles scroll-stitching
-- **Self-contained HTML report** — Single file, no external dependencies
+Keep flat structure (do NOT move to monorepo). The project is small enough that:
+- `landing/` directory at root for static HTML/CSS
+- `docs/` directory at root for VitePress
+- CLI source stays at `src/`
+
+**Note:** ARCHITECTURE.md suggested monorepo with `apps/` and `packages/cli/`. This is overkill for the current scope. A monorepo migration can happen if the project grows, but adds unnecessary complexity now.
+
+### Folder Organization
+
+```
+screenie/
+  src/                    # CLI source (unchanged)
+  landing/                # NEW: Static landing page
+    index.html
+    style.css
+    demo.gif
+  docs/                   # NEW: VitePress documentation
+    .vitepress/
+      config.mts
+    index.md
+    guide/
+    api/
+  dist/                   # CLI build output
+  package.json            # Updated for npm publishing
+  LICENSE                 # MIT
+  README.md               # Updated with badges, demo
+```
 
 ### Build Order
-1. Foundation — Device Registry + types
-2. Core Engine — Browser Manager + Page Capturer
-3. Orchestration — Parallel Executor + Engine facade
-4. Output — File Organizer + Report Generator
-5. Interface — Config Loader + CLI Parser
-6. Integration — Main entry point
+
+1. **npm Package Prep** — Update package.json, add LICENSE, test local install
+2. **Demo Creation** — Record with VHS before building landing page
+3. **Landing Page** — Build with demo GIF embedded
+4. **Documentation** — Set up VitePress, write initial docs
+5. **Hosting** — Deploy landing to screenie.xyz, docs to docs.screenie.xyz
+6. **Publish** — npm publish after everything is live
 
 ---
 
@@ -72,19 +101,18 @@
 
 | Pitfall | Prevention | Phase |
 |---------|------------|-------|
-| Font loading hangs | Bypass font waiting, use domcontentloaded | Engine |
-| Lazy loading misses | Scroll through page before capture | Engine |
-| Memory exhaustion | Single browser + context pooling + semaphore | Parallelization |
-| Wrong screenshot method | Disable animations, consecutive matching | Engine |
-| Cookie banners/popups | CSS injection to hide overlays | Engine |
-| Hardcoded wait times | Smart waiting (networkidle + buffer) | Engine |
+| Secrets exposed in published package | Use `files` field as whitelist, run `npm pack --dry-run` before every publish | npm setup |
+| Missing or wrong shebang | Ensure `#!/usr/bin/env node` first line of dist/cli.js, test with `npm link` | npm setup |
+| No quick start in docs | Demo in first 10 seconds, show command + output immediately | Documentation |
+| Marketing speak on landing page | Direct technical language, show actual CLI commands and output | Landing page |
+| No LICENSE file | Add MIT LICENSE before first public release, add to package.json | npm setup |
 
 ---
 
 ## Positioning
 
-Fast CLI tool for batch responsive screenshot capture with organized output and HTML report. Not a regression testing platform, not an interactive browser — a review preparation tool that saves manual DevTools checking.
+Screenie v2.0 is a **professional open source release** of an existing CLI tool. The goal is credibility and discoverability: proper npm metadata, clear documentation, and a landing page that communicates value in 5 seconds. This is not a feature release — the CLI is already complete. This is about packaging and presentation for public consumption. Success means developers can find screenie via npm search, understand what it does instantly, install it in one command, and capture their first screenshots within 60 seconds.
 
 ---
 
-*Research completed: 2025-01-20*
+*Research completed: 2026-01-20*

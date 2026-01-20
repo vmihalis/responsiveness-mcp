@@ -1,335 +1,436 @@
 # Architecture Research
 
-## Components
+**Project:** Screenie CLI - Landing Page & Documentation Site
+**Researched:** 2026-01-20
+**Overall Confidence:** HIGH
 
-### 1. CLI Parser (`cli/`)
-**Responsibility**: Parse command-line arguments and validate input
+## Repository Structure
 
-- Accept URL (base URL like `http://localhost:3000`)
-- Accept page path (e.g., `/dashboard`, `/settings`)
-- Accept optional flags: output directory, concurrency limit, timeout
-- Validate URL format and accessibility
-- Return structured configuration object
+### Recommendation: Monorepo with pnpm Workspaces
 
-**Technology**: Commander.js - mature, TypeScript-friendly, handles complex options
+**Use a single repository** with the existing CLI code alongside new `apps/` directory for web properties.
 
-```
-Input:  `responsive-check http://localhost:3000 /dashboard --output ./screenshots`
-Output: { baseUrl, pagePath, outputDir, concurrency, timeout }
-```
+**Rationale:**
+- CLI is small (single TypeScript package) - no need for separate repos
+- Landing page and docs benefit from shared assets, copy, and examples
+- Documentation can reference CLI source directly for code examples
+- Single CI/CD pipeline for npm + web deployments
+- Industry standard for open source CLI tools (Turborepo, Astro, Vite all use this pattern)
 
-### 2. Device Registry (`devices/`)
-**Responsibility**: Define and categorize device dimensions
+**Alternatives Considered:**
 
-- Store 50+ device presets with width, height, deviceScaleFactor, category
-- Categories: `phones`, `tablets`, `pc-laptops`
-- Provide device lookup by name or filter by category
-- Support custom device definitions via config file
+| Approach | Pros | Cons | Verdict |
+|----------|------|------|---------|
+| **Monorepo** (recommended) | Single source of truth, atomic changes, shared tooling | Slightly more complex initial setup | Best for this scale |
+| Separate repos | Complete isolation | Split documentation, version drift, harder to keep in sync | Overkill for small CLI |
+| Docs in same package | Simplest | Pollutes npm package, no clear separation | Not recommended |
 
-**Data structure**:
-```typescript
-interface Device {
-  name: string;           // "iPhone 14 Pro"
-  width: number;          // 393
-  height: number;         // 852
-  deviceScaleFactor: number; // 3
-  category: 'phones' | 'tablets' | 'pc-laptops';
-  userAgent?: string;     // Optional mobile UA
-}
-```
+### Why NOT Turborepo
 
-### 3. Screenshot Engine (`engine/`)
-**Responsibility**: Orchestrate browser automation and capture screenshots
+For a project this size (1 CLI + 2 web apps), Turborepo adds unnecessary complexity:
+- pnpm workspaces alone handle dependency management
+- Build caching is minimal benefit with 3 small packages
+- Additional configuration overhead
 
-**Sub-components**:
+If the project grows significantly (5+ packages), revisit Turborepo adoption.
 
-#### 3a. Browser Manager
-- Launch single Chromium instance (shared across all captures)
-- Create isolated browser contexts per device (parallel-safe)
-- Handle browser lifecycle (launch, health check, close)
+## Folder Organization
 
-#### 3b. Page Capturer
-- Navigate to target URL
-- Wait for network idle + configurable buffer (default 500ms)
-- Capture full-page screenshot
-- Handle timeout (default 30s max)
-- Return screenshot buffer + metadata
-
-#### 3c. Parallel Executor
-- Accept list of devices and capture function
-- Execute captures in parallel with concurrency limit (default: 10)
-- Collect results and errors
-- Report progress (for CLI feedback)
-
-### 4. Output Manager (`output/`)
-**Responsibility**: Organize screenshots and generate reports
-
-#### 4a. File Organizer
-- Create output directory structure: `output/{timestamp}/phones|tablets|pc-laptops/`
-- Save screenshots with descriptive filenames: `{device-name}-{width}x{height}.png`
-- Handle filesystem operations (mkdir, write)
-
-#### 4b. Report Generator
-- Generate single HTML file with embedded or linked images
-- Grid layout for quick visual scanning
-- Group by device category with collapsible sections
-- Include metadata: URL, timestamp, device count, duration
-- Self-contained (inline CSS, no external dependencies)
-
-### 5. Configuration Loader (`config/`)
-**Responsibility**: Merge CLI args with config file and defaults
-
-- Load optional `.responsiverc.json` or `responsive.config.js`
-- Merge priorities: CLI args > config file > defaults
-- Validate final configuration
-- Support custom device additions
-
----
-
-## Data Flow
+### Recommended Structure
 
 ```
-                                    [2. Device Registry]
-                                           |
-                                           | (device list)
-                                           v
-[User] --> [1. CLI Parser] --> [5. Config Loader] --> [3. Screenshot Engine]
-               |                                              |
-               | (args)                                       | (parallel captures)
-               v                                              v
-        { baseUrl,                                    [Browser Manager]
-          pagePath,                                          |
-          outputDir,                                         | (contexts)
-          ... }                                              v
-                                                      [Page Capturer] x N
-                                                             |
-                                                             | (screenshots + metadata)
-                                                             v
-                                                    [4. Output Manager]
-                                                             |
-                                        +--------------------+--------------------+
-                                        |                                         |
-                                        v                                         v
-                                 [File Organizer]                        [Report Generator]
-                                        |                                         |
-                                        v                                         v
-                              phones/tablet/pc-laptops/                    report.html
-                                   *.png files
-```
-
-### Sequence Flow
-
-1. **CLI invocation**: User runs `responsive-check <url> <path> [options]`
-2. **Argument parsing**: CLI Parser validates and structures input
-3. **Configuration merge**: Config Loader combines CLI + file + defaults
-4. **Device selection**: Device Registry provides filtered device list
-5. **Browser launch**: Browser Manager starts single Chromium instance
-6. **Parallel capture**: For each device (limited concurrency):
-   - Create browser context with device viewport
-   - Navigate to URL + path
-   - Wait for network idle + buffer
-   - Capture full-page screenshot
-   - Close context
-7. **Output organization**: File Organizer creates directories and saves PNGs
-8. **Report generation**: Report Generator creates HTML with all screenshots
-9. **Cleanup**: Browser Manager closes Chromium
-10. **Summary**: CLI displays results (count, duration, report path)
-
----
-
-## Build Order
-
-Based on dependencies, build components in this sequence:
-
-### Phase 1: Foundation (No dependencies)
-1. **Device Registry** - Pure data, no external dependencies
-   - Define device data structure
-   - Create initial 50+ device presets
-   - Implement category filtering
-
-2. **Configuration types** - TypeScript interfaces only
-   - Define all config interfaces
-   - Define result/error types
-
-### Phase 2: Core Engine (Depends on Phase 1)
-3. **Browser Manager** - Playwright wrapper
-   - Launch/close browser
-   - Create/destroy contexts
-   - Health check utilities
-
-4. **Page Capturer** - Uses Browser Manager
-   - Navigation with wait strategies
-   - Full-page screenshot capture
-   - Timeout handling
-
-### Phase 3: Orchestration (Depends on Phase 2)
-5. **Parallel Executor** - Uses Page Capturer
-   - Concurrency-limited execution
-   - Progress reporting
-   - Error collection
-
-6. **Screenshot Engine facade** - Combines 3a, 3b, 3c
-   - Single entry point for capture operations
-   - Coordinates browser lifecycle with captures
-
-### Phase 4: Output (Depends on Phase 3)
-7. **File Organizer** - Filesystem operations
-   - Directory creation
-   - Screenshot saving with naming convention
-
-8. **Report Generator** - HTML generation
-   - Template with embedded CSS
-   - Image grid layout
-   - Metadata display
-
-### Phase 5: Interface (Depends on all above)
-9. **Configuration Loader** - Merge logic
-   - File loading (JSON/JS config)
-   - Merge with defaults
-   - Validation
-
-10. **CLI Parser** - User interface
-    - Commander.js setup
-    - Argument definitions
-    - Help text
-    - Main execution flow
-
-### Phase 6: Integration
-11. **Main entry point** - Wire everything together
-    - CLI -> Config -> Engine -> Output
-    - Error handling
-    - Exit codes
-
----
-
-## File Structure
-
-```
-responsiveness-mcp/
-├── src/
-│   ├── cli/
-│   │   ├── index.ts           # CLI entry point, Commander setup
-│   │   ├── arguments.ts       # Argument definitions and parsing
-│   │   └── validators.ts      # URL and path validation
+screenie/
+├── apps/
+│   ├── web/                    # Landing page (screenie.xyz)
+│   │   ├── src/
+│   │   │   ├── pages/
+│   │   │   ├── components/
+│   │   │   ├── styles/
+│   │   │   └── assets/
+│   │   ├── public/
+│   │   ├── astro.config.mjs
+│   │   └── package.json
 │   │
-│   ├── config/
-│   │   ├── index.ts           # Configuration loader
-│   │   ├── defaults.ts        # Default configuration values
-│   │   ├── schema.ts          # Validation schema
-│   │   └── types.ts           # Configuration interfaces
-│   │
-│   ├── devices/
-│   │   ├── index.ts           # Device registry exports
-│   │   ├── registry.ts        # Device lookup and filtering
-│   │   ├── presets/
-│   │   │   ├── phones.ts      # Phone device definitions
-│   │   │   ├── tablets.ts     # Tablet device definitions
-│   │   │   └── pc-laptops.ts  # Desktop/laptop definitions
-│   │   └── types.ts           # Device interfaces
-│   │
-│   ├── engine/
-│   │   ├── index.ts           # Screenshot engine facade
-│   │   ├── browser.ts         # Browser manager (launch, context)
-│   │   ├── capturer.ts        # Page capture logic
-│   │   ├── executor.ts        # Parallel execution coordinator
-│   │   └── types.ts           # Engine interfaces
-│   │
-│   ├── output/
-│   │   ├── index.ts           # Output manager facade
-│   │   ├── organizer.ts       # File organization logic
-│   │   ├── reporter.ts        # HTML report generator
-│   │   ├── templates/
-│   │   │   └── report.html    # HTML template (or inline)
-│   │   └── types.ts           # Output interfaces
-│   │
-│   ├── utils/
-│   │   ├── logger.ts          # Console output utilities
-│   │   ├── progress.ts        # Progress bar/spinner
-│   │   └── timing.ts          # Duration formatting
-│   │
-│   ├── types/
-│   │   └── index.ts           # Shared type exports
-│   │
-│   └── index.ts               # Main entry, wires components
+│   └── docs/                   # Documentation (docs.screenie.xyz)
+│       ├── src/
+│       │   ├── content/
+│       │   │   └── docs/       # Markdown documentation
+│       │   └── assets/
+│       ├── astro.config.mjs
+│       └── package.json
 │
-├── bin/
-│   └── responsive-check.ts    # CLI executable entry
+├── packages/
+│   └── cli/                    # CLI package (moved from root)
+│       ├── src/
+│       │   ├── cli/
+│       │   ├── config/
+│       │   ├── devices/
+│       │   ├── engine/
+│       │   ├── output/
+│       │   ├── types/
+│       │   └── utils/
+│       ├── tests/
+│       ├── scripts/
+│       ├── package.json        # "name": "@screenie/cli" or "screenie"
+│       ├── tsconfig.json
+│       └── tsup.config.ts
 │
-├── tests/
-│   ├── unit/
-│   │   ├── devices/
-│   │   ├── config/
-│   │   └── output/
-│   └── integration/
-│       └── engine/
+├── .github/
+│   └── workflows/
+│       ├── ci.yml              # Test + lint on PR
+│       ├── release-cli.yml     # npm publish on tag
+│       └── deploy-web.yml      # Vercel preview on PR
 │
-├── package.json
-├── tsconfig.json
-├── .responsiverc.json.example # Example config file
+├── package.json                # Root workspace config
+├── pnpm-workspace.yaml
+├── turbo.json                  # Optional, can add later
 └── README.md
 ```
 
----
+### Key Decisions
 
-## Key Architectural Decisions
+**1. CLI moves to `packages/cli/`**
+- Keeps npm-publishable code separate from web apps
+- Root becomes workspace orchestrator only
+- Package name stays `screenie` or becomes `@screenie/cli`
 
-### Single Browser, Multiple Contexts
-- Launch ONE Chromium instance for all captures
-- Create isolated browser context per device (lightweight)
-- Contexts are independent, parallel-safe, share browser resources
-- Significantly faster than launching browser per device
+**2. Landing page in `apps/web/`**
+- Follows Turborepo convention (`web` not `landing` or `website`)
+- Contains marketing content, hero, features, pricing
+- Framework: Astro (see rationale below)
 
-### Parallel with Concurrency Limit
-- Default concurrency: 10 simultaneous captures
-- Prevents resource exhaustion on machines with limited RAM
-- Configurable via CLI flag for power users
-- Uses `p-limit` or similar for controlled parallelism
+**3. Docs in `apps/docs/`**
+- Separate Astro project with Starlight
+- Content-focused, can evolve independently
+- Markdown in `src/content/docs/`
 
-### Full-Page Screenshots
-- Capture entire scrollable page, not just viewport
-- Catches layout issues below the fold
-- Larger file sizes but complete coverage
-- Playwright handles scroll-stitching automatically
+### Root Configuration Files
 
-### Self-Contained HTML Report
-- Single file output, no external dependencies
-- Inline CSS, images as data URLs or relative paths
-- Can be shared/archived easily
-- Opens directly in any browser
+**pnpm-workspace.yaml:**
+```yaml
+packages:
+  - 'apps/*'
+  - 'packages/*'
+```
 
-### Typed Throughout
-- TypeScript for all components
-- Strict mode enabled
-- Interfaces define component contracts
-- Makes refactoring safe, enables IDE support
+**Root package.json:**
+```json
+{
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r dev",
+    "dev:web": "pnpm --filter @screenie/web dev",
+    "dev:docs": "pnpm --filter @screenie/docs dev",
+    "dev:cli": "pnpm --filter screenie dev",
+    "build": "pnpm -r build",
+    "test": "pnpm --filter screenie test",
+    "lint": "pnpm -r lint"
+  },
+  "devDependencies": {
+    "pnpm": "^9.0.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
+```
 
----
+## Domain Configuration
 
-## External Dependencies
+### Deployment Targets
 
-| Package | Purpose | Why This One |
-|---------|---------|--------------|
-| `playwright` | Browser automation | Best device emulation, built-in Chrome, active maintenance |
-| `commander` | CLI parsing | Industry standard, excellent TypeScript support |
-| `p-limit` | Concurrency control | Simple, lightweight, well-tested |
-| `ora` | Progress spinner | Clean CLI feedback during captures |
-| `chalk` | Terminal colors | Readable CLI output |
+| Domain | App | Purpose |
+|--------|-----|---------|
+| screenie.xyz | `apps/web` | Landing page |
+| docs.screenie.xyz | `apps/docs` | Documentation |
+| npmjs.com/package/screenie | `packages/cli` | npm package |
 
----
+### Vercel Setup (Recommended)
 
-## Performance Considerations
+Create **two Vercel projects** from the same repository:
 
-### Target: 50+ screenshots in under 60 seconds
+**Project 1: screenie-web**
+- Root directory: `apps/web`
+- Domain: screenie.xyz
+- Build command: `pnpm build` (or auto-detected)
+- Output: `dist/`
 
-**Strategies**:
-1. Single browser launch (~2s) vs per-device (~100s for 50 devices)
-2. Parallel context creation (10 concurrent = 5 batches for 50 devices)
-3. Network idle wait prevents premature captures
-4. Reuse page within context where possible
-5. PNG compression balance (quality vs file size)
+**Project 2: screenie-docs**
+- Root directory: `apps/docs`
+- Domain: docs.screenie.xyz
+- Build command: `pnpm build`
+- Output: `dist/`
 
-**Bottlenecks to watch**:
-- Initial browser launch (cold start)
-- Slow-loading pages (network bound)
-- Large full-page screenshots (memory bound)
-- Filesystem writes (I/O bound, mitigated by parallel)
+**vercel.json in each app:**
+```json
+{
+  "buildCommand": "cd ../.. && pnpm install && pnpm --filter @screenie/web build",
+  "outputDirectory": "dist"
+}
+```
+
+### DNS Configuration
+
+```
+screenie.xyz          A      76.76.21.21 (Vercel)
+www.screenie.xyz      CNAME  cname.vercel-dns.com
+docs.screenie.xyz     CNAME  cname.vercel-dns.com
+```
+
+### Alternative: Netlify
+
+Same approach works with Netlify:
+- Create two sites from same repo
+- Set base directory per site
+- Add custom domains
+
+## Deployment Strategy
+
+### CI/CD Pipeline Overview
+
+```
+                    ┌─────────────────┐
+                    │   GitHub Push   │
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+              ▼              ▼              ▼
+        ┌─────────┐    ┌─────────┐    ┌─────────┐
+        │ PR/Push │    │   Tag   │    │ PR/Push │
+        │ to main │    │  v*.*.* │    │ to main │
+        └────┬────┘    └────┬────┘    └────┬────┘
+             │              │              │
+             ▼              ▼              ▼
+        ┌─────────┐    ┌─────────┐    ┌─────────┐
+        │ Vercel  │    │   npm   │    │ Vercel  │
+        │  Web    │    │ publish │    │  Docs   │
+        └─────────┘    └─────────┘    └─────────┘
+```
+
+### Trigger Conditions
+
+| Trigger | Action | Affected |
+|---------|--------|----------|
+| Push to `main` | Vercel auto-deploy | web, docs |
+| PR opened | Vercel preview deploy | web, docs |
+| Tag `v*.*.*` | npm publish | cli |
+| PR (any) | CI tests | cli |
+
+### GitHub Actions Workflows
+
+**1. CI (`.github/workflows/ci.yml`):**
+```yaml
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm --filter screenie test
+      - run: pnpm --filter screenie build
+```
+
+**2. Release CLI (`.github/workflows/release.yml`):**
+```yaml
+name: Release CLI
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+      - run: pnpm install
+      - run: pnpm --filter screenie build
+      - run: pnpm --filter screenie publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+**3. Vercel handles web deploys automatically** (no workflow needed)
+
+### Vercel Integration Benefits
+
+- Automatic preview deploys on PRs
+- Automatic production deploys on merge to main
+- Per-app deployments (only changed app rebuilds)
+- Built-in analytics and performance monitoring
+
+## Build Order
+
+### Development Workflow
+
+```bash
+# From repository root
+
+# 1. Install all dependencies
+pnpm install
+
+# 2. Run everything in parallel
+pnpm dev
+
+# Or run individually:
+pnpm dev:cli   # CLI development (tsx watch)
+pnpm dev:web   # Landing page (Astro dev server)
+pnpm dev:docs  # Docs site (Astro dev server)
+```
+
+### Production Build Order
+
+No strict order required - builds are independent:
+
+```bash
+# All packages build in parallel
+pnpm build
+
+# Or sequential for debugging:
+pnpm --filter screenie build        # 1. CLI
+pnpm --filter @screenie/web build   # 2. Landing page
+pnpm --filter @screenie/docs build  # 3. Docs
+```
+
+### Release Sequence
+
+1. **Develop** - Feature branches, PR reviews
+2. **Merge** - PR merged to main
+3. **Web auto-deploys** - Vercel builds web + docs
+4. **Tag for CLI** - `git tag v1.2.3 && git push --tags`
+5. **npm publish** - GitHub Action publishes to npm
+
+## Technology Recommendations
+
+### Landing Page: Astro
+
+**Why Astro:**
+- Zero JavaScript by default (fastest possible landing page)
+- Component islands for interactive sections
+- Can use React/Vue/Svelte components if needed
+- Excellent image optimization
+- Native Vercel deployment support
+
+**Alternative considered:** Next.js
+- Overkill for a landing page
+- Heavier runtime
+- More complex for static content
+
+### Documentation: Astro Starlight
+
+**Why Starlight:**
+- Built on Astro (consistent tooling)
+- Beautiful default theme
+- Built-in search (Pagefind)
+- i18n support out of the box
+- Sidebar auto-generation from file structure
+- Used by Cloudflare, OpenAI, Netlify
+
+**Alternative considered:** VitePress
+- Vue-based (inconsistent with landing page)
+- Requires Vue knowledge for customization
+- Starlight has caught up on features
+
+### Shared Assets Pattern
+
+```
+packages/
+  └── shared/                   # Optional: shared assets
+      ├── assets/
+      │   ├── logo.svg
+      │   └── og-image.png
+      └── package.json
+```
+
+Apps import from shared:
+```typescript
+import logo from '@screenie/shared/assets/logo.svg';
+```
+
+This is optional for a small project - can also just copy assets.
+
+## Migration Path
+
+### Phase 1: Restructure Repository
+
+1. Create `packages/cli/` directory
+2. Move all CLI files into `packages/cli/`
+3. Update paths in package.json, tsconfig.json
+4. Add root pnpm-workspace.yaml
+5. Test CLI still builds and runs
+
+### Phase 2: Add Landing Page
+
+1. Create `apps/web/` with Astro
+2. Build landing page content
+3. Configure Vercel project for `apps/web`
+4. Deploy to screenie.xyz
+
+### Phase 3: Add Documentation
+
+1. Create `apps/docs/` with Astro Starlight
+2. Write initial documentation
+3. Configure Vercel project for `apps/docs`
+4. Deploy to docs.screenie.xyz
+
+### Phase 4: CI/CD
+
+1. Add GitHub Actions for CLI testing
+2. Add npm publish workflow
+3. Verify Vercel auto-deploys work
+4. Test full release cycle
+
+## Anti-Patterns to Avoid
+
+### 1. Single Astro Project for Both
+
+**Don't:** Put landing page and docs in same Astro project with path-based routing.
+
+**Why:** Starlight takes over the entire project. Path hacks (`src/content/docs/docs/`) are fragile and break on upgrades.
+
+### 2. Docs in npm Package
+
+**Don't:** Include documentation site source in the CLI package.
+
+**Why:** Bloats npm package size. Users installing `screenie` get Astro dependencies.
+
+### 3. Separate Repositories
+
+**Don't:** Create screenie-docs or screenie-web repos.
+
+**Why:** Version drift, harder to keep examples in sync with CLI, more repos to maintain.
+
+### 4. Overly Complex Tooling
+
+**Don't:** Add Turborepo, Nx, or Lerna for 3 packages.
+
+**Why:** pnpm workspaces handle this scale perfectly. Add complexity only when needed.
+
+## Sources
+
+### Primary Sources (HIGH Confidence)
+- [Turborepo: Structuring a Repository](https://turborepo.dev/docs/crafting-your-repository/structuring-a-repository)
+- [Vercel: Using Monorepos](https://vercel.com/docs/monorepos)
+- [pnpm Workspaces](https://pnpm.io/workspaces)
+- [Astro Starlight](https://starlight.astro.build/)
+- [Astro: Deploy to Vercel](https://docs.astro.build/en/guides/deploy/vercel/)
+
+### Community Patterns (MEDIUM Confidence)
+- [Corsfix: Multiple Astro Projects One Domain](https://corsfix.com/blog/multiple-astro-projects-one-domain)
+- [Starlight Subdomain Discussion](https://github.com/withastro/starlight/discussions/1560)
+- [Deploy Monorepo to Subdomains on Vercel](https://dev.to/jdtjenkins/how-to-deploy-a-monorepo-to-different-subdomains-on-vercel-2chn)
+
+### Ecosystem Research (MEDIUM Confidence)
+- [monorepo.tools](https://monorepo.tools/)
+- [Feature-Sliced Design: Monorepo Guide](https://feature-sliced.design/blog/frontend-monorepo-explained)
+- [VitePress vs Astro Starlight Comparison](https://dev.to/kevinbism/coding-the-perfect-documentation-deciding-between-vitepress-and-astro-starlight-2i11)

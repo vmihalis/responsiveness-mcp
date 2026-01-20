@@ -1,361 +1,549 @@
-# Stack Research
+# Stack Research: Screenie v2.0 Open Source Release
 
-## Project Context
-Building a CLI tool for responsive screenshot capture:
-- Takes URL + page path as input
-- Captures full-page screenshots at 50+ device dimensions
-- Organizes into phones/tablets/pc-laptops folders
-- Generates HTML report for quick review
-- Runs in parallel for speed
-- Uses Chrome/Chromium
+**Project:** screenie (responsive screenshot CLI)
+**Researched:** 2026-01-20
+**Scope:** Landing page, documentation site, npm publishing, hosting
 
 ---
 
-## Recommended Stack
+## Landing Page
 
-### Runtime & Language
-| Component | Choice | Version | Rationale |
-|-----------|--------|---------|-----------|
-| Runtime | **Node.js** | 20 LTS or 22 LTS | Native async/await, excellent Playwright support, fast startup |
-| Language | **TypeScript** | ^5.4 | Type safety for device configs, better IDE support, catches errors early |
+### Recommendation: Single HTML + CSS (No Framework)
 
-**Confidence: HIGH**
+**Why:** For a CLI tool landing page, a framework adds unnecessary complexity. You need:
+- Hero section with tagline
+- Demo GIF/video
+- Installation command (`npm install -g screenie`)
+- Links to docs and GitHub
 
----
+This is achievable with ~200 lines of HTML and ~150 lines of CSS.
 
-### Browser Automation
-| Component | Choice | Version | Rationale |
-|-----------|--------|---------|-----------|
-| Automation | **Playwright** | ^1.51 | Industry standard 2025, built-in device registry, native parallel contexts |
-
-**Why Playwright over Puppeteer:**
-1. **Built-in device registry** - `playwright.devices` has 100+ predefined phone/tablet/desktop configs (iPhone 15, Pixel 7, iPad, etc.)
-2. **Native parallel browser contexts** - Isolated contexts share browser instance, 3-5x faster than spawning browsers
-3. **Better full-page screenshots** - Handles lazy-loaded content, sticky headers, infinite scroll
-4. **Auto-wait mechanisms** - No manual `waitForNetworkIdle` tuning needed
-5. **Single API for Chromium/Firefox/WebKit** - Future flexibility
-6. **Active Microsoft backing** - Frequent updates, better long-term support
-
-```typescript
-// Playwright's killer feature for this project
-import { chromium, devices } from 'playwright';
-
-const iPhone15 = devices['iPhone 15 Pro'];
-const context = await browser.newContext({ ...iPhone15 });
-await page.screenshot({ fullPage: true });
+**Approach:**
+```
+landing/
+  index.html      # Single HTML file
+  style.css       # Vanilla CSS (flexbox/grid)
+  demo.gif        # Generated with VHS
+  favicon.svg     # Simple icon
 ```
 
-**Confidence: HIGH**
+**Rationale:**
+- Zero build step - just deploy the directory
+- Fast iteration - edit and refresh
+- No dependencies to maintain
+- Loads instantly (no JS framework overhead)
+- Perfect for a developer-focused CLI tool
+
+**Alternatives Considered:**
+
+| Option | Verdict | Why Not |
+|--------|---------|---------|
+| Astro | Overkill | Single page doesn't need component system |
+| Next.js | Wrong tool | SSR/React for static landing is overhead |
+| Tailwind CSS | Acceptable | Adds build step; vanilla CSS sufficient for single page |
+
+**Confidence:** HIGH - This is standard practice for CLI tool landing pages (see: esbuild.github.io, bun.sh patterns)
 
 ---
 
-### CLI Framework
-| Component | Choice | Version | Rationale |
-|-----------|--------|---------|-----------|
-| CLI Parser | **Commander.js** | ^12.0 | Most popular, excellent TypeScript support, simple API |
+## Documentation Site
 
-**Why Commander over Yargs:**
-1. Cleaner, more intuitive API for simple CLIs
-2. Better TypeScript inference out of the box
-3. Lighter weight (this isn't a complex multi-command CLI)
-4. More straightforward subcommand handling
+### Recommendation: VitePress 1.6.4 (Stable)
 
-```typescript
-import { program } from 'commander';
+**Version:** Use stable 1.6.x, not 2.0 alpha
 
-program
-  .argument('<url>', 'Base URL to capture')
-  .option('-p, --pages <paths...>', 'Page paths to capture', ['/'])
-  .option('-o, --output <dir>', 'Output directory', './screenshots')
-  .option('-c, --concurrency <num>', 'Parallel captures', '4')
-  .parse();
+**Why VitePress:**
+1. **Perfect fit for CLI docs:** Designed for technical documentation
+2. **Vite-powered:** Sub-second hot reload during writing
+3. **Vue ecosystem:** Same author (Evan You), battle-tested
+4. **Zero-config default:** Works out of the box with sensible defaults
+5. **Used by:** Vue, Vite, Vitest, Pinia, VueUse - proven at scale
+
+**Installation:**
+```bash
+# Create docs directory
+mkdir docs && cd docs
+
+# Initialize VitePress
+npm add -D vitepress@^1.6.4
+
+# Setup wizard
+npx vitepress init
 ```
 
-**Confidence: HIGH**
-
----
-
-### Parallel Processing
-| Component | Choice | Version | Rationale |
-|-----------|--------|---------|-----------|
-| Concurrency | **p-limit** | ^6.0 | Battle-tested, simple API, handles backpressure |
-
-**Why p-limit:**
-1. Minimal API - just wrap async functions
-2. Handles memory pressure from 50+ concurrent screenshots
-3. 1.2KB gzipped - no bloat
-4. Works perfectly with Promise.all patterns
-
-```typescript
-import pLimit from 'p-limit';
-
-const limit = pLimit(4); // 4 concurrent screenshots
-const tasks = devices.map(device =>
-  limit(() => captureScreenshot(url, device))
-);
-await Promise.all(tasks);
+**Project Structure:**
+```
+docs/
+  .vitepress/
+    config.mts           # Site configuration
+    theme/
+      index.ts           # Custom theme (optional)
+  index.md               # Home page
+  guide/
+    getting-started.md
+    installation.md
+    configuration.md
+  api/
+    cli-reference.md
+    config-file.md
+  public/
+    logo.svg
 ```
 
-**Alternative considered:** `p-queue` - More features but overkill for this use case.
-
-**Confidence: HIGH**
-
----
-
-### Build & Development
-| Component | Choice | Version | Rationale |
-|-----------|--------|---------|-----------|
-| Bundler | **tsup** | ^8.0 | Zero-config TypeScript bundling, esbuild under hood |
-| Dev Runner | **tsx** | ^4.0 | Fast TypeScript execution without build step |
-
-**Why tsup:**
-1. Zero config for CLI tools - just works
-2. Generates `.d.ts` files automatically
-3. ESM + CJS dual output if needed
-4. Tree-shaking built-in
-5. 10-50x faster than tsc
-
+**Configuration (docs/.vitepress/config.mts):**
 ```typescript
-// tsup.config.ts
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  entry: ['src/cli.ts'],
-  format: ['esm'],
-  dts: true,
-  clean: true,
-  target: 'node20',
-  shims: true,
-});
+  title: 'Screenie',
+  description: 'Responsive screenshot CLI',
+  base: '/',
+
+  themeConfig: {
+    logo: '/logo.svg',
+    nav: [
+      { text: 'Guide', link: '/guide/getting-started' },
+      { text: 'API', link: '/api/cli-reference' }
+    ],
+    sidebar: {
+      '/guide/': [
+        { text: 'Getting Started', link: '/guide/getting-started' },
+        { text: 'Installation', link: '/guide/installation' },
+        { text: 'Configuration', link: '/guide/configuration' }
+      ]
+    },
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/memehalis/screenie' }
+    ],
+    footer: {
+      message: 'Released under the MIT License.'
+    }
+  }
+})
 ```
 
-**Confidence: HIGH**
-
----
-
-### HTML Report Generation
-| Component | Choice | Version | Rationale |
-|-----------|--------|---------|-----------|
-| Templating | **Custom (no deps)** | N/A | Simple HTML string templates, no external dependency needed |
-
-**Rationale:** For a screenshot gallery report, we don't need a full templating engine. A simple TypeScript function generating HTML strings is:
-1. Zero dependencies
-2. Type-safe
-3. Fast to render
-4. Easy to customize
-
-```typescript
-function generateReport(screenshots: Screenshot[]): string {
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <title>Responsive Screenshots</title>
-  <style>
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-    .device-group { margin: 2rem 0; }
-    img { max-width: 100%; border: 1px solid #ddd; }
-  </style>
-</head>
-<body>
-  ${screenshots.map(s => `<img src="${s.path}" alt="${s.device}">`).join('\n')}
-</body>
-</html>`;
-}
-```
-
-**Alternative considered:** `ejs`, `handlebars` - Unnecessary complexity for static HTML generation.
-
-**Confidence: HIGH**
-
----
-
-### File System & Utilities
-| Component | Choice | Version | Rationale |
-|-----------|--------|---------|-----------|
-| FS Operations | **Node.js fs/promises** | Built-in | Native, async, no deps |
-| Path Handling | **Node.js path** | Built-in | Cross-platform path handling |
-| Progress Display | **ora** | ^8.0 | Beautiful spinners, minimal API |
-| Colors | **picocolors** | ^1.0 | Fastest, smallest terminal colors |
-
-**Confidence: HIGH**
-
----
-
-### Device Definitions Strategy
-
-**Use Playwright's built-in registry + custom additions:**
-
-```typescript
-import { devices } from 'playwright';
-
-// Playwright provides 100+ devices. Cherry-pick relevant ones:
-const PHONE_DEVICES = [
-  'iPhone 15 Pro',
-  'iPhone 15 Pro Max',
-  'iPhone 14',
-  'iPhone SE',
-  'Pixel 7',
-  'Pixel 5',
-  'Galaxy S23',
-  'Galaxy S21',
-];
-
-const TABLET_DEVICES = [
-  'iPad Pro 11',
-  'iPad Mini',
-  'Galaxy Tab S8',
-];
-
-const DESKTOP_VIEWPORTS = [
-  { name: 'Desktop 1080p', viewport: { width: 1920, height: 1080 } },
-  { name: 'Desktop 1440p', viewport: { width: 2560, height: 1440 } },
-  { name: 'Laptop', viewport: { width: 1366, height: 768 } },
-  { name: 'MacBook Pro 14', viewport: { width: 1512, height: 982 } },
-];
-```
-
-**Confidence: HIGH**
-
----
-
-## Complete package.json
-
+**Build Commands (add to package.json):**
 ```json
 {
-  "name": "responsiveness-mcp",
-  "version": "1.0.0",
-  "type": "module",
-  "bin": {
-    "responsive-capture": "./dist/cli.js"
-  },
   "scripts": {
-    "dev": "tsx src/cli.ts",
-    "build": "tsup",
-    "postinstall": "playwright install chromium"
-  },
-  "dependencies": {
-    "playwright": "^1.51.0",
-    "commander": "^12.0.0",
-    "p-limit": "^6.0.0",
-    "ora": "^8.0.0",
-    "picocolors": "^1.0.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.4.0",
-    "tsup": "^8.0.0",
-    "tsx": "^4.0.0",
-    "@types/node": "^20.0.0"
-  },
-  "engines": {
-    "node": ">=20"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   }
 }
 ```
 
----
+**Requirements:**
+- Node.js 18+
+- `"type": "module"` in package.json (already present)
 
-## Alternatives Considered
+**Alternatives Considered:**
 
-### Browser Automation
+| Option | Verdict | Why Not |
+|--------|---------|---------|
+| Docusaurus | Good but heavier | React-based, more complex config |
+| Nextra | Next.js lock-in | Overkill for static docs |
+| MkDocs | Python ecosystem | Different language than project |
+| GitBook | Commercial limits | Free tier has restrictions |
 
-| Library | Why Not Chosen |
-|---------|----------------|
-| **Puppeteer** | No built-in device registry, weaker parallel context support, Chrome-only focus |
-| **Selenium** | Heavy, slow, requires separate driver management |
-| **Cypress** | Testing-focused, not designed for screenshot automation |
-| **capture-website** | Wrapper around Puppeteer, less control |
+**Confidence:** HIGH - VitePress is the standard for JS/TS project documentation
 
-### CLI Frameworks
-
-| Library | Why Not Chosen |
-|---------|----------------|
-| **Yargs** | More complex API, heavier, better for complex multi-command CLIs |
-| **oclif** | Enterprise-grade, massive overkill for single-purpose CLI |
-| **cac** | Less popular, smaller ecosystem |
-| **meow** | Too minimal, missing features we need |
-
-### Concurrency
-
-| Library | Why Not Chosen |
-|---------|----------------|
-| **p-queue** | More features than needed (priority, rate limiting) |
-| **bottleneck** | Designed for rate limiting, not just concurrency |
-| **async.parallelLimit** | Callback-based legacy API |
-| **worker_threads** | Overkill - Playwright handles parallelism internally |
-
-### Build Tools
-
-| Tool | Why Not Chosen |
-|------|----------------|
-| **esbuild (direct)** | No TypeScript declaration generation, manual config |
-| **Rollup** | More config, slower, designed for libraries |
-| **Vite** | Designed for web apps, not CLI tools |
-| **tsc** | 10-50x slower, no bundling |
-| **swc** | Good but tsup already uses esbuild effectively |
+**Sources:**
+- [VitePress Official](https://vitepress.dev/)
+- [VitePress Getting Started](https://vitepress.dev/guide/getting-started)
+- [VitePress npm](https://www.npmjs.com/package/vitepress)
 
 ---
 
-## What to Avoid
+## npm Publishing
 
-### Libraries to Skip
+### Required package.json Updates
 
-| Library | Reason |
-|---------|--------|
-| **puppeteer-extra** | Stealth plugins irrelevant for screenshot capture |
-| **nightmare.js** | Deprecated, unmaintained |
-| **phantomjs** | Dead project |
-| **html-pdf** | Different use case (HTML to PDF, not screenshots) |
-| **node-html-to-image** | Uses Puppeteer internally, less control |
-| **any templating engine** | Overkill for simple HTML report |
+Current package.json needs updates for public npm publishing:
 
-### Patterns to Avoid
-
-1. **Spawning new browser per screenshot** - Use browser contexts instead (10x faster)
-2. **Sequential screenshot capture** - Always use controlled concurrency
-3. **Hardcoded device dimensions** - Use Playwright's device registry
-4. **waitForTimeout() delays** - Use proper waitForLoadState/waitForNetworkIdle
-5. **Synchronous file operations** - Always use fs/promises
-6. **Custom viewport calculations** - Trust Playwright's device descriptors
-
-### Architecture Anti-patterns
-
-1. **Worker threads for parallelism** - Playwright browser contexts handle this better
-2. **Microservices approach** - This is a simple CLI tool, keep it monolithic
-3. **Configuration file complexity** - CLI args + sensible defaults are sufficient
-4. **Plugin architecture** - Unnecessary complexity for focused tool
-
----
-
-## Confidence Levels Summary
-
-| Component | Confidence | Notes |
-|-----------|------------|-------|
-| Node.js 20+ | HIGH | Industry standard, LTS support |
-| TypeScript 5.4+ | HIGH | Essential for maintainability |
-| Playwright 1.51+ | HIGH | Clear winner over Puppeteer for this use case |
-| Commander 12+ | HIGH | Simple, well-documented, TypeScript-first |
-| p-limit 6+ | HIGH | Battle-tested, minimal API |
-| tsup 8+ | HIGH | Best TypeScript CLI bundler |
-| tsx 4+ | HIGH | Best dev experience |
-| ora + picocolors | HIGH | Standard CLI UX tools |
-| Custom HTML templates | HIGH | No deps needed for simple gallery |
-
----
-
-## Architecture Overview
-
+**1. Rename Package**
+```json
+{
+  "name": "screenie",
+  "version": "2.0.0"
+}
 ```
-src/
-  cli.ts              # Entry point, Commander setup
-  capture.ts          # Core screenshot capture logic
-  devices.ts          # Device configuration registry
-  report.ts           # HTML report generator
-  types.ts            # TypeScript interfaces
-  utils/
-    fs.ts             # File system helpers
-    progress.ts       # Progress display (ora wrapper)
+Note: Check `npm view screenie` to verify name availability.
+
+**2. Update bin Field**
+```json
+{
+  "bin": {
+    "screenie": "./dist/cli.js"
+  }
+}
 ```
 
-**Estimated dependencies: 5 runtime, 4 dev**
-**Estimated bundle size: ~2MB (mostly Playwright)**
-**Browser download: ~150MB (Chromium, one-time on install)**
+**3. Add exports Field (Modern Resolution)**
+```json
+{
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js"
+    }
+  }
+}
+```
+
+**4. Add files Field (Control Published Files)**
+```json
+{
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}
+```
+
+**5. Add Repository/Homepage/Bugs**
+```json
+{
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/memehalis/screenie.git"
+  },
+  "homepage": "https://screenie.xyz",
+  "bugs": {
+    "url": "https://github.com/memehalis/screenie/issues"
+  }
+}
+```
+
+**6. Update Keywords**
+```json
+{
+  "keywords": [
+    "screenshot",
+    "responsive",
+    "playwright",
+    "cli",
+    "design",
+    "testing",
+    "viewport",
+    "mobile",
+    "desktop",
+    "web"
+  ]
+}
+```
+
+**7. Add publishConfig (Optional - For Scoped)**
+```json
+{
+  "publishConfig": {
+    "access": "public"
+  }
+}
+```
+
+### Complete Updated package.json
+
+```json
+{
+  "name": "screenie",
+  "version": "2.0.0",
+  "description": "Capture responsive screenshots across devices with a single command",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "screenie": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "tsx src/cli/index.ts",
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm run test",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/memehalis/screenie.git"
+  },
+  "homepage": "https://screenie.xyz",
+  "bugs": {
+    "url": "https://github.com/memehalis/screenie/issues"
+  },
+  "keywords": [
+    "screenshot",
+    "responsive",
+    "playwright",
+    "cli",
+    "design",
+    "testing",
+    "viewport",
+    "mobile",
+    "desktop"
+  ],
+  "author": "memehalis",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "open": "^11.0.0",
+    "ora": "^8.0.0",
+    "p-limit": "^6.0.0",
+    "picocolors": "^1.0.0",
+    "playwright": "^1.51.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "execa": "^9.6.1",
+    "strip-ansi": "^7.1.2",
+    "tsup": "^8.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vitepress": "^1.6.4",
+    "vitest": "^2.0.0"
+  }
+}
+```
+
+### Pre-Publish Checklist
+
+Before `npm publish`:
+
+1. **Verify name availability:**
+   ```bash
+   npm view screenie
+   ```
+
+2. **Test package locally:**
+   ```bash
+   npm pack --dry-run  # See what will be published
+   npm pack            # Create tarball
+   npm install -g ./screenie-2.0.0.tgz  # Test installation
+   ```
+
+3. **Verify shebang in CLI entry:**
+   ```javascript
+   #!/usr/bin/env node
+   // First line of dist/cli.js
+   ```
+
+4. **Login to npm:**
+   ```bash
+   npm login
+   npm whoami  # Verify logged in
+   ```
+
+5. **Publish:**
+   ```bash
+   npm publish
+   ```
+
+**Confidence:** HIGH - Based on Node.js official documentation and npm best practices
+
+**Sources:**
+- [Node.js Packages Documentation](https://nodejs.org/api/packages.html)
+- [npm package.json fields](https://docs.npmjs.com/cli/v9/configuring-npm/package-json/)
+- [Guide to package.json exports](https://hirok.io/posts/package-json-exports)
+
+---
+
+## Hosting
+
+### Recommendation: Netlify
+
+**Why Netlify over Vercel for this project:**
+
+| Criteria | Netlify | Vercel |
+|----------|---------|--------|
+| VitePress support | Excellent (official Vite partner) | Good |
+| Free tier | More generous | Restricts commercial use |
+| Static sites | Purpose-built | Optimized for Next.js |
+| Build plugins | Rich ecosystem | Fewer for static |
+| Simplicity | Connect git, auto-deploys | Similar |
+| Custom domains | Easy setup | Easy setup |
+
+**Deployment Architecture:**
+
+```
+screenie.xyz          → Landing page (Netlify)
+docs.screenie.xyz     → VitePress docs (Netlify)
+```
+
+**Setup for Landing Page:**
+```bash
+# From landing/ directory
+netlify init
+# Build command: (none)
+# Publish directory: .
+```
+
+**Setup for Docs:**
+```bash
+# From docs/ directory
+netlify init
+# Build command: npm run docs:build
+# Publish directory: docs/.vitepress/dist
+```
+
+**Alternative: Single Site with Redirects**
+
+Both landing and docs on one Netlify site:
+```
+project/
+  landing/           # Static HTML
+  docs/              # VitePress
+  netlify.toml       # Routing config
+```
+
+**netlify.toml:**
+```toml
+[build]
+  command = "npm run docs:build"
+  publish = "docs/.vitepress/dist"
+
+[[redirects]]
+  from = "/"
+  to = "/landing/index.html"
+  status = 200
+```
+
+**Confidence:** MEDIUM-HIGH - Both platforms work well; Netlify slightly better fit for static docs
+
+**Sources:**
+- [Netlify Vite Documentation](https://docs.netlify.com/build/frameworks/framework-setup-guides/vite/)
+- [Northflank Vercel vs Netlify 2026](https://northflank.com/blog/vercel-vs-netlify-choosing-the-deployment-platform-in-2025)
+- [Netlify Official Vite Partnership](https://www.netlify.com/blog/vite-plugin-netlify-official-deployment-partner/)
+
+---
+
+## Demo Asset Creation
+
+### Recommendation: VHS (by Charmbracelet)
+
+**Why VHS:**
+1. **Scriptable:** Write `.tape` files that define exactly what to type
+2. **Reproducible:** Re-render demos without re-recording
+3. **High quality:** Better frame rates than alternatives
+4. **Multiple formats:** GIF, MP4, WebM output
+
+**Installation (Arch Linux):**
+```bash
+pacman -S vhs
+# VHS requires ttyd and ffmpeg (usually auto-installed as deps)
+```
+
+**Create Demo Script (demo.tape):**
+```tape
+# demo.tape - Screenie demo
+Output demo.gif
+Output demo.mp4
+
+Set Shell "bash"
+Set FontSize 18
+Set Width 1200
+Set Height 600
+Set Theme "Dracula"
+
+Type "screenie https://example.com"
+Sleep 500ms
+Enter
+Sleep 8s
+
+Type "screenie https://example.com --devices iphone-14,pixel-7,desktop"
+Sleep 500ms
+Enter
+Sleep 10s
+```
+
+**Generate Demo:**
+```bash
+vhs demo.tape
+# Outputs: demo.gif, demo.mp4
+```
+
+**Alternative: asciinema + agg**
+
+For embedding on docs (interactive player):
+```bash
+# Record
+asciinema rec demo.cast
+
+# Convert to GIF
+agg demo.cast demo.gif
+```
+
+**Recommendation:**
+- **Landing page:** Use VHS-generated GIF (auto-plays, no interaction needed)
+- **Documentation:** Consider asciinema embeds (users can pause, copy commands)
+
+**Confidence:** HIGH - VHS is the standard for CLI demo GIFs
+
+**Sources:**
+- [VHS GitHub](https://github.com/charmbracelet/vhs)
+- [asciinema](https://docs.asciinema.org/getting-started/)
+- [agg (asciinema gif generator)](https://docs.asciinema.org/manual/agg/)
+
+---
+
+## Stack Summary Table
+
+| Component | Choice | Version | Rationale |
+|-----------|--------|---------|-----------|
+| Landing Page | Vanilla HTML/CSS | N/A | Zero deps, instant load, appropriate for single page |
+| Documentation | VitePress | ^1.6.4 | Vite-powered, Vue ecosystem, perfect for tech docs |
+| npm Publishing | Standard exports | N/A | Modern package resolution with types |
+| Hosting | Netlify | N/A | Official Vite partner, generous free tier, static-focused |
+| Demo GIFs | VHS | latest | Scriptable, reproducible, high quality output |
+
+---
+
+## Implementation Order
+
+1. **npm Package Prep** - Update package.json, test local install
+2. **Demo Creation** - Record with VHS before launch
+3. **Landing Page** - Build with demo GIF embedded
+4. **Documentation** - Set up VitePress, write initial docs
+5. **Hosting** - Deploy landing to screenie.xyz, docs to docs.screenie.xyz
+6. **Publish** - npm publish after everything is live
+
+---
+
+## Open Questions
+
+1. **Package name availability:** Verify `screenie` is available on npm
+2. **Domain registration:** Confirm screenie.xyz is available/owned
+3. **postinstall script:** Keep `playwright install chromium` or document separately?
+4. **Peer dependencies:** Should playwright be a peer dep instead of direct dep?
+
+---
+
+## Confidence Assessment
+
+| Area | Confidence | Notes |
+|------|------------|-------|
+| VitePress | HIGH | Official docs, used by major projects |
+| npm Publishing | HIGH | Node.js official documentation |
+| Hosting (Netlify) | MEDIUM-HIGH | Both platforms viable; Netlify better static fit |
+| Landing (vanilla) | HIGH | Standard practice for CLI tools |
+| VHS | HIGH | De facto standard for CLI demos |

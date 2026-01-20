@@ -1,196 +1,216 @@
 # Features Research
 
-## Table Stakes
-
-These are must-have features that users expect. Without these, the tool will be rejected immediately.
-
-### Core Screenshot Functionality
-- **Full-page screenshot capture** - Capture entire scrollable pages, not just viewport. Every competitor (pageres-cli, snaprocket, Playwright) supports this.
-- **Multiple viewport/resolution support** - Must support capturing at multiple screen sizes in one run. Users expect at minimum: mobile (375px), tablet (768px), desktop (1280px+).
-- **Parallel execution** - Capturing 50+ screenshots sequentially is unacceptably slow. pageres-cli generates 100 screenshots from 10 sites in ~1 minute through parallelization.
-- **Configurable output directory** - Users need control over where screenshots are saved.
-- **Clear, predictable file naming** - Screenshots must have names that indicate URL/path + viewport size. Example: `homepage-1280x800.png`
-
-### Device Presets
-- **Pre-built device profiles** - Common device dimensions out of the box (iPhone, iPad, Android phones, common desktop resolutions). Responsively App ships with 30+ built-in profiles. Apify's tool advertises 30+ device presets.
-- **Custom viewport dimensions** - Allow user-defined widths/heights beyond presets.
-
-### CLI Usability
-- **URL input** - Accept base URL as required parameter.
-- **Path specification** - Accept multiple page paths to capture.
-- **Simple installation** - npm/yarn/pnpm global install. No complex setup.
-- **Clear error messages** - When pages fail to load or screenshots fail, provide actionable errors.
-
-### Output Quality
-- **PNG format support** - Industry standard for screenshot quality.
-- **Consistent rendering** - Same page should produce identical screenshots across runs (deterministic).
+**Domain:** Open Source CLI Tool Release
+**Project:** Screenie (responsiveness-mcp) - Responsive Screenshot CLI
+**Researched:** 2026-01-20
+**Confidence:** HIGH (multiple authoritative sources)
 
 ---
 
-## Differentiators
+## Landing Page Features
 
-These features provide competitive advantage but are not strictly required for MVP. Prioritize based on user feedback.
+### Table Stakes
 
-### Enhanced Output & Reporting
-- **HTML report generation** - Interactive report showing all screenshots organized by device category. cypress-image-diff-html-report demonstrates demand for visual reports. This is your stated differentiator.
-- **Folder organization by device category** - phones/tablets/desktops folders. Makes reviewing 50+ screenshots manageable.
-- **Thumbnail gallery** - Quick visual overview before diving into full-size images.
-- **Side-by-side comparison view** - Compare same page across different viewports.
+| Feature | Why Expected | Complexity | Notes |
+|---------|--------------|------------|-------|
+| Clear value proposition | Users need to understand "what is this" within 5 seconds | Low | One sentence: "Capture responsive screenshots from your terminal" |
+| Installation command | Copy-paste installation is expected for CLI tools | Low | `npm install -g responsiveness-mcp` front and center |
+| Quick demo/example | Shows tool in action, builds confidence | Medium | Terminal recording (GIF/asciinema) showing basic usage |
+| Feature list | Users scan for capability matches | Low | Bullet points with icons |
+| GitHub link | Open source credibility signal | Low | Prominent button/badge |
+| License visibility | OSS users need to know terms | Low | MIT badge |
 
-### Advanced Capture Options
-- **Delay/wait configuration** - Wait for JavaScript to render, animations to complete, or specific network idle state. pageres-cli has `--delay` flag.
-- **Element hiding** - Hide cookie banners, chat widgets, ads before capture. pageres-cli: `--hide <selector>`. High user demand feature.
-- **Cookie banner blocking** - Auto-dismiss consent dialogs. Apify tool advertises this specifically.
-- **Dark mode capture** - Emulate `prefers-color-scheme: dark`. pageres-cli: `--darkMode`.
-- **Custom CSS injection** - Apply CSS before capture for testing or hiding elements. pageres-cli: `--css`.
-- **Specific element capture** - Capture only a DOM element, not full page. pageres-cli: `--selector`.
+### Differentiators
 
-### Authentication & Headers
-- **Cookie support** - Pass authentication cookies. pageres-cli: `--cookie`.
-- **Custom HTTP headers** - Authorization headers, custom user agents. pageres-cli: `--header`, `--user-agent`.
-- **Basic auth** - Username/password for HTTP authentication. pageres-cli: `--username`, `--password`.
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| Live demo | Try before install builds massive trust | High | Consider embedding a web playground or CodeSandbox |
+| Comparison table | Shows advantage over alternatives (Playwright raw, shot-scraper, etc.) | Medium | Honest comparison highlighting unique multi-viewport feature |
+| Output gallery | Visual proof of quality screenshots | Low | Grid of sample outputs at different viewports |
+| Integration logos | Shows ecosystem compatibility (CI/CD, GitHub Actions) | Low | Badges for Node, GitHub Actions, etc. |
+| Testimonials/stars | Social proof from real users | Medium | Requires adoption first; add GitHub star count badge |
+| Performance stats | "Generate 5 screenshots in 3 seconds" type claims | Low | Only if verifiable |
 
-### Developer Experience
-- **Configuration file support** - `.responsiveness.config.js` or similar for project-level defaults.
-- **Verbose/debug mode** - Detailed output for troubleshooting failed captures.
-- **Dry-run mode** - Preview what would be captured without actually running.
-- **Progress indicators** - Show capture progress for long-running batches.
+### Anti-Features
 
-### Image Options
-- **JPEG format support** - Smaller file sizes when quality is less critical.
-- **Image scaling** - Capture at 2x for retina displays. pageres-cli: `--scale`.
-- **Transparent background** - For design asset generation. pageres-cli: `--transparent`.
-- **Image cropping** - Crop to specific height. pageres-cli: `--crop`.
-
-### Batch & Automation
-- **Sitemap parsing** - Auto-discover pages from sitemap.xml.
-- **URL list from file** - Read URLs from text file for batch processing.
-- **Retry failed captures** - Automatically retry on transient failures.
-- **Overwrite vs append** - Control behavior when output files exist. pageres-cli: `--overwrite`.
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| Auto-playing video with sound | Annoying, unprofessional | Use muted GIFs or opt-in video |
+| Newsletter popup | Interrupts evaluation | Add newsletter option in footer only |
+| Feature overload | Overwhelms users, dilutes message | Focus on 3-5 key features prominently |
+| Marketing fluff | Developers distrust vague claims | Use concrete examples and numbers |
+| Pricing/enterprise section | Confuses OSS positioning | Keep purely OSS, no commercial tier messaging |
+| Animation overload | Slow loading, distracting | Subtle animations only |
 
 ---
 
-## Anti-Features
+## Documentation Features
 
-Things to deliberately NOT build, with reasoning.
+### Table Stakes
 
-### Visual Regression / Diff Comparison
-**DO NOT BUILD**: Baseline storage, pixel-by-pixel comparison, visual diff highlighting.
+| Feature | Why Expected | Complexity | Notes |
+|---------|--------------|------------|-------|
+| Installation guide | Every user's first step | Low | Multiple methods: npm global, npx, local install |
+| Quick start example | 30-second path to first success | Low | Single command that produces output |
+| CLI reference | All commands and flags documented | Medium | `--help` output formatted nicely |
+| Configuration options | Users need to customize behavior | Medium | Environment variables, config file format |
+| Error troubleshooting | Common issues and solutions | Medium | "Playwright not found", permissions, etc. |
+| Changelog | Track what changed between versions | Low | Keep-a-changelog format |
 
-**Why**: This is a completely different product category dominated by Percy, Applitools, Playwright snapshots, and BackstopJS. These tools have years of investment in:
-- AI-powered comparison algorithms (reduce false positives)
-- Baseline management systems
-- CI/CD integration for automated approval workflows
-- Dynamic content handling
+### Differentiators
 
-Building this would be:
-1. Massive scope creep
-2. Competing with well-funded, mature products
-3. Different user workflow (CI/CD integrated vs one-off review)
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| Recipes/cookbook | Real-world usage patterns | Medium | "Screenshot your Storybook", "CI/CD integration" |
+| Architecture docs | Helps contributors understand codebase | Medium | Shows professional maintenance |
+| Video tutorials | Accessibility for visual learners | High | Short (<3 min) focused tutorials |
+| Versioned docs | Different docs per major version | High | Overkill for v1, plan for v2+ |
+| Search functionality | Large doc sites need search | Medium | Algolia DocSearch (free for OSS) |
+| Dark mode | Developer preference | Low | Essential if building custom site |
 
-**What to build instead**: Capture screenshots, organize them, generate HTML report. Let users visually review manually or pipe output to existing diff tools if needed.
+### Anti-Features
 
-### Real Device / Cloud Browser Testing
-**DO NOT BUILD**: Running on actual physical devices, cloud browser farm integration.
-
-**Why**: This is BrowserStack/LambdaTest territory requiring:
-- Device farm infrastructure ($$$)
-- Cross-platform browser management
-- Significant ops overhead
-
-Our tool uses headless Chromium/Puppeteer. That's sufficient for responsive layout verification.
-
-### Interactive Browser / DevTools
-**DO NOT BUILD**: Mirrored interactions, synchronized scrolling, live CSS editing, element inspector.
-
-**Why**: This is Responsively App's domain (and they do it well, open source). It's a different use case - interactive development vs batch capture for review.
-
-### SaaS / Cloud Service
-**DO NOT BUILD**: Cloud-hosted version, user accounts, screenshot storage, team collaboration.
-
-**Why**: Keeps tool simple, no infrastructure costs, no auth/billing complexity. CLI that runs locally is the scope.
-
-### GUI / Electron App
-**DO NOT BUILD**: Desktop application with graphical interface.
-
-**Why**: CLI tools are simpler to maintain, easier to automate, and integrate better with development workflows. Responsively App already fills the GUI niche.
-
-### PDF/Video Export
-**DO NOT BUILD**: PDF reports, video recording of pages.
-
-**Why**: Scope creep. Focus on screenshots + HTML report.
-
-### AI-Powered Analysis
-**DO NOT BUILD**: AI detection of visual issues, automated suggestions.
-
-**Why**: This is Applitools' moat with years of ML investment. We're building a capture tool, not an analysis platform.
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| Outdated examples | Breaks trust when code doesn't work | Test examples in CI, use actual tool output |
+| Missing CLI reference | Forces users to `--help` guess | Generate from source or maintain manually |
+| Walls of text | Developers skim, don't read | Use code blocks, tables, bullet points |
+| Undocumented flags | Frustrates power users | Document everything, mark experimental flags |
+| No error documentation | Users get stuck | Add troubleshooting section |
+| Scattered information | Can't find what you need | Clear navigation, table of contents |
 
 ---
 
-## Feature Dependencies
+## npm Package Features
 
-Understanding which features unlock or require others helps prioritize development.
+### Table Stakes
 
-```
-Core Screenshot Capture
-    |
-    +-- Multiple Viewports (requires: parallel execution for speed)
-    |       |
-    |       +-- Device Presets (enhances: viewport config)
-    |       |
-    |       +-- Folder Organization (requires: multiple viewports)
-    |               |
-    |               +-- HTML Report (requires: organized folder structure)
-    |                       |
-    |                       +-- Thumbnail Gallery (enhances: HTML report)
-    |                       |
-    |                       +-- Side-by-side View (enhances: HTML report)
-    |
-    +-- Wait/Delay Options (standalone, high value)
-    |
-    +-- Element Hiding (standalone, high value)
-    |       |
-    |       +-- Cookie Banner Blocking (specialized form of element hiding)
-    |
-    +-- Authentication (cookie, headers, basic auth - group together)
-    |
-    +-- Config File (requires: multiple options to configure)
-```
+| Feature | Why Expected | Complexity | Notes |
+|---------|--------------|------------|-------|
+| Semantic versioning | Industry standard, enables dependency management | Low | Already at 1.0.0 |
+| Accurate `description` | npm search discoverability | Low | Current: "CLI tool for capturing responsive design screenshots" - good |
+| Relevant `keywords` | npm search ranking | Low | Current has 6 keywords - add more: "viewport", "multi-device", "capture" |
+| `repository` field | Links npm to GitHub | Low | **Currently missing** - add GitHub URL |
+| `bugs` field | Direct path to report issues | Low | **Currently missing** - add issues URL |
+| `homepage` field | Links to docs/landing page | Low | **Currently missing** - add URL |
+| `license` field | Legal clarity | Low | Already "MIT" |
+| `engines` field | Node version requirements | Low | Already ">=20" |
+| Clean `files` array | Only ship what's needed | Low | Use `files` field to whitelist dist/ |
 
-### Recommended Build Order (MVP to Full)
+### Differentiators
 
-**Phase 1 - MVP**:
-1. Single URL + paths capture
-2. Multiple viewport dimensions
-3. Full-page screenshots
-4. Parallel execution
-5. Organized folder output (phones/tablets/desktops)
-6. Basic HTML report
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| TypeScript declarations | DX for TS users if used as library | Medium | Ship `.d.ts` files |
+| `exports` field | Modern ESM support | Low | Define entry points explicitly |
+| Minimal dependencies | Faster install, smaller attack surface | Low | Current deps are reasonable |
+| Pre-publish checks | Prevents broken releases | Low | `prepublishOnly` script |
+| npm provenance | Supply chain security badge | Low | `npm publish --provenance` |
+| `funding` field | Sustainability signal | Low | GitHub Sponsors, Open Collective |
 
-**Phase 2 - Polish**:
-7. Device presets
-8. Wait/delay configuration
-9. Element hiding
-10. Progress indicators
+### Anti-Features
 
-**Phase 3 - Power Features**:
-11. Cookie/header support
-12. Config file
-13. Dark mode
-14. Custom CSS injection
-15. Batch URL input from file
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| Publishing tests | Bloats package size | Use `files` field to exclude |
+| Publishing source maps | Usually unnecessary for CLI | Exclude unless debugging needed |
+| Missing `bin` field | CLI won't be executable | Already have this |
+| Overly broad keywords | Spam signal, poor discovery | Keep keywords focused and relevant |
+| No `prepublishOnly` script | Risk publishing broken code | Add build + test before publish |
+| Secrets in published package | Security vulnerability | Use `.npmignore` or `files` whitelist |
 
 ---
 
-## Competitive Landscape Summary
+## README Features
 
-| Tool | Type | Strengths | Gap We Fill |
-|------|------|-----------|-------------|
-| pageres-cli | CLI | Fast, flexible, mature | No organized output, no HTML report |
-| snaprocket | CLI | Simple, Puppeteer-based | Minimal features, small user base |
-| Percy | SaaS | Visual regression, CI integration | Requires subscription, overkill for quick review |
-| Applitools | SaaS | AI-powered comparison | Enterprise pricing, complex setup |
-| Responsively | Desktop | Interactive dev browser | Not for batch capture |
-| Chrome DevTools | Built-in | Free, always available | Manual, one viewport at a time |
+### Table Stakes
 
-**Our Positioning**: Fast CLI tool for batch responsive screenshot capture with organized output and HTML report. Not a regression testing platform, not an interactive browser - a review preparation tool.
+| Feature | Why Expected | Complexity | Notes |
+|---------|--------------|------------|-------|
+| Project name + one-liner | Immediate understanding | Low | "responsiveness-mcp: Responsive screenshots from the CLI" |
+| Badges row | Version, license, build status, npm downloads | Low | 4-7 badges max |
+| Installation section | `npm install` command | Low | Global and npx options |
+| Quick usage example | 5-10 lines showing basic use | Low | Include expected output |
+| Feature list | Scannable capabilities | Low | Bullet points with brief descriptions |
+| License section | Legal notice | Low | "MIT License" with link |
+| API/CLI reference | All options documented | Medium | Or link to full docs |
+
+### Differentiators
+
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| Demo GIF/video | Visual proof of functionality | Medium | Terminal recording showing command -> output |
+| Table of contents | Navigation for long READMEs | Low | Auto-generate with tools |
+| Comparison section | Why choose this over alternatives | Medium | Honest comparison table |
+| Use cases section | Helps users see if it fits their needs | Low | "Perfect for: design QA, documentation, portfolio shots" |
+| Contributing section | Encourages community | Low | Link to CONTRIBUTING.md |
+| Acknowledgments | Credits to dependencies/inspirations | Low | Shows good community citizenship |
+| Roadmap | Shows project is active/planned | Low | Link to GitHub Projects or brief list |
+
+---
+
+## Supporting Files
+
+### Table Stakes
+
+| File | Purpose | Notes |
+|------|---------|-------|
+| `LICENSE` | Legal terms | MIT full text file |
+| `CHANGELOG.md` | Version history | Keep-a-changelog format |
+| `.gitignore` | Clean repo | Standard Node ignores |
+| `.npmignore` or `files` | Clean package | Prefer `files` in package.json |
+
+### Differentiators
+
+| File | Purpose | Notes |
+|------|---------|-------|
+| `CONTRIBUTING.md` | Contributor guidelines | Setup, testing, PR process |
+| `CODE_OF_CONDUCT.md` | Community standards | Contributor Covenant recommended |
+| `SECURITY.md` | Vulnerability reporting | GitHub recognizes this |
+| `.github/ISSUE_TEMPLATE/` | Structured bug reports | Bug report, feature request templates |
+| `.github/PULL_REQUEST_TEMPLATE.md` | PR guidelines | Checklist for contributors |
+| `.github/FUNDING.yml` | Sponsorship links | GitHub Sponsors integration |
+
+---
+
+## Priority Recommendations
+
+### Must Have for Credibility (Do First)
+
+1. **package.json metadata**: Add `repository`, `bugs`, `homepage` fields
+2. **README badges**: npm version, license, build status, downloads
+3. **Demo GIF**: Terminal recording of basic usage
+4. **CHANGELOG.md**: Document existing versions
+5. **LICENSE file**: Full MIT text
+
+### Should Have for Professional Polish
+
+1. **CONTRIBUTING.md**: How to contribute
+2. **GitHub issue templates**: Bug report, feature request
+3. **Quick start in README**: 3-step path to first screenshot
+4. **CLI reference**: All flags documented
+
+### Nice to Have for Excellence
+
+1. **Landing page**: Simple single-page site
+2. **Comparison table**: vs shot-scraper, vs raw Playwright
+3. **Recipes section**: CI/CD, Storybook, common patterns
+4. **CODE_OF_CONDUCT.md**: Community guidelines
+
+---
+
+## Sources
+
+### HIGH Confidence (Authoritative)
+- [Command Line Interface Guidelines](https://clig.dev/) - Comprehensive CLI design best practices
+- [npm package.json documentation](https://docs.npmjs.com/cli/v11/configuring-npm/package-json/) - Official npm metadata reference
+- [Make a README](https://www.makeareadme.com/) - README structure best practices
+
+### MEDIUM Confidence (Verified with multiple sources)
+- [Evil Martians Dev Tool Landing Page Research](https://evilmartians.com/chronicles/we-studied-100-devtool-landing-pages-here-is-what-actually-works-in-2025) - Analysis of 100+ landing pages
+- [shot-scraper GitHub](https://github.com/simonw/shot-scraper) - Example of well-documented screenshot CLI
+- [GitHub README Template Guide](https://rivereditor.com/blogs/write-perfect-readme-github-repo) - README structure analysis
+- [Snyk npm package best practices](https://snyk.io/blog/best-practices-create-modern-npm-package/) - Security-focused package guidelines
+
+### LOW Confidence (Single source, verify)
+- [Lapa Ninja Open Source Examples](https://www.lapa.ninja/category/open-source/) - Landing page inspiration gallery

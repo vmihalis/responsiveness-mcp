@@ -2,6 +2,7 @@ import type { CaptureOptions, ScreenshotResult } from './types.js';
 import { DEFAULT_TIMEOUT } from './types.js';
 import { BrowserManager } from './browser.js';
 import { scrollForLazyContent } from './scroll.js';
+import { hideCookieBanners } from './cookies.js';
 
 /**
  * Capture a full-page screenshot of a URL using a specific device configuration.
@@ -32,6 +33,7 @@ export async function captureScreenshot(
     waitBuffer = 500,
     scrollForLazy = true,
     maxScrollIterations = 10,
+    hideCookieBanners: shouldHideCookies = true,
   } = options;
 
   // Split timeout budget: 60% navigation, 25% scroll+buffer, 15% screenshot
@@ -52,6 +54,11 @@ export async function captureScreenshot(
 
     // LOAD-02: Wait buffer after network idle for post-idle rendering
     await page.waitForTimeout(waitBuffer);
+
+    // UX-02: Hide cookie banners before capture (default: true)
+    if (shouldHideCookies) {
+      await hideCookieBanners(page);
+    }
 
     // LOAD-03: Scroll for lazy-loaded content
     if (scrollForLazy) {

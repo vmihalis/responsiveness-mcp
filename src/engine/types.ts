@@ -41,6 +41,8 @@ export interface CaptureOptions {
   scrollForLazy?: boolean;
   /** Max scroll iterations to prevent infinite scroll hangs (default: 10) */
   maxScrollIterations?: number;
+  /** Hide common cookie consent banners before capture (default: true) */
+  hideCookieBanners?: boolean;
 }
 
 /**

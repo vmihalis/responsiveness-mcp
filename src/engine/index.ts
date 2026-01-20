@@ -18,3 +18,4 @@ export { BrowserManager } from './browser.js';
 export { captureScreenshot } from './capturer.js';
 export { scrollForLazyContent } from './scroll.js';
 export { captureAllDevices, captureWithRetry, isRetryableError } from './executor.js';
+export { hideCookieBanners, COOKIE_BANNER_SELECTORS } from './cookies.js';

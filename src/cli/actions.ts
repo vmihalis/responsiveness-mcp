@@ -1,4 +1,5 @@
 import pc from 'picocolors';
+import open from 'open';
 import type { CLIOptions } from './types.js';
 import {
   validateUrl,
@@ -116,6 +117,11 @@ export async function runCapture(
 
       const reportPath = await generateReport(reportData, screenshots, outputDir);
       console.log(pc.green(`\nReport saved: ${reportPath}`));
+
+      // Auto-open report in browser unless suppressed with --no-open
+      if (options.open !== false) {
+        await open(reportPath);
+      }
     }
 
     const totalDuration = Date.now() - startTime;

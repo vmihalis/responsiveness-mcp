@@ -12,6 +12,7 @@ import { BrowserManager, captureAllDevices } from '../engine/index.js';
 import { createOutputDirectory, saveAllScreenshots } from '../output/index.js';
 import { generateReport, prepareScreenshotsForReport } from '../output/reporter.js';
 import { defaultConfig } from '../config/defaults.js';
+import { createSpinner } from './progress.js';
 import { displayFailureSummary } from './errors.js';
 import type { ReportData } from '../output/types.js';
 
@@ -61,6 +62,10 @@ export async function runCapture(
       const fullUrl = buildFullUrl(baseUrl, page);
       console.log(pc.cyan(`\nCapturing: ${fullUrl}`));
 
+      // Create spinner for this page's captures
+      const spinner = createSpinner();
+      spinner.start(devices.length);
+
       const result = await captureAllDevices(
         manager,
         fullUrl,
@@ -72,19 +77,21 @@ export async function runCapture(
         {
           concurrency,
           onProgress: (done, total, res) => {
-            const status = res.success ? pc.green('OK') : pc.red('FAIL');
-            // Simple progress output (Phase 9 will add spinner)
-            process.stdout.write(`\r  ${done}/${total} ${res.deviceName} ${status}  `);
+            spinner.update(done, total, res.deviceName, res.success);
           },
         }
       );
 
-      // Clear progress line
-      process.stdout.write('\r' + ' '.repeat(60) + '\r');
+      // Show final spinner state
+      if (result.failureCount === 0) {
+        spinner.succeed(result.successCount);
+      } else {
+        spinner.warn(result.successCount, result.failureCount);
+      }
 
       // Show capture result summary
       if (result.failureCount === 0) {
-        console.log(pc.green(`  All ${result.successCount} captures succeeded`));
+        console.log(pc.dim(`  All ${result.successCount} captures succeeded`));
       } else {
         console.log(pc.dim(`  ${result.successCount} succeeded, ${result.failureCount} failed`));
         // Display detailed failures with user-friendly messages

@@ -15,7 +15,7 @@ See: .planning/PROJECT.md (updated 2025-01-20)
 |--------|-------|
 | Current Phase | 3 (complete) |
 | Phases Complete | 3/10 |
-| Requirements Complete | 3/24 |
+| Requirements Complete | 4/24 |
 | Overall Progress | 30% |
 
 ---
@@ -114,7 +114,7 @@ Resume file: None
 
 ## Next Action
 
-`/gsd:execute-phase 04` - Plan and execute Page Loading phase
+`/gsd:plan-phase 4` - Plan Page Loading phase
 
 ---
 *Last updated: 2026-01-20*

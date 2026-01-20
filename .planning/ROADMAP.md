@@ -14,7 +14,7 @@
 | 3 | Browser Engine | Core screenshot capture with Playwright | SHOT-01, LOAD-01, LOAD-04 | 3 | Complete |
 | 4 | Page Loading | Smart waiting and lazy content handling | LOAD-02, LOAD-03, SHOT-03 | 4 | Complete |
 | 5 | Parallel Execution | Concurrent captures with retry logic | SHOT-02, SHOT-04 | 2 | Complete |
-| 6 | File Output | Organized folder structure and file naming | DEV-02, OUT-01 | 3-5 | Pending |
+| 6 | File Output | Organized folder structure and file naming | DEV-02, OUT-01 | 2 | Planned |
 | 7 | HTML Report | Grid view report with thumbnails and metadata | OUT-02, OUT-03, OUT-04, OUT-05 | 5-7 | Pending |
 | 8 | CLI Interface | Command parsing with flags and validation | CLI-01, CLI-02, CLI-03, CLI-04, LOAD-05, DEV-03 | 5-7 | Pending |
 | 9 | UX Polish | Progress indicators, cookie hiding, error messages | UX-01, UX-02, UX-03 | 4-6 | Pending |
@@ -153,6 +153,13 @@
 **Goal:** Organized folder structure with descriptive file naming
 
 **Requirements:** DEV-02, OUT-01
+
+**Status:** Planned
+**Plans:** 2 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Core file output (types, timestamp, directory creation, file writing)
+- [ ] 06-02-PLAN.md — Unit tests for file output module
 
 **Success Criteria:**
 1. Output creates phones/, tablets/, pc-laptops/ subdirectories

@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "tsx src/cli/index.ts",
     "build": "tsup",
+    "smoke-test": "tsx scripts/smoke-test.ts",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {

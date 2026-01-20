@@ -52,3 +52,39 @@ export interface ScreenshotResult {
   buffer?: Buffer;
   error?: string;
 }
+
+/**
+ * Options for parallel execution
+ */
+export interface ExecutionOptions {
+  /** Max concurrent captures (default: 10) */
+  concurrency?: number;
+  /** Max retry attempts per device (default: 3) */
+  maxRetries?: number;
+  /** Delay between retries in ms (default: 500) */
+  retryDelay?: number;
+  /** Progress callback (completed, total, result) */
+  onProgress?: (completed: number, total: number, result: ExecutionResult) => void;
+}
+
+/**
+ * Extended result with retry information
+ */
+export interface ExecutionResult extends ScreenshotResult {
+  /** Number of attempts made (1 = first attempt succeeded) */
+  attempts: number;
+}
+
+/**
+ * Aggregate results from parallel capture
+ */
+export interface CaptureAllResult {
+  /** Individual results for each device */
+  results: ExecutionResult[];
+  /** Count of successful captures */
+  successCount: number;
+  /** Count of failed captures */
+  failureCount: number;
+  /** Total capture attempts (includes retries) */
+  totalAttempts: number;
+}

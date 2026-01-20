@@ -19,7 +19,7 @@ Requirements for open source release. Each maps to roadmap phases.
 
 ### Demo
 
-- [ ] **DEMO-01**: Demo GIF/video created showing CLI capturing screenshots and generating report
+- [x] **DEMO-01**: Demo GIF/video created showing CLI capturing screenshots and generating report
 
 ### README
 
@@ -91,7 +91,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NPM-05 | Phase 11 | Complete |
 | NPM-06 | Phase 16 | Pending |
 | NPM-07 | Phase 16 | Pending |
-| DEMO-01 | Phase 12 | Pending |
+| DEMO-01 | Phase 12 | Complete |
 | README-01 | Phase 13 | Pending |
 | README-02 | Phase 13 | Pending |
 | README-03 | Phase 13 | Pending |
@@ -113,4 +113,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 11 completion*
+*Last updated: 2026-01-20 after Phase 12 completion*

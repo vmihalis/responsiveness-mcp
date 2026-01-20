@@ -23,7 +23,7 @@ See `.planning/milestones/v1.0-cli/` for complete history.
 - Decimal phases (12.1, 12.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 11: npm Package Prep** - Configure package.json for publishing
-- [ ] **Phase 12: Demo Creation** - Record CLI demo GIF with VHS
+- [x] **Phase 12: Demo Creation** - Record CLI demo GIF with VHS
 - [ ] **Phase 13: README Polish** - Update README with demo, badges, features
 - [ ] **Phase 14: Landing Page** - Build and deploy screenie.xyz
 - [ ] **Phase 15: Documentation** - Set up VitePress docs.screenie.xyz
@@ -57,7 +57,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 12-01-PLAN.md — Create VHS tape script and generate optimized demo GIF
+- [x] 12-01-PLAN.md — Create VHS tape script and generate optimized demo GIF
 
 ### Phase 13: README Polish
 **Goal**: README communicates value and enables instant onboarding
@@ -123,7 +123,7 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 11. npm Package Prep | 2/2 | ✓ Complete | 2026-01-20 |
-| 12. Demo Creation | 0/1 | Planned | - |
+| 12. Demo Creation | 1/1 | ✓ Complete | 2026-01-20 |
 | 13. README Polish | 0/? | Not started | - |
 | 14. Landing Page | 0/? | Not started | - |
 | 15. Documentation | 0/? | Not started | - |
@@ -132,4 +132,4 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 ---
 
 *Created: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 12 planning*
+*Last updated: 2026-01-20 after Phase 12 completion*

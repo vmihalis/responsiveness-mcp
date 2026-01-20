@@ -18,7 +18,7 @@
 | 7 | HTML Report | Grid view report with thumbnails and metadata | OUT-02, OUT-03, OUT-04, OUT-05 | 2 | Complete |
 | 8 | CLI Interface | Command parsing with flags and validation | CLI-01, CLI-02, CLI-03, CLI-04, LOAD-05, DEV-03 | 3 | Complete |
 | 9 | UX Polish | Progress indicators, cookie hiding, error messages | UX-01, UX-02, UX-03 | 3 | Complete |
-| 10 | Integration | Wire everything, auto-open report, end-to-end testing | OUT-06 | 2 | Pending |
+| 10 | Integration | Wire everything, auto-open report, end-to-end testing | OUT-06 | 2 | Complete |
 
 ---
 
@@ -263,25 +263,31 @@
 
 ---
 
-### Phase 10: Integration
+### Phase 10: Integration - COMPLETE
 
 **Goal:** Wire everything together, auto-open report, final polish
 
 **Requirements:** OUT-06
 
-**Status:** Pending
-**Plans:** 2 plans
+**Status:** Complete (2026-01-20)
+**Plans:** 2 plans executed
 
-Plans:
-- [ ] 10-01-PLAN.md — Auto-open report feature with --no-open flag
-- [ ] 10-02-PLAN.md — End-to-end tests with subprocess invocation
+**Completed Plans:**
+- 10-01: Auto-open report feature with open@11.0.0 and --no-open flag
+- 10-02: End-to-end tests (7 tests covering help, validation, pipeline, filtering)
 
 **Success Criteria:**
-1. Full pipeline works: CLI -> devices -> capture -> output -> report
-2. Report opens automatically in default browser
-3. Exit code 0 on success, non-zero on failure
-4. Clean shutdown (no orphan browser processes)
-5. End-to-end test with real URL passes
+1. Full pipeline works: CLI -> devices -> capture -> output -> report ✓
+2. Report opens automatically in default browser ✓
+3. Exit code 0 on success, non-zero on failure ✓
+4. Clean shutdown (no orphan browser processes) ✓
+5. End-to-end test with real URL passes ✓
+
+**Key Deliverables:**
+- `src/cli/actions.ts` with open() call after report generation
+- `--no-open` flag for CI/headless environments
+- `src/cli/__tests__/e2e.test.ts` with 7 E2E tests
+- 291 total tests passing
 
 ---
 

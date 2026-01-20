@@ -34,7 +34,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **OUT-03**: Tool groups screenshots by device category in report
 - [x] **OUT-04**: Tool shows thumbnails in report for quick scanning
 - [x] **OUT-05**: Tool displays metadata in report (URL, timestamp, duration, device count)
-- [ ] **OUT-06**: Tool opens report in browser automatically after capture
+- [x] **OUT-06**: Tool opens report in browser automatically after capture
 
 ### Page Loading
 
@@ -104,7 +104,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | OUT-03 | Phase 7 | Complete |
 | OUT-04 | Phase 7 | Complete |
 | OUT-05 | Phase 7 | Complete |
-| OUT-06 | Phase 10 | Pending |
+| OUT-06 | Phase 10 | Complete |
 | LOAD-01 | Phase 3 | Complete |
 | LOAD-02 | Phase 4 | Complete |
 | LOAD-03 | Phase 4 | Complete |
@@ -121,4 +121,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2025-01-20*
-*Last updated: 2026-01-20 after Phase 9 completion*
+*Last updated: 2026-01-20 after Phase 10 completion — all v1 requirements complete*

@@ -9,11 +9,11 @@ Requirements for open source release. Each maps to roadmap phases.
 
 ### npm Package
 
-- [ ] **NPM-01**: Package renamed to "screenie" in package.json
-- [ ] **NPM-02**: package.json includes repository, bugs, and homepage fields
-- [ ] **NPM-03**: package.json includes files whitelist (prevents accidental secret exposure)
-- [ ] **NPM-04**: MIT LICENSE file exists in repository root
-- [ ] **NPM-05**: npm pack --dry-run succeeds without warnings
+- [x] **NPM-01**: Package renamed to "screenie" in package.json
+- [x] **NPM-02**: package.json includes repository, bugs, and homepage fields
+- [x] **NPM-03**: package.json includes files whitelist (prevents accidental secret exposure)
+- [x] **NPM-04**: MIT LICENSE file exists in repository root
+- [x] **NPM-05**: npm pack --dry-run succeeds without warnings
 - [ ] **NPM-06**: npm provenance signing configured for supply chain security
 - [ ] **NPM-07**: Package published to npm registry
 
@@ -84,11 +84,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NPM-01 | Phase 11 | Pending |
-| NPM-02 | Phase 11 | Pending |
-| NPM-03 | Phase 11 | Pending |
-| NPM-04 | Phase 11 | Pending |
-| NPM-05 | Phase 11 | Pending |
+| NPM-01 | Phase 11 | Complete |
+| NPM-02 | Phase 11 | Complete |
+| NPM-03 | Phase 11 | Complete |
+| NPM-04 | Phase 11 | Complete |
+| NPM-05 | Phase 11 | Complete |
 | NPM-06 | Phase 16 | Pending |
 | NPM-07 | Phase 16 | Pending |
 | DEMO-01 | Phase 12 | Pending |
@@ -113,4 +113,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-20*
-*Last updated: 2026-01-20 after roadmap creation*
+*Last updated: 2026-01-20 after Phase 11 completion*

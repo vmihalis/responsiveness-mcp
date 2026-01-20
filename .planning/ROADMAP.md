@@ -25,7 +25,7 @@ See `.planning/milestones/v1.0-cli/` for complete history.
 - [x] **Phase 11: npm Package Prep** - Configure package.json for publishing
 - [x] **Phase 12: Demo Creation** - Record CLI demo GIF with VHS
 - [x] **Phase 13: README Polish** - Update README with demo, badges, features
-- [ ] **Phase 14: Landing Page** - Build and deploy screenie.xyz
+- [x] **Phase 14: Landing Page** - Build and deploy landing page (Vercel)
 - [ ] **Phase 15: Documentation** - Set up VitePress docs.screenie.xyz
 - [ ] **Phase 16: Publish** - npm publish with provenance signing
 
@@ -74,19 +74,19 @@ Plans:
 - [x] 13-01-PLAN.md — Create README with badges, demo GIF, quick start, and features
 
 ### Phase 14: Landing Page
-**Goal**: screenie.xyz converts visitors to users within 10 seconds
+**Goal**: Landing page converts visitors to users within 10 seconds
 **Depends on**: Phase 12 (need demo GIF)
 **Requirements**: LAND-01, LAND-02, LAND-03, LAND-04, LAND-05
 **Success Criteria** (what must be TRUE):
   1. Page loads under 1 second (Lighthouse performance > 95)
   2. Install command copies to clipboard with single click
   3. Demo GIF plays automatically above the fold
-  4. screenie.xyz resolves and serves the landing page via Netlify
+  4. Landing page deployed and accessible via Vercel
 **Plans**: 2 plans
 
 Plans:
-- [ ] 14-01-PLAN.md — Create landing page with assets and Netlify configuration
-- [ ] 14-02-PLAN.md — Deploy to Netlify with custom domain setup
+- [x] 14-01-PLAN.md — Create landing page with assets and deployment config
+- [x] 14-02-PLAN.md — Deploy to Vercel (custom domain deferred)
 
 ### Phase 15: Documentation
 **Goal**: Developers can find answers to CLI questions without reading source
@@ -126,7 +126,7 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 | 11. npm Package Prep | 2/2 | ✓ Complete | 2026-01-20 |
 | 12. Demo Creation | 1/1 | ✓ Complete | 2026-01-20 |
 | 13. README Polish | 1/1 | ✓ Complete | 2026-01-20 |
-| 14. Landing Page | 0/2 | Planned | - |
+| 14. Landing Page | 2/2 | ✓ Complete | 2026-01-20 |
 | 15. Documentation | 0/? | Not started | - |
 | 16. Publish | 0/? | Not started | - |
 

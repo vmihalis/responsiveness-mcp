@@ -10,9 +10,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Core Screenshot
 
 - [x] **SHOT-01**: Tool captures full-page screenshots (entire scrollable content)
-- [ ] **SHOT-02**: Tool runs captures in parallel with configurable concurrency (default 10)
+- [x] **SHOT-02**: Tool runs captures in parallel with configurable concurrency (default 10)
 - [x] **SHOT-03**: Tool disables CSS animations before capture for consistency
-- [ ] **SHOT-04**: Tool retries failed captures automatically (2-3 attempts)
+- [x] **SHOT-04**: Tool retries failed captures automatically (2-3 attempts)
 
 ### Device Support
 
@@ -89,9 +89,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | SHOT-01 | Phase 3 | Complete |
-| SHOT-02 | Phase 5 | Pending |
+| SHOT-02 | Phase 5 | Complete |
 | SHOT-03 | Phase 4 | Complete |
-| SHOT-04 | Phase 5 | Pending |
+| SHOT-04 | Phase 5 | Complete |
 | DEV-01 | Phase 2 | Complete |
 | DEV-02 | Phase 6 | Pending |
 | DEV-03 | Phase 8 | Pending |
@@ -121,4 +121,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2025-01-20*
-*Last updated: 2026-01-20 after Phase 4 completion*
+*Last updated: 2026-01-20 after Phase 5 completion*

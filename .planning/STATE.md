@@ -108,6 +108,9 @@ Progress: [==============================] 3/3 plans in phase 9
 | 08-02 | Re-exports in index.ts for testability | Allows importing from cli/index.js in tests |
 | 08-03 | Fresh Commander instance per test | Prevents state leakage between tests |
 | 08-03 | Test validates behavior not implementation | Use error regex patterns not exact strings |
+| 09-01 | Wrap ora in ProgressSpinner interface | Capture-specific methods (start/update/succeed/warn/stop) |
+| 09-01 | Yellow ! symbol for partial failures | Distinguishes from full success green checkmark |
+| 09-01 | Test safe method handling over isSpinning state | ora returns false in non-TTY (CI) environments |
 | 09-02 | CSS injection over JavaScript removal | More reliable, doesn't require waiting for elements |
 | 09-02 | Default true for hideCookieBanners | Most users want clean screenshots |
 | 09-02 | 50+ selectors for cookie banners | Covers OneTrust, Cookiebot, Didomi, TrustArc, etc. |
@@ -171,9 +174,10 @@ Resume file: None
 | 2026-01-20 | Plan 08-02 completed | CLI action handler (3 commits, runCapture/handleError) |
 | 2026-01-20 | Plan 08-03 completed | CLI tests (2 commits, 66 tests) |
 | 2026-01-20 | Phase 8 complete | All 3 plans executed, 234 total tests passing |
+| 2026-01-20 | Plan 09-01 completed | Progress indicators with ora spinner (3 commits, 14 tests) |
 | 2026-01-20 | Plan 09-02 completed | Cookie banner hiding (3 commits, 11 tests) |
 | 2026-01-20 | Plan 09-03 completed | Error messages (3 commits, 25 tests) |
-| 2026-01-20 | Phase 9 complete | All 3 plans executed |
+| 2026-01-20 | Phase 9 complete | All 3 plans executed, 284 total tests passing |
 
 ---
 

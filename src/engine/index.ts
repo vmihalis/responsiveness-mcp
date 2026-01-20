@@ -4,6 +4,9 @@ export type {
   ScreenshotResult,
   BrowserManagerOptions,
   ContextOptions,
+  ExecutionOptions,
+  ExecutionResult,
+  CaptureAllResult,
 } from './types.js';
 
 export { DEFAULT_TIMEOUT } from './types.js';
@@ -14,3 +17,4 @@ export { BrowserManager } from './browser.js';
 // Functions
 export { captureScreenshot } from './capturer.js';
 export { scrollForLazyContent } from './scroll.js';
+export { captureAllDevices, captureWithRetry, isRetryableError } from './executor.js';

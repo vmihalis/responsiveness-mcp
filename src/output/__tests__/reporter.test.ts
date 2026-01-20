@@ -235,3 +235,213 @@ describe('getCategoryDisplayName', () => {
     expect(getCategoryDisplayName('pc-laptops')).toBe('Desktop & Laptops');
   });
 });
+
+// ============================================================================
+// HTML Template Tests (via generateReport output)
+// ============================================================================
+
+// Test fixtures for HTML template tests
+const mockScreenshot: ScreenshotForReport = {
+  deviceName: 'iPhone 15 Pro',
+  category: 'phones',
+  width: 393,
+  height: 852,
+  dataUri: 'data:image/png;base64,iVBORw0KGgo=',
+};
+
+const mockReportData: ReportData = {
+  url: 'https://example.com',
+  capturedAt: '2026-01-20 12:00:00',
+  duration: 45000,
+  deviceCount: 3,
+  files: [],
+};
+
+describe('HTML Template Output', () => {
+  beforeEach(async () => {
+    await mkdir(TEST_OUTPUT_DIR, { recursive: true });
+  });
+
+  afterEach(async () => {
+    await rm(TEST_OUTPUT_DIR, { recursive: true, force: true });
+  });
+
+  describe('header rendering', () => {
+    it('contains h1 with "Responsive Screenshots"', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('<h1>Responsive Screenshots</h1>');
+    });
+
+    it('contains escaped URL', async () => {
+      const dataWithSpecialUrl: ReportData = {
+        ...mockReportData,
+        url: 'https://example.com?foo=1&bar=2',
+      };
+      await generateReport(dataWithSpecialUrl, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('https://example.com?foo=1&amp;bar=2');
+    });
+
+    it('contains formatted duration', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('45s'); // formatDuration(45000)
+    });
+
+    it('contains device count', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('<strong>Devices:</strong> 3');
+    });
+  });
+
+  describe('thumbnail card rendering', () => {
+    it('contains link with href to lightbox ID', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('href="#lb-iphone-15-pro-393x852"');
+    });
+
+    it('contains img with dataUri src', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('src="data:image/png;base64,iVBORw0KGgo="');
+    });
+
+    it('contains device name', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('<div class="device-name">iPhone 15 Pro</div>');
+    });
+
+    it('contains dimensions text', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('<div class="dimensions">393 x 852</div>');
+    });
+  });
+
+  describe('category section rendering', () => {
+    it('contains h2 with category display name', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('<h2>Phones</h2>');
+    });
+
+    it('contains thumbnail-grid class div', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('class="thumbnail-grid"');
+    });
+
+    it('contains all thumbnail cards for category', async () => {
+      const multiplePhones: ScreenshotForReport[] = [
+        { deviceName: 'Phone A', category: 'phones', width: 100, height: 200, dataUri: 'data:a' },
+        { deviceName: 'Phone B', category: 'phones', width: 100, height: 200, dataUri: 'data:b' },
+      ];
+      await generateReport(mockReportData, multiplePhones, TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('Phone A');
+      expect(html).toContain('Phone B');
+    });
+
+    it('empty array produces no thumbnail cards but valid HTML', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).not.toContain('class="thumbnail-card"');
+      expect(html).toContain('<!DOCTYPE html>');
+    });
+  });
+
+  describe('lightbox rendering', () => {
+    it('contains correct ID attribute', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('id="lb-iphone-15-pro-393x852"');
+    });
+
+    it('contains close link (href="#_")', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('href="#_"');
+      expect(html).toContain('class="lightbox-close"');
+    });
+
+    it('contains full-size image with dataUri', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      // Full-size image in lightbox
+      expect(html).toContain('alt="iPhone 15 Pro - Full Size"');
+    });
+
+    it('contains device info text in lightbox', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('class="lightbox-info"');
+      expect(html).toContain('<strong>iPhone 15 Pro</strong>');
+      expect(html).toContain('393 x 852');
+    });
+  });
+
+  describe('buildReportHtml (full HTML)', () => {
+    it('contains DOCTYPE html', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toMatch(/^<!DOCTYPE html>/);
+    });
+
+    it('contains charset UTF-8 meta tag', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('<meta charset="UTF-8">');
+    });
+
+    it('contains style tag with CSS', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('<style>');
+      expect(html).toContain('.thumbnail-grid');
+      expect(html).toContain('.lightbox');
+    });
+
+    it('contains all three categories when present', async () => {
+      const allCategories: ScreenshotForReport[] = [
+        { deviceName: 'Phone', category: 'phones', width: 100, height: 200, dataUri: 'data:phone' },
+        { deviceName: 'Tablet', category: 'tablets', width: 768, height: 1024, dataUri: 'data:tablet' },
+        { deviceName: 'PC', category: 'pc-laptops', width: 1920, height: 1080, dataUri: 'data:pc' },
+      ];
+      await generateReport(mockReportData, allCategories, TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('<h2>Phones</h2>');
+      expect(html).toContain('<h2>Tablets</h2>');
+      // Note: Category display name uses literal & as it's a static trusted string
+      expect(html).toContain('<h2>Desktop & Laptops</h2>');
+    });
+
+    it('contains lightbox elements for all screenshots', async () => {
+      const twoDevices: ScreenshotForReport[] = [
+        { deviceName: 'Device A', category: 'phones', width: 100, height: 200, dataUri: 'data:a' },
+        { deviceName: 'Device B', category: 'tablets', width: 768, height: 1024, dataUri: 'data:b' },
+      ];
+      await generateReport(mockReportData, twoDevices, TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('id="lb-device-a-100x200"');
+      expect(html).toContain('id="lb-device-b-768x1024"');
+    });
+
+    it('HTML is self-contained (no external URLs in src/href for assets)', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      // Should not have external http/https sources for images/stylesheets
+      // Images should use data: URIs
+      const srcMatches = html.match(/src="([^"]+)"/g) || [];
+      for (const match of srcMatches) {
+        expect(match).toMatch(/src="data:/);
+      }
+      // No external stylesheet links
+      expect(html).not.toContain('href="http');
+      expect(html).not.toContain("href='http");
+    });
+  });
+});

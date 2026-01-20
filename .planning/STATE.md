@@ -14,28 +14,28 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 | Metric | Value |
 |--------|-------|
 | Current Milestone | v2.0 Open Source Release |
-| Phases Complete | 4/6 |
-| Requirements Complete | 15/21 |
+| Phases Complete | 5/6 |
+| Requirements Complete | 17/21 |
 
 ---
 
 ## Current Position
 
 Phase: 15 of 16 (Documentation)
-Plan: 1 of 2 complete
-Status: In progress - VitePress documentation site created
-Last activity: 2026-01-20 - Completed 15-01-PLAN.md (VitePress setup)
+Plan: 2 of 2 complete
+Status: Phase complete - Documentation deployed to Vercel
+Last activity: 2026-01-20 - Completed 15-02-PLAN.md (Docs deployment)
 
-Progress: [########..] ~71%
+Progress: [########..] ~75%
 
 ---
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7 (v2.0)
-- Average duration: 3m 12s
-- Total execution time: 22m 12s
+- Total plans completed: 8 (v2.0)
+- Average duration: 5m 28s
+- Total execution time: 42m 12s
 
 **By Phase:**
 
@@ -45,11 +45,11 @@ Progress: [########..] ~71%
 | 12-demo-creation | 1 | 8m 00s | 8m 00s |
 | 13-readme-polish | 1 | 2m 00s | 2m 00s |
 | 14-landing-page | 2 | 5m 00s | 2m 30s |
-| 15-documentation | 1 | 3m 40s | 3m 40s |
+| 15-documentation | 2 | 23m 40s | 11m 50s |
 
 **Recent Trend:**
-- Last 5 plans: 13-01 (2m 00s), 14-01 (2m 00s), 14-02 (3m 00s), 15-01 (3m 40s)
-- Trend: Stable (efficient execution on well-scoped plans)
+- Last 5 plans: 14-01 (2m 00s), 14-02 (3m 00s), 15-01 (3m 40s), 15-02 (20m 00s)
+- Trend: Plan 15-02 longer due to checkpoint verification delay
 
 *Updated after each plan completion*
 
@@ -83,6 +83,9 @@ v2.0 decisions:
 - Built-in local search (no external Algolia needed)
 - Single sidebar navigation for linear documentation flow
 - CLI reference matches `screenie --help` output exactly
+- Documentation site deployed to Vercel as separate project
+- Docs live at: https://dist-xi-virid.vercel.app
+- Custom domain (docs.screenie.xyz) setup deferred for later
 
 ### Pending Todos
 
@@ -96,10 +99,10 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-20T21:52:09Z
-Stopped at: Completed 15-01-PLAN.md (VitePress documentation site)
+Last session: 2026-01-20T22:12:26Z
+Stopped at: Completed 15-02-PLAN.md (Documentation deployment)
 Resume file: None
 
 ---
 
-*Last updated: 2026-01-20 after Phase 15 Plan 01 completion*
+*Last updated: 2026-01-20 after Phase 15 completion*

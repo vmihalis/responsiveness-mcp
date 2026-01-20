@@ -30,10 +30,10 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Output & Report
 
 - [x] **OUT-01**: Tool saves screenshots with descriptive names (device-name-widthxheight.png)
-- [ ] **OUT-02**: Tool generates HTML report with grid view of all screenshots
-- [ ] **OUT-03**: Tool groups screenshots by device category in report
-- [ ] **OUT-04**: Tool shows thumbnails in report for quick scanning
-- [ ] **OUT-05**: Tool displays metadata in report (URL, timestamp, duration, device count)
+- [x] **OUT-02**: Tool generates HTML report with grid view of all screenshots
+- [x] **OUT-03**: Tool groups screenshots by device category in report
+- [x] **OUT-04**: Tool shows thumbnails in report for quick scanning
+- [x] **OUT-05**: Tool displays metadata in report (URL, timestamp, duration, device count)
 - [ ] **OUT-06**: Tool opens report in browser automatically after capture
 
 ### Page Loading
@@ -100,10 +100,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLI-03 | Phase 8 | Pending |
 | CLI-04 | Phase 8 | Pending |
 | OUT-01 | Phase 6 | Complete |
-| OUT-02 | Phase 7 | Pending |
-| OUT-03 | Phase 7 | Pending |
-| OUT-04 | Phase 7 | Pending |
-| OUT-05 | Phase 7 | Pending |
+| OUT-02 | Phase 7 | Complete |
+| OUT-03 | Phase 7 | Complete |
+| OUT-04 | Phase 7 | Complete |
+| OUT-05 | Phase 7 | Complete |
 | OUT-06 | Phase 10 | Pending |
 | LOAD-01 | Phase 3 | Complete |
 | LOAD-02 | Phase 4 | Complete |
@@ -121,4 +121,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2025-01-20*
-*Last updated: 2026-01-20 after Phase 6 completion*
+*Last updated: 2026-01-20 after Phase 7 completion*

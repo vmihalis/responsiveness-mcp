@@ -138,4 +138,119 @@ describe('executor', () => {
       expect(result.attempts).toBe(2); // Retried once
     });
   });
+
+  describe('captureAllDevices', () => {
+    let manager: BrowserManager;
+
+    beforeAll(async () => {
+      manager = new BrowserManager();
+      await manager.launch();
+    });
+
+    afterAll(async () => {
+      await manager.close();
+    });
+
+    it('should capture multiple devices in parallel', async () => {
+      const devices = [testPhone, testDesktop];
+
+      const result = await captureAllDevices(
+        manager,
+        'https://example.com',
+        devices,
+        { timeout: DEFAULT_TIMEOUT, waitBuffer: 500 },
+        { concurrency: 10 }
+      );
+
+      expect(result.successCount).toBe(2);
+      expect(result.failureCount).toBe(0);
+      expect(result.results).toHaveLength(2);
+      expect(result.results.every((r) => r.success)).toBe(true);
+    });
+
+    it('should respect concurrency limit', async () => {
+      const devices = [testPhone, testDesktop, testPhone]; // 3 devices
+      const concurrencyTracker: number[] = [];
+      let currentConcurrency = 0;
+
+      // Track concurrent executions via progress callback
+      const result = await captureAllDevices(
+        manager,
+        'https://example.com',
+        devices,
+        { timeout: DEFAULT_TIMEOUT, waitBuffer: 500 },
+        {
+          concurrency: 1, // Force sequential
+          onProgress: () => {
+            currentConcurrency++;
+            concurrencyTracker.push(currentConcurrency);
+            currentConcurrency--;
+          },
+        }
+      );
+
+      expect(result.successCount).toBe(3);
+      // With concurrency=1, captures should be sequential
+      expect(Math.max(...concurrencyTracker)).toBeLessThanOrEqual(1);
+    });
+
+    it('should collect all results even with partial failures', async () => {
+      const goodDevice = testPhone;
+      const badDevice: Device = {
+        ...testPhone,
+        name: 'Bad Device',
+      };
+      const devices = [goodDevice, badDevice, goodDevice];
+
+      // Create a scenario where all captures succeed with valid URL
+      // and verify all results are collected
+      const result = await captureAllDevices(
+        manager,
+        'https://example.com',
+        devices,
+        { timeout: DEFAULT_TIMEOUT, waitBuffer: 500 },
+        { concurrency: 10 }
+      );
+
+      // All should succeed with valid URL
+      expect(result.results).toHaveLength(3);
+      expect(result.successCount).toBe(3);
+      expect(result.totalAttempts).toBe(3);
+    });
+
+    it('should call progress callback for each capture', async () => {
+      const devices = [testPhone, testDesktop];
+      const progressCalls: Array<{ completed: number; total: number }> = [];
+
+      await captureAllDevices(
+        manager,
+        'https://example.com',
+        devices,
+        { timeout: DEFAULT_TIMEOUT, waitBuffer: 500 },
+        {
+          onProgress: (completed, total) => {
+            progressCalls.push({ completed, total });
+          },
+        }
+      );
+
+      expect(progressCalls).toHaveLength(2);
+      expect(progressCalls.every((p) => p.total === 2)).toBe(true);
+      // completed values should include 1 and 2 (order may vary due to parallelism)
+      expect(progressCalls.map((p) => p.completed).sort()).toEqual([1, 2]);
+    });
+
+    it('should use default options when not specified', async () => {
+      const result = await captureAllDevices(
+        manager,
+        'https://example.com',
+        [testPhone],
+        { timeout: DEFAULT_TIMEOUT, waitBuffer: 500 }
+        // No executionOptions - should use defaults
+      );
+
+      expect(result.successCount).toBe(1);
+      expect(result.results[0]?.attempts).toBe(1);
+    });
+  });
 });

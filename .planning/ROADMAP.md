@@ -68,10 +68,10 @@ Plans:
   2. `npx screenie --help` command is copy-pasteable from README
   3. npm version badge updates automatically on new releases
   4. Feature list covers all major capabilities (viewports, report, presets)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 13-01: TBD
+- [ ] 13-01-PLAN.md — Create README with badges, demo GIF, quick start, and features
 
 ### Phase 14: Landing Page
 **Goal**: screenie.xyz converts visitors to users within 10 seconds
@@ -124,7 +124,7 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 |-------|----------------|--------|-----------|
 | 11. npm Package Prep | 2/2 | ✓ Complete | 2026-01-20 |
 | 12. Demo Creation | 1/1 | ✓ Complete | 2026-01-20 |
-| 13. README Polish | 0/? | Not started | - |
+| 13. README Polish | 0/1 | In progress | - |
 | 14. Landing Page | 0/? | Not started | - |
 | 15. Documentation | 0/? | Not started | - |
 | 16. Publish | 0/? | Not started | - |
@@ -132,4 +132,4 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 ---
 
 *Created: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 12 completion*
+*Last updated: 2026-01-20 after Phase 13 planning*

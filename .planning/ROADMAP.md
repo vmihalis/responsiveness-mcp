@@ -97,10 +97,11 @@ Plans:
   2. Getting started guide has copy-pasteable commands that work
   3. CLI reference documents all flags shown in `screenie --help`
   4. docs.screenie.xyz resolves and serves documentation via Netlify
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 15-01: TBD
+- [ ] 15-01-PLAN.md — Set up VitePress with config and create all documentation pages
+- [ ] 15-02-PLAN.md — Deploy documentation to Netlify
 
 ### Phase 16: Publish
 **Goal**: Package is live on npm and discoverable via search
@@ -127,10 +128,10 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 | 12. Demo Creation | 1/1 | ✓ Complete | 2026-01-20 |
 | 13. README Polish | 1/1 | ✓ Complete | 2026-01-20 |
 | 14. Landing Page | 2/2 | ✓ Complete | 2026-01-20 |
-| 15. Documentation | 0/? | Not started | - |
+| 15. Documentation | 0/2 | Planned | - |
 | 16. Publish | 0/? | Not started | - |
 
 ---
 
 *Created: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 14 planning*
+*Last updated: 2026-01-20 after Phase 15 planning*

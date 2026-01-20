@@ -15,7 +15,7 @@ See: .planning/PROJECT.md (updated 2025-01-20)
 |--------|-------|
 | Current Phase | 8 (complete) |
 | Phases Complete | 8/10 |
-| Requirements Complete | 18/24 |
+| Requirements Complete | 21/24 |
 | Overall Progress | 80% |
 
 ---

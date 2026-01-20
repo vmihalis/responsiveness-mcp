@@ -18,14 +18,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **DEV-01**: Tool includes 50+ built-in device presets (phones, tablets, desktops)
 - [x] **DEV-02**: Tool organizes screenshots into phones/tablets/pc-laptops folders
-- [ ] **DEV-03**: Tool supports device filtering flags (--phones-only, --tablets-only, --desktops-only)
+- [x] **DEV-03**: Tool supports device filtering flags (--phones-only, --tablets-only, --desktops-only)
 
 ### CLI Interface
 
-- [ ] **CLI-01**: Tool accepts base URL as required argument (localhost or remote)
-- [ ] **CLI-02**: Tool accepts page path(s) to capture
-- [ ] **CLI-03**: Tool supports multiple pages in one run (--pages /home /about /gallery)
-- [ ] **CLI-04**: Tool supports concurrency flag (--concurrency N)
+- [x] **CLI-01**: Tool accepts base URL as required argument (localhost or remote)
+- [x] **CLI-02**: Tool accepts page path(s) to capture
+- [x] **CLI-03**: Tool supports multiple pages in one run (--pages /home /about /gallery)
+- [x] **CLI-04**: Tool supports concurrency flag (--concurrency N)
 
 ### Output & Report
 
@@ -42,7 +42,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **LOAD-02**: Tool adds configurable buffer after network idle (default 500ms)
 - [x] **LOAD-03**: Tool scrolls through page to trigger lazy-loaded content
 - [x] **LOAD-04**: Tool enforces max timeout (30s) to prevent hanging
-- [ ] **LOAD-05**: Tool supports custom wait flag (--wait ms)
+- [x] **LOAD-05**: Tool supports custom wait flag (--wait ms)
 
 ### UX & Polish
 
@@ -94,11 +94,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SHOT-04 | Phase 5 | Complete |
 | DEV-01 | Phase 2 | Complete |
 | DEV-02 | Phase 6 | Complete |
-| DEV-03 | Phase 8 | Pending |
-| CLI-01 | Phase 8 | Pending |
-| CLI-02 | Phase 8 | Pending |
-| CLI-03 | Phase 8 | Pending |
-| CLI-04 | Phase 8 | Pending |
+| DEV-03 | Phase 8 | Complete |
+| CLI-01 | Phase 8 | Complete |
+| CLI-02 | Phase 8 | Complete |
+| CLI-03 | Phase 8 | Complete |
+| CLI-04 | Phase 8 | Complete |
 | OUT-01 | Phase 6 | Complete |
 | OUT-02 | Phase 7 | Complete |
 | OUT-03 | Phase 7 | Complete |
@@ -109,7 +109,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LOAD-02 | Phase 4 | Complete |
 | LOAD-03 | Phase 4 | Complete |
 | LOAD-04 | Phase 3 | Complete |
-| LOAD-05 | Phase 8 | Pending |
+| LOAD-05 | Phase 8 | Complete |
 | UX-01 | Phase 9 | Pending |
 | UX-02 | Phase 9 | Pending |
 | UX-03 | Phase 9 | Pending |
@@ -121,4 +121,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2025-01-20*
-*Last updated: 2026-01-20 after Phase 7 completion*
+*Last updated: 2026-01-20 after Phase 8 completion*

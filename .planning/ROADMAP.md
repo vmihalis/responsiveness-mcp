@@ -16,7 +16,7 @@
 | 5 | Parallel Execution | Concurrent captures with retry logic | SHOT-02, SHOT-04 | 2 | Complete |
 | 6 | File Output | Organized folder structure and file naming | DEV-02, OUT-01 | 2 | Complete |
 | 7 | HTML Report | Grid view report with thumbnails and metadata | OUT-02, OUT-03, OUT-04, OUT-05 | 2 | Complete |
-| 8 | CLI Interface | Command parsing with flags and validation | CLI-01, CLI-02, CLI-03, CLI-04, LOAD-05, DEV-03 | 3 | Planned |
+| 8 | CLI Interface | Command parsing with flags and validation | CLI-01, CLI-02, CLI-03, CLI-04, LOAD-05, DEV-03 | 3 | Complete |
 | 9 | UX Polish | Progress indicators, cookie hiding, error messages | UX-01, UX-02, UX-03 | 4-6 | Pending |
 | 10 | Integration | Wire everything, auto-open report, end-to-end testing | OUT-06 | 4-6 | Pending |
 
@@ -201,29 +201,36 @@
 
 ---
 
-### Phase 8: CLI Interface
+### Phase 8: CLI Interface - COMPLETE
 
 **Goal:** Full command-line interface with all flags
 
 **Requirements:** CLI-01, CLI-02, CLI-03, CLI-04, LOAD-05, DEV-03
 
-**Status:** Planned
-**Plans:** 3 plans
+**Status:** Complete (2026-01-20)
+**Plans:** 3 plans executed
 
-Plans:
-- [ ] 08-01-PLAN.md — CLI types, validation functions, Commander program definition
-- [ ] 08-02-PLAN.md — Action handler and entry point wiring
-- [ ] 08-03-PLAN.md — CLI unit tests (validation + command parsing)
+**Completed Plans:**
+- 08-01: CLI types, validation functions, Commander program definition (4 commits)
+- 08-02: Action handler and entry point wiring (4 commits)
+- 08-03: CLI unit tests — 66 new tests (3 commits)
 
 **Success Criteria:**
-1. `responsive-capture <url>` works with URL argument
-2. `responsive-capture <url> /path` captures specific page
-3. `--pages /a /b /c` captures multiple pages
-4. `--concurrency N` sets parallel limit
-5. `--wait N` overrides wait buffer
-6. `--phones-only`, `--tablets-only`, `--desktops-only` filter devices
-7. `--help` shows usage
-8. Invalid input shows helpful error messages
+1. `responsive-capture <url>` works with URL argument ✓
+2. `responsive-capture <url> /path` captures specific page ✓
+3. `--pages /a /b /c` captures multiple pages ✓
+4. `--concurrency N` sets parallel limit ✓
+5. `--wait N` overrides wait buffer ✓
+6. `--phones-only`, `--tablets-only`, `--desktops-only` filter devices ✓
+7. `--help` shows usage ✓
+8. Invalid input shows helpful error messages ✓
+
+**Key Deliverables:**
+- `src/cli/types.ts` with CLIOptions and ValidatedConfig interfaces
+- `src/cli/validation.ts` with URL, concurrency, wait, device selection validators
+- `src/cli/commands.ts` with Commander program and all flags
+- `src/cli/actions.ts` with runCapture orchestrating full pipeline
+- 234 total tests passing (66 new CLI tests)
 
 ---
 

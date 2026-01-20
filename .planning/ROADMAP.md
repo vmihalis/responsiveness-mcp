@@ -40,10 +40,11 @@ See `.planning/milestones/v1.0-cli/` for complete history.
   2. `npm link && screenie --help` works from any directory
   3. LICENSE file is MIT and matches package.json license field
   4. package.json has repository, bugs, homepage pointing to correct URLs
-**Plans**: 1 plan
+**Plans**: 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — Configure package.json and create LICENSE for npm publishing
+- [x] 11-01-PLAN.md — Configure package.json and create LICENSE for npm publishing
+- [ ] 11-02-PLAN.md — Fix CLI branding (gap closure: responsive-capture -> screenie)
 
 ### Phase 12: Demo Creation
 **Goal**: High-quality demo GIF shows screenie capturing screenshots and generating report
@@ -121,7 +122,7 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 11. npm Package Prep | 0/1 | Planned | - |
+| 11. npm Package Prep | 1/2 | In progress | - |
 | 12. Demo Creation | 0/? | Not started | - |
 | 13. README Polish | 0/? | Not started | - |
 | 14. Landing Page | 0/? | Not started | - |
@@ -131,4 +132,4 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 ---
 
 *Created: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 11 planning*
+*Last updated: 2026-01-20 after gap closure plan 11-02 created*

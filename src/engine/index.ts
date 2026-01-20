@@ -13,3 +13,4 @@ export { BrowserManager } from './browser.js';
 
 // Functions
 export { captureScreenshot } from './capturer.js';
+export { scrollForLazyContent } from './scroll.js';

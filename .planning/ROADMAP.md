@@ -16,7 +16,7 @@
 | 5 | Parallel Execution | Concurrent captures with retry logic | SHOT-02, SHOT-04 | 2 | Complete |
 | 6 | File Output | Organized folder structure and file naming | DEV-02, OUT-01 | 2 | Complete |
 | 7 | HTML Report | Grid view report with thumbnails and metadata | OUT-02, OUT-03, OUT-04, OUT-05 | 2 | Complete |
-| 8 | CLI Interface | Command parsing with flags and validation | CLI-01, CLI-02, CLI-03, CLI-04, LOAD-05, DEV-03 | 5-7 | Pending |
+| 8 | CLI Interface | Command parsing with flags and validation | CLI-01, CLI-02, CLI-03, CLI-04, LOAD-05, DEV-03 | 3 | Planned |
 | 9 | UX Polish | Progress indicators, cookie hiding, error messages | UX-01, UX-02, UX-03 | 4-6 | Pending |
 | 10 | Integration | Wire everything, auto-open report, end-to-end testing | OUT-06 | 4-6 | Pending |
 
@@ -207,9 +207,17 @@
 
 **Requirements:** CLI-01, CLI-02, CLI-03, CLI-04, LOAD-05, DEV-03
 
+**Status:** Planned
+**Plans:** 3 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — CLI types, validation functions, Commander program definition
+- [ ] 08-02-PLAN.md — Action handler and entry point wiring
+- [ ] 08-03-PLAN.md — CLI unit tests (validation + command parsing)
+
 **Success Criteria:**
-1. `responsive-check <url>` works with URL argument
-2. `responsive-check <url> /path` captures specific page
+1. `responsive-capture <url>` works with URL argument
+2. `responsive-capture <url> /path` captures specific page
 3. `--pages /a /b /c` captures multiple pages
 4. `--concurrency N` sets parallel limit
 5. `--wait N` overrides wait buffer

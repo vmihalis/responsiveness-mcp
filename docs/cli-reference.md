@@ -142,6 +142,58 @@ Suppress automatic opening of the HTML report in your browser. Useful for CI/CD 
 screenie https://example.com --no-open
 ```
 
+## Troubleshooting
+
+### Timeout failures on large viewports
+
+Large viewports like 4K (3840×2160) and ultrawide (5120×1440) may timeout on heavy pages because:
+
+- More pixels to render means more layout work
+- Responsive images serve larger files at bigger viewports
+- More content becomes visible, triggering lazy-loading
+- Higher memory usage in the browser
+
+**Fix:** Increase the wait buffer:
+```bash
+screenie https://example.com --wait 3000
+```
+
+### Page load timed out
+
+Screenie waits up to 30 seconds for pages to reach network idle. If a page has:
+
+- Infinite polling (analytics, chat widgets)
+- Very large images or videos
+- Slow server response
+
+It may timeout. **Fixes:**
+
+1. **Add wait buffer:** `--wait 2000` adds 2 seconds after network idle
+2. **Reduce concurrency:** `--concurrency 3` uses fewer parallel browsers
+3. **Test subset first:** `--phones-only` to isolate the issue
+
+### Partial failures (some devices fail)
+
+If most devices succeed but a few fail, it's usually resource contention. **Fixes:**
+
+1. **Lower concurrency:** `--concurrency 5` (default is 10)
+2. **Retry:** Run again - transient failures often pass on retry
+3. **Check the specific viewport:** Some sites have bugs at certain breakpoints
+
+### Cookie banners blocking content
+
+Screenie auto-hides 50+ common cookie banner selectors. If one still appears:
+
+1. Accept/dismiss it manually once (sets cookie)
+2. Re-run screenie (cookie persists in session)
+
+### Screenshots are blank or incomplete
+
+Usually means the page needs more time to render. **Fix:**
+```bash
+screenie https://example.com --wait 2000
+```
+
 ## Exit Codes
 
 | Code | Meaning |

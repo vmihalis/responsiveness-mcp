@@ -262,6 +262,113 @@ describe('getCategoryDisplayName', () => {
 });
 
 // ============================================================================
+// Fold Line Function Tests
+// ============================================================================
+
+describe('getPngDimensions', () => {
+  it('extracts correct width and height from valid PNG buffer', () => {
+    const buffer = createTestPngBuffer(800, 600);
+    const dimensions = getPngDimensions(buffer);
+    expect(dimensions.width).toBe(800);
+    expect(dimensions.height).toBe(600);
+  });
+
+  it('handles large dimensions', () => {
+    const buffer = createTestPngBuffer(1920, 10000);
+    const dimensions = getPngDimensions(buffer);
+    expect(dimensions.width).toBe(1920);
+    expect(dimensions.height).toBe(10000);
+  });
+
+  it('handles small dimensions', () => {
+    const buffer = createTestPngBuffer(1, 1);
+    const dimensions = getPngDimensions(buffer);
+    expect(dimensions.width).toBe(1);
+    expect(dimensions.height).toBe(1);
+  });
+
+  it('throws "Invalid PNG file: incorrect signature" for non-PNG buffer', () => {
+    const invalidBuffer = Buffer.from('This is not a PNG file');
+    expect(() => getPngDimensions(invalidBuffer)).toThrow('Invalid PNG file: incorrect signature');
+  });
+
+  it('throws for buffer too short', () => {
+    const shortBuffer = Buffer.from([0x89, 0x50, 0x4e, 0x47]);
+    expect(() => getPngDimensions(shortBuffer)).toThrow();
+  });
+
+  it('throws for empty buffer', () => {
+    const emptyBuffer = Buffer.alloc(0);
+    expect(() => getPngDimensions(emptyBuffer)).toThrow();
+  });
+});
+
+describe('calculateFoldPositions', () => {
+  it('calculates lightboxPercent correctly (viewport 852px, screenshot 3000px)', () => {
+    const { lightboxPercent } = calculateFoldPositions(852, 393, 3000);
+    expect(lightboxPercent).toBeCloseTo(28.4, 1);
+  });
+
+  it('returns thumbnailPercent when fold is above visible area (short page)', () => {
+    // For a short page where the fold is within the thumbnail's visible area
+    // Width 393, height 400 -> aspect ratio 0.9825
+    // visibleHeightPercent = min(100, 1.6 / 0.9825 * 100) = 100 (entire image visible)
+    // lightboxPercent = 200 / 400 * 100 = 50%
+    // Since 50% <= 100%, thumbnailPercent = 50 / 100 * 100 = 50%
+    const { lightboxPercent, thumbnailPercent } = calculateFoldPositions(200, 393, 400);
+    expect(lightboxPercent).toBe(50);
+    expect(thumbnailPercent).toBe(50);
+  });
+
+  it('returns null thumbnailPercent when fold is below visible area (very tall screenshot)', () => {
+    // Very tall screenshot: width 393, height 10000 -> aspect ratio 0.0393
+    // visibleHeightPercent = min(100, 1.6 / 0.0393 * 100) = min(100, 4071) = 100
+    // But wait, for a tall narrow screenshot, the aspect ratio is low,
+    // so visibleHeightPercent would be capped at 100 (entire image visible)
+    // Let's test with a wide screenshot instead
+
+    // Actually, with object-fit: cover and object-position: top,
+    // a tall narrow image would be scaled to fill the width, showing more height
+    // Let's use a wider screenshot: width 1920, height 800
+    // aspect ratio = 2.4
+    // visibleHeightPercent = min(100, 1.6 / 2.4 * 100) = min(100, 66.67) = 66.67%
+    // If viewport 800px, lightboxPercent = 100%
+    // Since 100% > 66.67%, thumbnailPercent = null
+    const { lightboxPercent, thumbnailPercent } = calculateFoldPositions(800, 1920, 800);
+    expect(lightboxPercent).toBe(100);
+    // For this case, the fold is at the bottom of the screenshot
+    // which is beyond the visible 66.67% in the thumbnail
+    expect(thumbnailPercent).toBeNull();
+  });
+
+  it('calculates correctly when viewport equals screenshot height (fold at 100%)', () => {
+    const { lightboxPercent, thumbnailPercent } = calculateFoldPositions(1000, 393, 1000);
+    expect(lightboxPercent).toBe(100);
+    // For narrow screenshot (aspect 0.393), all height is visible in thumbnail
+    expect(thumbnailPercent).toBe(100);
+  });
+
+  it('handles different aspect ratios correctly', () => {
+    // Test with a wider screenshot where thumbnail crops more
+    // Width 1920, height 1080 -> aspect ratio ~1.78
+    // Thumbnail aspect ratio = 1.6
+    // visibleHeightPercent = 1.6 / 1.78 * 100 = 89.9%
+    // Viewport 540px (half of 1080), lightboxPercent = 50%
+    // 50% <= 89.9%, so thumbnailPercent = 50 / 89.9 * 100 = 55.6%
+    const { lightboxPercent, thumbnailPercent } = calculateFoldPositions(540, 1920, 1080);
+    expect(lightboxPercent).toBe(50);
+    expect(thumbnailPercent).toBeCloseTo(55.6, 0);
+  });
+
+  it('handles extreme case where fold is at top (viewport near 0)', () => {
+    const { lightboxPercent, thumbnailPercent } = calculateFoldPositions(10, 393, 1000);
+    expect(lightboxPercent).toBe(1);
+    expect(thumbnailPercent).not.toBeNull();
+    expect(thumbnailPercent).toBe(1);
+  });
+});
+
+// ============================================================================
 // HTML Template Tests (via generateReport output)
 // ============================================================================
 
@@ -471,6 +578,88 @@ describe('HTML Template Output', () => {
       // No external stylesheet links
       expect(html).not.toContain('href="http');
       expect(html).not.toContain("href='http");
+    });
+  });
+
+  describe('fold line styles and rendering', () => {
+    it('CSS includes .thumbnail-link::after fold line styles', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('.thumbnail-link::after');
+      expect(html).toContain('var(--fold-position');
+      expect(html).toContain('border-top: 2px dashed');
+    });
+
+    it('CSS includes .lightbox-content::after fold line styles', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('.lightbox-content::after');
+      expect(html).toContain('.lightbox-content {');
+    });
+
+    it('thumbnail card includes --fold-position style when fold is visible', async () => {
+      const screenshot: ScreenshotForReport = {
+        deviceName: 'Test Phone',
+        category: 'phones',
+        width: 375,
+        height: 812,
+        dataUri: 'data:image/png;base64,test',
+        screenshotWidth: 375,
+        screenshotHeight: 2000,
+        foldPositionLightbox: 40.6,
+        foldPositionThumbnail: 63.44, // Non-null means fold is visible
+      };
+      await generateReport(mockReportData, [screenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toMatch(/thumbnail-link.*style="--fold-position: 63\.44%/);
+    });
+
+    it('thumbnail card does NOT include fold style when foldPositionThumbnail is null', async () => {
+      const screenshot: ScreenshotForReport = {
+        deviceName: 'Test PC',
+        category: 'pc-laptops',
+        width: 1920,
+        height: 1080,
+        dataUri: 'data:image/png;base64,test',
+        screenshotWidth: 1920,
+        screenshotHeight: 1080,
+        foldPositionLightbox: 100,
+        foldPositionThumbnail: null, // Fold below visible area
+      };
+      await generateReport(mockReportData, [screenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      // The thumbnail-link should NOT have a style attribute when foldPositionThumbnail is null
+      expect(html).toMatch(/thumbnail-link">\s*<img/);
+    });
+
+    it('lightbox includes class="lightbox-content" wrapper div', async () => {
+      await generateReport(mockReportData, [mockScreenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('class="lightbox-content"');
+    });
+
+    it('lightbox wrapper has --fold-position style', async () => {
+      const screenshot: ScreenshotForReport = {
+        deviceName: 'Test Phone',
+        category: 'phones',
+        width: 375,
+        height: 812,
+        dataUri: 'data:image/png;base64,test',
+        screenshotWidth: 375,
+        screenshotHeight: 2000,
+        foldPositionLightbox: 40.6,
+        foldPositionThumbnail: 63.44,
+      };
+      await generateReport(mockReportData, [screenshot], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toMatch(/lightbox-content.*style="--fold-position: 40\.60%/);
+    });
+
+    it('fold line uses semi-transparent dashed styling', async () => {
+      await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
+      const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
+      expect(html).toContain('dashed');
+      expect(html).toContain('rgba(255, 100, 100, 0.5)');
     });
   });
 });

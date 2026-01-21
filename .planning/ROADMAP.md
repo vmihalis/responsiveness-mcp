@@ -2,7 +2,7 @@
 
 **Status:** In Progress
 **Phases:** 21-23
-**Total Plans:** TBD
+**Total Plans:** 5
 
 ## Overview
 
@@ -73,10 +73,11 @@ Plans:
 5. Running `screenie --version` shows "3.0.0" in ASCII banner
 6. package.json version is "3.0.0"
 
-**Plans:** TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 23-01: TBD
+- [ ] 23-01-PLAN.md — Update documentation with --full-page flag and viewport-only default
+- [ ] 23-02-PLAN.md — Create CHANGELOG and bump version to 3.0.0
 
 ---
 
@@ -107,9 +108,9 @@ Plans:
 |-------|----------------|--------|-----------|
 | 21. Capture Engine Changes | 2/2 | Complete | 2026-01-21 |
 | 22. Report Cleanup | 1/1 | Complete | 2026-01-22 |
-| 23. Documentation & Release | 0/? | Not started | - |
+| 23. Documentation & Release | 0/2 | Planned | - |
 
 ---
 
 *Created: 2026-01-21*
-*Last updated: 2026-01-22 (Phase 22 complete)*
+*Last updated: 2026-01-22 (Phase 23 planned)*

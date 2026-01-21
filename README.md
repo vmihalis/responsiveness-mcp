@@ -5,7 +5,7 @@
 
 # screenie
 
-Capture responsive design screenshots across 57 device viewports with one command.
+Capture viewport screenshots across 57 device viewports with one command.
 
 <p align="center">
   <img src="demo/demo.gif" alt="screenie capturing responsive screenshots" width="850">
@@ -40,6 +40,8 @@ With screenie:
 - **57 Device Viewports** - Phones, tablets, and desktops from iPhone to 4K displays
 - **HTML Report** - Visual grid of all captures, opens automatically
 - **Device Presets** - `--phones-only`, `--tablets-only`, `--desktops-only`
+- **Viewport Capture** - Fast, focused screenshots of the visible viewport
+- **Full-Page Option** - Use `--full-page` flag for entire page capture
 - **Parallel Capture** - Configurable concurrency for fast captures
 - **Zero Config** - Works out of the box, no setup required
 
@@ -82,6 +84,14 @@ Capture all 57 device viewports:
 
 ```bash
 screenie https://example.com
+```
+
+### Full-page capture
+
+Capture entire page height (not just viewport):
+
+```bash
+screenie https://example.com --full-page
 ```
 
 ### Capture specific device types
@@ -151,6 +161,7 @@ screenie https://example.com --no-open
 | `--phones-only` | Only capture phone devices (24 devices) | all |
 | `--tablets-only` | Only capture tablet devices (13 devices) | all |
 | `--desktops-only` | Only capture desktop devices (20 devices) | all |
+| `--full-page` | Capture entire page instead of viewport | viewport-only |
 | `-c, --concurrency <n>` | Parallel captures (1-50) | auto |
 | `-w, --wait <ms>` | Wait after page load | 0 |
 | `-o, --output <dir>` | Output directory | ./screenshots |

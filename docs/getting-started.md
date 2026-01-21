@@ -69,6 +69,8 @@ Capture all device viewports for a website:
 npx screenie-tool https://example.com
 ```
 
+Screenshots capture the visible viewport by default. For full-page capture, add the `--full-page` flag.
+
 This will:
 1. Launch Chromium browser
 2. Capture screenshots across 57 device viewports
@@ -82,6 +84,8 @@ After running screenie, you'll see:
 - **Progress spinner** showing capture status
 - **Screenshot files** in `./screenshots/` directory
 - **HTML report** opening in your browser with a grid view of all captures
+
+Screenie captures viewport screenshots across 57 device viewports by default.
 
 Each screenshot is named with the device name (e.g., `iPhone-15-Pro-Max.png`) for easy identification.
 

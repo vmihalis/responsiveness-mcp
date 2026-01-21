@@ -51,10 +51,10 @@ Plans:
 3. Fold line CSS and JavaScript code removed from report generation
 4. Report file size reduced (no fold line positioning data)
 
-**Plans:** TBD
+**Plans:** 1 plan
 
 Plans:
-- [ ] 22-01: TBD
+- [ ] 22-01-PLAN.md — Remove fold line code from reporter, types, and tests
 
 ---
 
@@ -106,10 +106,10 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 21. Capture Engine Changes | 2/2 | Complete | 2026-01-21 |
-| 22. Report Cleanup | 0/? | Not started | - |
+| 22. Report Cleanup | 0/1 | Planned | - |
 | 23. Documentation & Release | 0/? | Not started | - |
 
 ---
 
 *Created: 2026-01-21*
-*Last updated: 2026-01-21 (Phase 21 complete)*
+*Last updated: 2026-01-22 (Phase 22 planned)*

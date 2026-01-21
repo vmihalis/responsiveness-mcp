@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-21)
 
 **Core value:** Instantly verify that a web app looks correct across all device sizes without manual testing - run one command, review one report.
-**Current focus:** Phase 17 - Fold Line Indicator (completed)
+**Current focus:** Phase 18 - Interactive Preview Modal (completed)
 
 ## Current Position
 
-Phase: 17 of 18 (Fold Line Indicator)
+Phase: 18 of 18 (Interactive Preview Modal)
 Plan: 1 of 1 complete
 Status: Phase complete
-Last activity: 2026-01-21 - Completed 17-01-PLAN.md
+Last activity: 2026-01-21 - Completed 18-01-PLAN.md
 
-Progress: [█████████░] 85% (17/18 phases complete)
+Progress: [██████████] 100% (18/18 phases complete)
 
 ## Performance Metrics
 
@@ -24,14 +24,14 @@ Progress: [█████████░] 85% (17/18 phases complete)
 - Total execution time: 57m 12s
 
 **v2.1 Velocity:**
-- Plans completed: 1
-- Total duration: 7m
-- Plans remaining: 1 (Phase 18)
+- Plans completed: 2
+- Total duration: 11m (7m + 4m)
+- Plans remaining: 0
 
 **Cumulative:**
 - Milestones shipped: 2 (v1.0, v2.0)
-- Total phases completed: 17
-- Total plans completed: 39
+- Total phases completed: 18
+- Total plans completed: 40
 - Total days: 2
 
 ## Accumulated Context
@@ -47,6 +47,9 @@ Recent decisions affecting current work:
 - v2.1: PNG dimension extraction via buffer header (no external dependencies)
 - v2.1: CSS ::after pseudo-elements for fold line overlay
 - v2.1: Semi-transparent coral dashed line (rgba(255, 100, 100, 0.5), 2px)
+- v2.1: Native dialog element over custom modal for built-in accessibility
+- v2.1: 10-second iframe timeout for detecting blocked embedding
+- v2.1: Separate preview button from lightbox (preserve both features)
 
 ### Pending Todos
 
@@ -54,10 +57,9 @@ None.
 
 ### Blockers/Concerns
 
-**Research notes for Phase 18:**
-- Iframe CORS blocking with file:// protocol - Mitigation: Detect and provide fallback
-- Requires serving via HTTP/HTTPS for interactive preview to work fully
-- Iframe sandbox security configuration critical
+None - v2.1 feature development complete.
+
+Note for users: Interactive preview requires HTTP/HTTPS serving (file:// protocol may block iframes). Error state provides "Open in New Tab" fallback.
 
 ### Tech Debt
 
@@ -69,10 +71,10 @@ From v2.0:
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Completed 17-01-PLAN.md (Fold Line Indicator)
-Resume file: None - Ready to proceed with Phase 18 planning
+Stopped at: Completed 18-01-PLAN.md (Interactive Preview Modal)
+Resume file: None - v2.1 feature development complete
 
 ---
 
 *State initialized: 2026-01-21*
-*Last updated: 2026-01-21 after 17-01-PLAN.md completion*
+*Last updated: 2026-01-21 after 18-01-PLAN.md completion*

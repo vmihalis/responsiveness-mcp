@@ -3,7 +3,7 @@
 ## Milestones
 
 - [x] **v1.0 MVP** - Phases 1-10 (shipped 2026-01-20)
-- [ ] **v2.0 Open Source Release** - Phases 11-16 (in progress)
+- [x] **v2.0 Open Source Release** - Phases 11-16 (shipped 2026-01-21)
 
 ## Phases
 
@@ -14,7 +14,7 @@ See `.planning/milestones/v1.0-cli/` for complete history.
 
 </details>
 
-### v2.0 Open Source Release (In Progress)
+### v2.0 Open Source Release (SHIPPED 2026-01-21)
 
 **Milestone Goal:** Package screenie for public release with npm publishing, landing page, and documentation.
 
@@ -27,7 +27,7 @@ See `.planning/milestones/v1.0-cli/` for complete history.
 - [x] **Phase 13: README Polish** - Update README with demo, badges, features
 - [x] **Phase 14: Landing Page** - Build and deploy landing page (Vercel)
 - [x] **Phase 15: Documentation** - Set up VitePress documentation (Vercel)
-- [ ] **Phase 16: Publish** - npm publish with provenance signing
+- [x] **Phase 16: Publish** - npm publish with provenance signing
 
 ## Phase Details
 
@@ -108,13 +108,13 @@ Plans:
 **Depends on**: Phases 11, 13, 14, 15 (all must be complete before publishing)
 **Requirements**: NPM-06, NPM-07
 **Success Criteria** (what must be TRUE):
-  1. `npm info screenie` returns package metadata
+  1. `npm info screenie-tool` returns package metadata
   2. npm package has provenance badge (signed by GitHub Actions)
-  3. `npx screenie --help` works for new users without prior installation
+  3. `npx screenie-tool --help` works for new users without prior installation
 **Plans**: 1 plan
 
 Plans:
-- [ ] 16-01-PLAN.md — Create GitHub Actions workflow and publish to npm with provenance
+- [x] 16-01-PLAN.md — Create GitHub Actions workflow and publish to npm with provenance
 
 ## Progress
 
@@ -129,9 +129,9 @@ Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 | 13. README Polish | 1/1 | ✓ Complete | 2026-01-20 |
 | 14. Landing Page | 2/2 | ✓ Complete | 2026-01-20 |
 | 15. Documentation | 2/2 | ✓ Complete | 2026-01-20 |
-| 16. Publish | 0/1 | Planned | - |
+| 16. Publish | 1/1 | ✓ Complete | 2026-01-21 |
 
 ---
 
 *Created: 2026-01-20*
-*Last updated: 2026-01-20 after Phase 16 planning*
+*Last updated: 2026-01-21 after Phase 16 completion - MILESTONE COMPLETE*

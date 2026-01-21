@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Instantly verify responsive design without manual testing
-**Current focus:** Phase 15 complete, ready for Phase 16 (Publish)
+**Current focus:** v2.0 Open Source Release COMPLETE
 
 ---
 
@@ -14,28 +14,28 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 | Metric | Value |
 |--------|-------|
 | Current Milestone | v2.0 Open Source Release |
-| Phases Complete | 5/6 |
-| Requirements Complete | 17/21 |
+| Phases Complete | 6/6 |
+| Requirements Complete | 21/21 |
 
 ---
 
 ## Current Position
 
-Phase: 15 of 16 (Documentation)
-Plan: 2 of 2 complete
-Status: Phase complete - Documentation deployed to Vercel
-Last activity: 2026-01-20 - Completed 15-02-PLAN.md (Docs deployment)
+Phase: 16 of 16 (Publish)
+Plan: 1 of 1 complete
+Status: MILESTONE COMPLETE - Package published to npm with provenance
+Last activity: 2026-01-21 - Completed 16-01-PLAN.md (npm publish)
 
-Progress: [########..] ~75%
+Progress: [##########] 100%
 
 ---
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8 (v2.0)
-- Average duration: 5m 28s
-- Total execution time: 42m 12s
+- Total plans completed: 9 (v2.0)
+- Average duration: 6m 21s
+- Total execution time: 57m 12s
 
 **By Phase:**
 
@@ -46,10 +46,11 @@ Progress: [########..] ~75%
 | 13-readme-polish | 1 | 2m 00s | 2m 00s |
 | 14-landing-page | 2 | 5m 00s | 2m 30s |
 | 15-documentation | 2 | 23m 40s | 11m 50s |
+| 16-publish | 1 | 15m 00s | 15m 00s |
 
 **Recent Trend:**
-- Last 5 plans: 14-01 (2m 00s), 14-02 (3m 00s), 15-01 (3m 40s), 15-02 (20m 00s)
-- Trend: Plan 15-02 longer due to checkpoint verification delay
+- Last 5 plans: 14-02 (3m 00s), 15-01 (3m 40s), 15-02 (20m 00s), 16-01 (15m 00s)
+- Trend: Plan 16-01 longer due to npm setup checkpoints (token, 2FA, name collision)
 
 *Updated after each plan completion*
 
@@ -65,7 +66,7 @@ v2.0 decisions:
 - Stack: Vanilla HTML/CSS for landing, VitePress for docs
 - Flat structure (no monorepo migration)
 - VHS for terminal recording
-- Package renamed to "screenie" for npm identity
+- Package renamed to "screenie-tool" for npm (screenie was taken)
 - Files whitelist ["dist"] for npm security
 - MIT license for open source distribution
 - CLI branding updated to match npm package name (screenie)
@@ -86,23 +87,26 @@ v2.0 decisions:
 - Documentation site deployed to Vercel as separate project
 - Docs live at: https://dist-xi-virid.vercel.app
 - Custom domain (docs.screenie.xyz) setup deferred for later
+- GitHub Actions workflow for automated npm publishing
+- Granular access token with 2FA bypass (trusted publishers not available for new packages)
+- npm provenance via --provenance flag with OIDC
 
 ### Pending Todos
 
-None yet.
+None - milestone complete.
 
 ### Blockers/Concerns
 
-None yet.
+None.
 
 ---
 
 ## Session Continuity
 
-Last session: 2026-01-20T22:12:26Z
-Stopped at: Completed 15-02-PLAN.md (Documentation deployment)
+Last session: 2026-01-21T12:50:00Z
+Stopped at: Completed 16-01-PLAN.md (npm publish) - MILESTONE COMPLETE
 Resume file: None
 
 ---
 
-*Last updated: 2026-01-20 after Phase 15 completion*
+*Last updated: 2026-01-21 after Phase 16 completion*

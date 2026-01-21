@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import stripAnsi from 'strip-ansi';
 import { generateBanner } from '../banner.js';
 
@@ -7,6 +7,39 @@ import { generateBanner } from '../banner.js';
  * Tests the generateBanner function used for --version/-v display
  */
 describe('ASCII Banner', () => {
+  // Store original values for TTY mocking
+  const originalIsTTY = process.stdout.isTTY;
+  const originalColumns = process.stdout.columns;
+
+  beforeEach(() => {
+    // Mock TTY environment for consistent ASCII art output testing
+    Object.defineProperty(process.stdout, 'isTTY', {
+      value: true,
+      writable: true,
+      configurable: true,
+    });
+    Object.defineProperty(process.stdout, 'columns', {
+      value: 120,
+      writable: true,
+      configurable: true,
+    });
+  });
+
+  afterEach(() => {
+    // Restore original values
+    Object.defineProperty(process.stdout, 'isTTY', {
+      value: originalIsTTY,
+      writable: true,
+      configurable: true,
+    });
+    Object.defineProperty(process.stdout, 'columns', {
+      value: originalColumns,
+      writable: true,
+      configurable: true,
+    });
+    vi.restoreAllMocks();
+  });
+
   describe('content requirements', () => {
     it('contains SCREENIE text in ASCII art form', () => {
       const banner = generateBanner('1.0.0');

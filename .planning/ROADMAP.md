@@ -43,10 +43,10 @@ Plans:
   5. User sees helpful error message when site blocks iframe (CORS/X-Frame-Options)
   6. Error state includes "Open in new tab" fallback link
   7. Modal uses proper iframe sandboxing for security
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 18-01: [To be determined during planning]
+- [ ] 18-01-PLAN.md — Add interactive preview modal (native dialog, iframe preview, loading/error states, keyboard accessibility)
 
 ---
 
@@ -58,9 +58,9 @@ Phases execute in numeric order: 17 → 18
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 17. Fold Line Indicator | 1/1 | ✓ Complete | 2026-01-21 |
-| 18. Interactive Preview Modal | 0/TBD | Not started | - |
+| 18. Interactive Preview Modal | 0/1 | Planned | - |
 
 ---
 
 *Created: 2026-01-20*
-*Last updated: 2026-01-21 for Phase 17 completion*
+*Last updated: 2026-01-21 for Phase 18 planning*

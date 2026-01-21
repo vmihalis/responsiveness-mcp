@@ -12,6 +12,28 @@ npx screenie-tool https://example.com
 
 **Output:** 57 screenshots in `./screenshots/` + HTML report
 
+## Full-Page Capture
+
+Capture the entire page height instead of just the viewport:
+
+```bash
+npx screenie-tool https://example.com --full-page
+```
+
+**Output:** 57 full-page screenshots showing all content
+
+**Use case:** Documenting complete page layouts, testing scroll content
+
+## Full-Page with Multiple Pages
+
+Combine full-page with multiple page paths:
+
+```bash
+npx screenie-tool https://example.com --full-page --pages /home /about /pricing
+```
+
+**Output:** Complete page captures for all specified routes
+
 ## Capture Specific Page
 
 Capture a specific page path:
@@ -155,6 +177,8 @@ npx screenie-tool http://localhost:3000 \
 - Waits 500ms after page load
 - Saves to `./qa-screenshots/`
 - Doesn't open browser (CI mode)
+
+Add `--full-page` for entire page capture instead of viewport-only.
 
 **Use case:** Automated QA pipeline for mobile layouts
 

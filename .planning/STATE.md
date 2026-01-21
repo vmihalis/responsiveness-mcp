@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-21)
 
 **Core value:** Instantly verify that a web app looks correct across all device sizes without manual testing - run one command, review one report.
-**Current focus:** Phase 17 - Fold Line Indicator
+**Current focus:** Phase 17 - Fold Line Indicator (completed)
 
 ## Current Position
 
 Phase: 17 of 18 (Fold Line Indicator)
-Plan: Ready to plan (no plans created yet)
-Status: Ready to plan
-Last activity: 2026-01-21 - v2.1 roadmap created with 2 phases
+Plan: 1 of 1 complete
+Status: Phase complete
+Last activity: 2026-01-21 - Completed 17-01-PLAN.md
 
-Progress: [████████░░] 80% (16/18 phases - v2.0 complete, v2.1 planned)
+Progress: [█████████░] 85% (17/18 phases complete)
 
 ## Performance Metrics
 
@@ -23,16 +23,16 @@ Progress: [████████░░] 80% (16/18 phases - v2.0 complete, v2
 - Average duration: 6m 21s
 - Total execution time: 57m 12s
 
+**v2.1 Velocity:**
+- Plans completed: 1
+- Total duration: 7m
+- Plans remaining: 1 (Phase 18)
+
 **Cumulative:**
 - Milestones shipped: 2 (v1.0, v2.0)
-- Total phases completed: 16
-- Total plans completed: 38
+- Total phases completed: 17
+- Total plans completed: 39
 - Total days: 2
-
-**v2.1 Status:**
-- Phases: 2 planned (17-18)
-- Plans: Not yet created
-- Next: `/gsd:plan-phase 17`
 
 ## Accumulated Context
 
@@ -44,14 +44,15 @@ Recent decisions affecting current work:
 - v2.0: Base64 data URIs for images - Report works offline, single file (Good)
 - v2.0: CSS-only lightbox - No JavaScript, self-contained HTML (Good)
 - v2.0: VitePress for docs - Vue ecosystem, built-in search (Good)
+- v2.1: PNG dimension extraction via buffer header (no external dependencies)
+- v2.1: CSS ::after pseudo-elements for fold line overlay
+- v2.1: Semi-transparent coral dashed line (rgba(255, 100, 100, 0.5), 2px)
 
 ### Pending Todos
 
-None yet. (v2.1 just starting)
+None.
 
 ### Blockers/Concerns
-
-None yet. Research completed with HIGH confidence for v2.1 implementation.
 
 **Research notes for Phase 18:**
 - Iframe CORS blocking with file:// protocol - Mitigation: Detect and provide fallback
@@ -68,10 +69,10 @@ From v2.0:
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: v2.1 roadmap created (ROADMAP.md, STATE.md updated)
-Resume file: None - Ready to proceed with `/gsd:plan-phase 17`
+Stopped at: Completed 17-01-PLAN.md (Fold Line Indicator)
+Resume file: None - Ready to proceed with Phase 18 planning
 
 ---
 
 *State initialized: 2026-01-21*
-*Last updated: 2026-01-21 after v2.1 roadmap creation*
+*Last updated: 2026-01-21 after 17-01-PLAN.md completion*

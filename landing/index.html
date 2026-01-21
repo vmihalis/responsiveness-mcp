@@ -148,6 +148,20 @@
       color: var(--ctp-subtext1);
     }
 
+    .hint {
+      color: var(--ctp-subtext0);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hint code.inline {
+      font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", "Liberation Mono", Menlo, Monaco, Consolas, monospace;
+      background: var(--ctp-surface0);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
     /* Mobile responsive adjustments */
     @media (max-width: 640px) {
       .install {
@@ -172,12 +186,14 @@
     <p class="tagline">Capture responsive design screenshots across 57 device viewports with one command.</p>
     <img src="demo.gif" alt="screenie capturing responsive screenshots" class="demo" width="850" height="450">
     <div class="install">
-      <code id="cmd">npx screenie-tool https://your-site.com</code>
+      <code id="cmd">npm install -g screenie-tool</code>
       <button class="copy-btn" onclick="copyInstall()">Copy</button>
     </div>
+    <p class="hint">Then run: <code class="inline">screenie https://your-site.com</code></p>
     <nav class="links">
-      <a href="https://github.com/vmihalis/responsiveness-mcp">GitHub</a>
+      <a href="https://github.com/vmihalis/screenie">GitHub</a>
       <a href="https://www.npmjs.com/package/screenie-tool">npm</a>
+      <a href="https://dist-xi-virid.vercel.app">Docs</a>
     </nav>
   </main>
 

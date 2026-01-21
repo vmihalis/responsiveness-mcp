@@ -4,11 +4,11 @@
 
 - [x] **v1.0 MVP** - Phases 1-10 (shipped 2026-01-20) - See `.planning/milestones/v1.0-ROADMAP.md`
 - [x] **v2.0 Open Source Release** - Phases 11-16 (shipped 2026-01-21) - See `.planning/milestones/v2.0-ROADMAP.md`
-- [ ] **v2.1 Enhanced Report** - Phases 17-18 (in progress)
+- [x] **v2.1 Enhanced Report** - Phases 17-18 (shipped 2026-01-21)
 
 ---
 
-## v2.1 Enhanced Report (In Progress)
+## v2.1 Enhanced Report (Complete)
 
 **Milestone Goal:** Make the HTML report more useful by showing the viewport boundary and enabling interactive testing at any device size.
 
@@ -46,7 +46,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 18-01-PLAN.md — Add interactive preview modal (native dialog, iframe preview, loading/error states, keyboard accessibility)
+- [x] 18-01-PLAN.md — Add interactive preview modal (native dialog, iframe preview, loading/error states, keyboard accessibility)
 
 ---
 
@@ -58,9 +58,9 @@ Phases execute in numeric order: 17 → 18
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 17. Fold Line Indicator | 1/1 | ✓ Complete | 2026-01-21 |
-| 18. Interactive Preview Modal | 0/1 | Planned | - |
+| 18. Interactive Preview Modal | 1/1 | ✓ Complete | 2026-01-21 |
 
 ---
 
 *Created: 2026-01-20*
-*Last updated: 2026-01-21 for Phase 18 planning*
+*Last updated: 2026-01-21 - v2.1 milestone complete*

@@ -17,13 +17,13 @@ Requirements for Enhanced Report milestone. Each maps to roadmap phases.
 
 ### Interactive Preview Modal
 
-- [ ] **PREV-01**: User can click screenshot to open interactive preview modal
-- [ ] **PREV-02**: Modal contains iframe sized to exact device dimensions (width × height)
-- [ ] **PREV-03**: Modal displays loading spinner while iframe loads
-- [ ] **PREV-04**: User can close modal via close button
-- [ ] **PREV-05**: User can close modal via ESC key
-- [ ] **PREV-06**: Modal shows error message when site blocks iframe embedding (CORS/X-Frame-Options)
-- [ ] **PREV-07**: Error state includes "Open in new tab" fallback link
+- [x] **PREV-01**: User can click screenshot to open interactive preview modal
+- [x] **PREV-02**: Modal contains iframe sized to exact device dimensions (width × height)
+- [x] **PREV-03**: Modal displays loading spinner while iframe loads
+- [x] **PREV-04**: User can close modal via close button
+- [x] **PREV-05**: User can close modal via ESC key
+- [x] **PREV-06**: Modal shows error message when site blocks iframe embedding (CORS/X-Frame-Options)
+- [x] **PREV-07**: Error state includes "Open in new tab" fallback link
 
 ## Future Requirements
 
@@ -72,13 +72,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOLD-03 | Phase 17 | Complete |
 | FOLD-04 | Phase 17 | Complete |
 | FOLD-05 | Phase 17 | Complete |
-| PREV-01 | Phase 18 | Pending |
-| PREV-02 | Phase 18 | Pending |
-| PREV-03 | Phase 18 | Pending |
-| PREV-04 | Phase 18 | Pending |
-| PREV-05 | Phase 18 | Pending |
-| PREV-06 | Phase 18 | Pending |
-| PREV-07 | Phase 18 | Pending |
+| PREV-01 | Phase 18 | Complete |
+| PREV-02 | Phase 18 | Complete |
+| PREV-03 | Phase 18 | Complete |
+| PREV-04 | Phase 18 | Complete |
+| PREV-05 | Phase 18 | Complete |
+| PREV-06 | Phase 18 | Complete |
+| PREV-07 | Phase 18 | Complete |
 
 **Coverage:**
 - v2.1 requirements: 12 total
@@ -87,4 +87,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-21*
-*Last updated: 2026-01-21 after Phase 17 completion*
+*Last updated: 2026-01-21 after Phase 18 completion (v2.1 complete)*

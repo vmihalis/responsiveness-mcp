@@ -11,7 +11,7 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 Phase: 18 of 18 (Interactive Preview Modal)
 Plan: 1 of 1 complete
-Status: Phase complete
+Status: Milestone complete
 Last activity: 2026-01-21 - Completed 18-01-PLAN.md
 
 Progress: [██████████] 100% (18/18 phases complete)
@@ -29,7 +29,7 @@ Progress: [██████████] 100% (18/18 phases complete)
 - Plans remaining: 0
 
 **Cumulative:**
-- Milestones shipped: 2 (v1.0, v2.0)
+- Milestones shipped: 3 (v1.0, v2.0, v2.1)
 - Total phases completed: 18
 - Total plans completed: 40
 - Total days: 2

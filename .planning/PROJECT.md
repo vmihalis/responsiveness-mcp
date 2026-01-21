@@ -10,21 +10,12 @@ Instantly verify that a web app looks correct across all device sizes without ma
 
 ## Current State
 
-**Version:** v2.1 (shipped 2026-01-21)
+**Version:** v2.2 (shipped 2026-01-21)
 **npm:** https://www.npmjs.com/package/screenie-tool
 **Landing:** https://landing-gilt-psi-18.vercel.app
 **Docs:** https://dist-xi-virid.vercel.app
 
-The tool is complete and published. All v1.0, v2.0, and v2.1 requirements are validated.
-
-## Current Milestone: v2.2 ASCII Art Branding
-
-**Goal:** Add branded ASCII art banner for tool identity and polish.
-
-**Target features:**
-- ASCII art banner design (stylish, fits "Screenie" identity)
-- Display on `npm install -g screenie-tool` (postinstall script)
-- Display on `screenie --version` / `screenie -v`
+The tool is complete and published. All v1.0, v2.0, v2.1, and v2.2 requirements are validated.
 
 ## Requirements
 
@@ -94,7 +85,17 @@ The tool is complete and published. All v1.0, v2.0, and v2.1 requirements are va
 - ✓ `PREV-06` Error message for blocked iframes — v2.1
 - ✓ `PREV-07` "Open in new tab" fallback — v2.1
 
-### Future (v2.2+)
+**v2.2 ASCII Art Branding:**
+- ✓ `BRAND-01` ASCII art banner with "SCREENIE" text in stylish block letters — v2.2
+- ✓ `BRAND-02` Banner includes version number display — v2.2
+- ✓ `BRAND-03` Banner includes brief tagline — v2.2
+- ✓ `BRAND-04` Graceful handling of narrow terminal widths — v2.2
+- ✓ `CLI-05` `screenie --version` displays ASCII banner + version — v2.2
+- ✓ `CLI-06` `screenie -v` alias works identically — v2.2
+- ✓ `INST-02` Quick-start hint (in version banner) — v2.2
+- — `INST-01` Postinstall script — Skipped (security anti-pattern in 2026)
+
+### Future (v2.3+)
 
 - Config file support (.responsiverc.json)
 - Custom viewport definitions via config
@@ -128,12 +129,13 @@ The tool is complete and published. All v1.0, v2.0, and v2.1 requirements are va
 
 ## Context
 
-v2.1 shipped with enhanced report features:
-- Fold line indicator showing viewport boundary on all screenshots
-- Interactive preview modal for testing sites at device dimensions
+v2.2 shipped with ASCII art branding:
+- Branded ASCII art banner using figlet Big font
+- Terminal width detection with graceful font fallback (Big → Small → Mini → plain text)
+- Non-TTY output returns plain text for CI/pipe compatibility
 
-Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest.
-6,862 LOC TypeScript, 333 tests passing.
+Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest, figlet.
+7,395 LOC TypeScript, 353 tests passing.
 57 device presets covering flagship phones, tablets, and desktops.
 
 ## Constraints
@@ -167,6 +169,11 @@ Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest.
 | Native dialog element for preview modal | Built-in focus trapping, ESC, backdrop | ✓ Good |
 | 10-second iframe timeout | Standard value for detecting X-Frame-Options blocking | ✓ Good |
 | Separate preview button from lightbox | Preserve both features (screenshot view + live preview) | ✓ Good |
+| Figlet Big font for ASCII banner | Clear readable ASCII art within 80-char width | ✓ Good |
+| Commander preAction hook for custom version | Clean way to intercept --version before action runs | ✓ Good |
+| Width thresholds: Big/Small/Mini/plain | Graceful degradation from 80+ to <45 columns | ✓ Good |
+| Non-TTY always plain text | Pipe and CI compatibility for machine parsing | ✓ Good |
+| Skip postinstall banner | Security anti-pattern (pnpm 10+ disables by default) | ✓ Good |
 
 ---
-*Last updated: 2026-01-21 after v2.1 milestone*
+*Last updated: 2026-01-21 after v2.2 milestone*

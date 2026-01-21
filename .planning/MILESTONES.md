@@ -1,5 +1,33 @@
 # Project Milestones: Screenie
 
+## v2.2 ASCII Art Branding (Shipped: 2026-01-21)
+
+**Delivered:** Professional CLI identity with branded ASCII art banner displayed on `screenie --version` with graceful terminal width handling and font fallback.
+
+**Phases completed:** 19-20 (2 plans total)
+
+**Key accomplishments:**
+
+- ASCII art banner using figlet Big font for professional CLI branding
+- Custom `--version` and `-v` flags showing branded output with version, tagline, and quick-start hint
+- Terminal width detection with graceful font fallback (Big → Small → Mini → plain text)
+- Non-TTY output (pipes, CI) returns plain text for machine parsing compatibility
+- Comprehensive test coverage (353 tests passing)
+
+**Stats:**
+
+- 20 files created/modified
+- +1,998 / -39 lines
+- 2 phases, 2 plans, 5 tasks
+- 13 commits
+- 353 tests total (19 new in v2.2)
+
+**Git range:** `c0830cd` (docs(19): research) → `d97cc1b` (chore: bump version)
+
+**What's next:** v2.3+ enhancements (config file support, custom domains, expanded documentation)
+
+---
+
 ## v2.1 Enhanced Report (Shipped: 2026-01-21)
 
 **Delivered:** Enhanced HTML report with fold line indicator showing viewport boundaries on all screenshots and interactive preview modal for live site testing at device dimensions.

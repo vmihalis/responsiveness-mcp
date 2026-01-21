@@ -2,90 +2,90 @@
 
 ## What This Is
 
-An open source CLI tool that captures responsive screenshots across 57 device dimensions and generates HTML reports for quick visual review. Published on npm as `screenie-tool` with documentation at dist-xi-virid.vercel.app and a landing page at landing-gilt-psi-18.vercel.app.
+An open source CLI tool that captures responsive screenshots across 57 device dimensions and generates HTML reports with fold line indicators and interactive device previews for quick visual review. Published on npm as `screenie-tool` with documentation at dist-xi-virid.vercel.app and a landing page at landing-gilt-psi-18.vercel.app.
 
 ## Core Value
 
 Instantly verify that a web app looks correct across all device sizes without manual testing - run one command, review one report.
 
-## Current Milestone: v2.1 Enhanced Report
-
-**Goal:** Make the HTML report more useful by showing the viewport boundary and enabling interactive testing at any device size.
-
-**Target features:**
-- Fold line indicator — CSS overlay showing where viewport ends on each screenshot
-- Interactive preview — Click screenshot to open live iframe at device dimensions
-
 ## Current State
 
-**Version:** v2.0 (shipped 2026-01-21)
+**Version:** v2.1 (shipped 2026-01-21)
 **npm:** https://www.npmjs.com/package/screenie-tool
 **Landing:** https://landing-gilt-psi-18.vercel.app
 **Docs:** https://dist-xi-virid.vercel.app
 
-The tool is complete and published. All v1.0 and v2.0 requirements are validated.
+The tool is complete and published. All v1.0, v2.0, and v2.1 requirements are validated.
 
 ## Requirements
 
 ### Validated
 
 **v1.0 MVP:**
-- `SHOT-01` Full-page screenshots - v1.0
-- `SHOT-02` Parallel execution with configurable concurrency (default 10) - v1.0
-- `SHOT-03` CSS animation disabling before capture - v1.0
-- `SHOT-04` Retry on failure (2-3 attempts for transient errors) - v1.0
-- `DEV-01` 57 built-in device presets (24 phones, 13 tablets, 20 desktops) - v1.0
-- `DEV-02` Screenshots organized into phones/tablets/pc-laptops folders - v1.0
-- `DEV-03` Device filtering flags (--phones-only, --tablets-only, --desktops-only) - v1.0
-- `CLI-01` Base URL argument (localhost or remote) - v1.0
-- `CLI-02` Page path argument - v1.0
-- `CLI-03` Multiple pages flag (--pages) - v1.0
-- `CLI-04` Concurrency flag (--concurrency) - v1.0
-- `OUT-01` Descriptive file names (device-name-widthxheight.png) - v1.0
-- `OUT-02` HTML report with responsive grid view - v1.0
-- `OUT-03` Category grouping in report - v1.0
-- `OUT-04` Thumbnails with click-to-enlarge - v1.0
-- `OUT-05` Metadata display (URL, timestamp, duration, device count) - v1.0
-- `OUT-06` Auto-open report in browser - v1.0
-- `LOAD-01` Network idle wait before capture - v1.0
-- `LOAD-02` Configurable wait buffer (default 500ms) - v1.0
-- `LOAD-03` Lazy content scroll triggering - v1.0
-- `LOAD-04` Max timeout (30s) - v1.0
-- `LOAD-05` Custom wait flag (--wait) - v1.0
-- `UX-01` Progress indicators (ora spinner) - v1.0
-- `UX-02` Cookie banner auto-hiding (50+ selectors) - v1.0
-- `UX-03` Clear error messages with actionable hints - v1.0
+- ✓ `SHOT-01` Full-page screenshots — v1.0
+- ✓ `SHOT-02` Parallel execution with configurable concurrency (default 10) — v1.0
+- ✓ `SHOT-03` CSS animation disabling before capture — v1.0
+- ✓ `SHOT-04` Retry on failure (2-3 attempts for transient errors) — v1.0
+- ✓ `DEV-01` 57 built-in device presets (24 phones, 13 tablets, 20 desktops) — v1.0
+- ✓ `DEV-02` Screenshots organized into phones/tablets/pc-laptops folders — v1.0
+- ✓ `DEV-03` Device filtering flags (--phones-only, --tablets-only, --desktops-only) — v1.0
+- ✓ `CLI-01` Base URL argument (localhost or remote) — v1.0
+- ✓ `CLI-02` Page path argument — v1.0
+- ✓ `CLI-03` Multiple pages flag (--pages) — v1.0
+- ✓ `CLI-04` Concurrency flag (--concurrency) — v1.0
+- ✓ `OUT-01` Descriptive file names (device-name-widthxheight.png) — v1.0
+- ✓ `OUT-02` HTML report with responsive grid view — v1.0
+- ✓ `OUT-03` Category grouping in report — v1.0
+- ✓ `OUT-04` Thumbnails with click-to-enlarge — v1.0
+- ✓ `OUT-05` Metadata display (URL, timestamp, duration, device count) — v1.0
+- ✓ `OUT-06` Auto-open report in browser — v1.0
+- ✓ `LOAD-01` Network idle wait before capture — v1.0
+- ✓ `LOAD-02` Configurable wait buffer (default 500ms) — v1.0
+- ✓ `LOAD-03` Lazy content scroll triggering — v1.0
+- ✓ `LOAD-04` Max timeout (30s) — v1.0
+- ✓ `LOAD-05` Custom wait flag (--wait) — v1.0
+- ✓ `UX-01` Progress indicators (ora spinner) — v1.0
+- ✓ `UX-02` Cookie banner auto-hiding (50+ selectors) — v1.0
+- ✓ `UX-03` Clear error messages with actionable hints — v1.0
 
 **v2.0 Open Source Release:**
-- `NPM-01` Package renamed to screenie-tool - v2.0
-- `NPM-02` package.json includes repository, bugs, homepage - v2.0
-- `NPM-03` files whitelist for security - v2.0
-- `NPM-04` MIT LICENSE file - v2.0
-- `NPM-05` npm pack succeeds - v2.0
-- `NPM-06` npm provenance signing - v2.0
-- `NPM-07` Package published to npm - v2.0
-- `DEMO-01` Demo GIF showing workflow - v2.0
-- `README-01` README demo GIF - v2.0
-- `README-02` Quick install command - v2.0
-- `README-03` Badges (version, license, downloads) - v2.0
-- `README-04` Feature list - v2.0
-- `LAND-01` Landing hero section - v2.0
-- `LAND-02` Landing demo GIF - v2.0
-- `LAND-03` Copy-to-clipboard install - v2.0
-- `LAND-04` Links to GitHub, npm, docs - v2.0
-- `LAND-05` Landing deployed to Vercel - v2.0
-- `DOCS-01` VitePress site setup - v2.0
-- `DOCS-02` Getting started guide - v2.0
-- `DOCS-03` CLI reference - v2.0
-- `DOCS-04` Docs deployed to Vercel - v2.0
-
-### Active
+- ✓ `NPM-01` Package renamed to screenie-tool — v2.0
+- ✓ `NPM-02` package.json includes repository, bugs, homepage — v2.0
+- ✓ `NPM-03` files whitelist for security — v2.0
+- ✓ `NPM-04` MIT LICENSE file — v2.0
+- ✓ `NPM-05` npm pack succeeds — v2.0
+- ✓ `NPM-06` npm provenance signing — v2.0
+- ✓ `NPM-07` Package published to npm — v2.0
+- ✓ `DEMO-01` Demo GIF showing workflow — v2.0
+- ✓ `README-01` README demo GIF — v2.0
+- ✓ `README-02` Quick install command — v2.0
+- ✓ `README-03` Badges (version, license, downloads) — v2.0
+- ✓ `README-04` Feature list — v2.0
+- ✓ `LAND-01` Landing hero section — v2.0
+- ✓ `LAND-02` Landing demo GIF — v2.0
+- ✓ `LAND-03` Copy-to-clipboard install — v2.0
+- ✓ `LAND-04` Links to GitHub, npm, docs — v2.0
+- ✓ `LAND-05` Landing deployed to Vercel — v2.0
+- ✓ `DOCS-01` VitePress site setup — v2.0
+- ✓ `DOCS-02` Getting started guide — v2.0
+- ✓ `DOCS-03` CLI reference — v2.0
+- ✓ `DOCS-04` Docs deployed to Vercel — v2.0
 
 **v2.1 Enhanced Report:**
-- Fold line indicator on screenshots (CSS overlay at viewport height)
-- Interactive preview modal with live iframe at device dimensions
+- ✓ `FOLD-01` Horizontal line overlay at viewport height — v2.1
+- ✓ `FOLD-02` Fold line visible on thumbnails — v2.1
+- ✓ `FOLD-03` Fold line visible on lightbox — v2.1
+- ✓ `FOLD-04` Non-intrusive dashed styling — v2.1
+- ✓ `FOLD-05` CSS-based (not baked into image) — v2.1
+- ✓ `PREV-01` Click screenshot to open preview modal — v2.1
+- ✓ `PREV-02` Iframe sized to device dimensions — v2.1
+- ✓ `PREV-03` Loading spinner while iframe loads — v2.1
+- ✓ `PREV-04` Close via close button — v2.1
+- ✓ `PREV-05` Close via ESC key — v2.1
+- ✓ `PREV-06` Error message for blocked iframes — v2.1
+- ✓ `PREV-07` "Open in new tab" fallback — v2.1
 
-### Future (v2.1+)
+### Future (v2.2+)
 
 - Config file support (.responsiverc.json)
 - Custom viewport definitions via config
@@ -100,27 +100,31 @@ The tool is complete and published. All v1.0 and v2.0 requirements are validated
 - Feature cards on landing page
 - Example gallery showing actual reports
 - Custom domain setup (screenie.xyz, docs.screenie.xyz)
+- Toggle button to show/hide fold lines globally
+- Fold line label showing viewport height
+- Keyboard navigation (arrow keys to cycle devices in preview)
+- Side-by-side comparison mode
 
 ### Out of Scope
 
-- Hosted web application - users run CLI locally
-- Backend/API - no server-side screenshot capture
-- Visual regression/diff comparison - Percy/Applitools territory
-- Real device cloud testing - BrowserStack domain
-- User accounts/authentication - open source tool, no login
-- Cross-browser (Firefox/Safari) - Chrome sufficient for layout verification
-- PDF/video export - focus on screenshots + HTML
+- Hosted web application — users run CLI locally
+- Backend/API — no server-side screenshot capture
+- Visual regression/diff comparison — Percy/Applitools territory
+- Real device cloud testing — BrowserStack domain
+- User accounts/authentication — open source tool, no login
+- Cross-browser (Firefox/Safari) — Chrome sufficient for layout verification
+- PDF/video export — focus on screenshots + HTML
+- Fold line baked into screenshot image — CSS overlay allows toggling later
+- Video recording of interactions — focus on screenshots
 
 ## Context
 
-v2.0 shipped with full open source release infrastructure:
-- npm package with provenance signing
-- Landing page deployed to Vercel
-- VitePress documentation site
-- Professional README with demo GIF and badges
+v2.1 shipped with enhanced report features:
+- Fold line indicator showing viewport boundary on all screenshots
+- Interactive preview modal for testing sites at device dimensions
 
 Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest.
-5,954 LOC TypeScript, 291 tests passing.
+6,862 LOC TypeScript, 333 tests passing.
 57 device presets covering flagship phones, tablets, and desktops.
 
 ## Constraints
@@ -134,20 +138,26 @@ Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest.
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Full-page screenshots (not viewport-only) | Catch layout issues anywhere on page | Good |
-| Playwright over Puppeteer | Better API, built-in device emulation | Good |
-| HTML report over folder browsing | Scanning 50+ images in grid is faster | Good |
-| Parallel execution with p-limit | 57 devices sequentially ~3min; parallel ~40sec | Good |
-| CSS-only lightbox | No JavaScript, self-contained HTML | Good |
-| Base64 data URIs for images | Report works offline, single file | Good |
-| ESM-only with NodeNext | Modern Node.js standard | Good |
-| Vitest for testing | Native ESM support, fast | Good |
-| ora for spinner | Non-blocking progress, clean CI output | Good |
-| Error returns vs throws | Batch operations continue on individual failures | Good |
-| screenie-tool npm name | screenie was taken; binary still runs as screenie | Good |
-| Vercel for hosting | User preference, excellent static hosting | Good |
-| VitePress for docs | Vue ecosystem, built-in search | Good |
-| GitHub Actions for publish | Automated releases with provenance | Good |
+| Full-page screenshots (not viewport-only) | Catch layout issues anywhere on page | ✓ Good |
+| Playwright over Puppeteer | Better API, built-in device emulation | ✓ Good |
+| HTML report over folder browsing | Scanning 50+ images in grid is faster | ✓ Good |
+| Parallel execution with p-limit | 57 devices sequentially ~3min; parallel ~40sec | ✓ Good |
+| CSS-only lightbox | No JavaScript, self-contained HTML | ✓ Good |
+| Base64 data URIs for images | Report works offline, single file | ✓ Good |
+| ESM-only with NodeNext | Modern Node.js standard | ✓ Good |
+| Vitest for testing | Native ESM support, fast | ✓ Good |
+| ora for spinner | Non-blocking progress, clean CI output | ✓ Good |
+| Error returns vs throws | Batch operations continue on individual failures | ✓ Good |
+| screenie-tool npm name | screenie was taken; binary still runs as screenie | ✓ Good |
+| Vercel for hosting | User preference, excellent static hosting | ✓ Good |
+| VitePress for docs | Vue ecosystem, built-in search | ✓ Good |
+| GitHub Actions for publish | Automated releases with provenance | ✓ Good |
+| PNG dimension extraction via buffer header | No external dependencies for fold positioning | ✓ Good |
+| CSS ::after pseudo-elements for fold line | Pure CSS, toggleable without JS | ✓ Good |
+| Semi-transparent coral dashed line | Good contrast without being intrusive | ✓ Good |
+| Native dialog element for preview modal | Built-in focus trapping, ESC, backdrop | ✓ Good |
+| 10-second iframe timeout | Standard value for detecting X-Frame-Options blocking | ✓ Good |
+| Separate preview button from lightbox | Preserve both features (screenshot view + live preview) | ✓ Good |
 
 ---
-*Last updated: 2026-01-21 after starting v2.1 milestone*
+*Last updated: 2026-01-21 after v2.1 milestone*

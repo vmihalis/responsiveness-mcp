@@ -1,5 +1,34 @@
 # Project Milestones: Screenie
 
+## v2.1 Enhanced Report (Shipped: 2026-01-21)
+
+**Delivered:** Enhanced HTML report with fold line indicator showing viewport boundaries on all screenshots and interactive preview modal for live site testing at device dimensions.
+
+**Phases completed:** 17-18 (2 plans total)
+
+**Key accomplishments:**
+
+- PNG dimension extraction from buffer header (no external dependencies) for fold line positioning
+- CSS fold line overlay showing viewport boundary on all screenshots (thumbnails and lightbox)
+- Interactive preview modal using native HTML5 dialog with iframe at exact device dimensions
+- Loading spinner and error state with "Open in New Tab" fallback for sites blocking iframes
+- Full keyboard accessibility (ESC to close, backdrop click, focus restoration)
+- 42 new tests covering fold line (19) and modal (23) functionality
+
+**Stats:**
+
+- 12 files created/modified
+- +2,629 / -94 lines
+- 2 phases, 2 plans, 6 tasks
+- 8 commits
+- 333 tests total (42 new in v2.1)
+
+**Git range:** `d5e6218` (feat(17-01)) → `f5c3946` (docs(18))
+
+**What's next:** v2.2+ enhancements (config file support, custom domains, expanded documentation)
+
+---
+
 ## v2.0 Open Source Release (Shipped: 2026-01-21)
 
 **Delivered:** Professional open source release with npm publishing, landing page, VitePress documentation, and demo GIF for instant developer onboarding.

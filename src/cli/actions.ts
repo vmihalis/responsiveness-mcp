@@ -74,6 +74,7 @@ export async function runCapture(
         {
           timeout: defaultConfig.timeout,
           waitBuffer,
+          fullPage: options.fullPage ?? false,
         },
         {
           concurrency,

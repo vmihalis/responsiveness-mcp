@@ -8,6 +8,8 @@ Complete reference for all `screenie` command-line options.
 screenie [options] <url> [path]
 ```
 
+By default, screenshots capture only the visible viewport. Use `--full-page` for entire page capture.
+
 ## Arguments
 
 | Argument | Description | Required |
@@ -26,6 +28,7 @@ screenie [options] <url> [path]
 | `--phones-only` | Only capture phone devices (24 devices) | all devices |
 | `--tablets-only` | Only capture tablet devices (16 devices) | all devices |
 | `--desktops-only` | Only capture desktop/laptop devices (17 devices) | all devices |
+| `--full-page` | Capture entire page instead of viewport | viewport-only |
 | `-o, --output <dir>` | Output directory for screenshots and report | `./screenshots` |
 | `--no-open` | Suppress auto-opening report in browser (useful for CI) | report opens |
 | `-h, --help` | Display help for command | - |
@@ -120,6 +123,24 @@ Only capture desktop and laptop devices. Useful for testing desktop-specific lay
 ```bash
 screenie https://example.com --desktops-only
 ```
+
+### `--full-page`
+
+Capture the entire page height instead of just the visible viewport.
+
+**Default:** false (viewport-only capture)
+
+**Example:**
+```bash
+screenie https://example.com --full-page
+```
+
+**When to use:**
+- You need screenshots of content below the fold
+- Documenting entire page layouts
+- Comparing full-page designs across devices
+
+**Note:** Full-page capture may be slower on very long pages and produce larger file sizes.
 
 ### `-o, --output <dir>`
 

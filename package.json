@@ -1,6 +1,6 @@
 {
   "name": "screenie-tool",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "CLI tool for capturing responsive design screenshots using Playwright",
   "type": "module",
   "bin": {

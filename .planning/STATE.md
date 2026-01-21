@@ -10,13 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 Phase: 21 of 23 (Capture Engine Changes)
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-01-21 — Roadmap created for v3.0 milestone
+Plan: 01 of 03
+Status: In progress
+Last activity: 2026-01-21 — Completed 21-01-PLAN.md (Type definitions and CLI flag)
 
-Progress: [░░░░░░░░░░] 0% (v3.0 Viewport-First Capture)
+Progress: [█░░░░░░░░░] 33% (v3.0 Viewport-First Capture)
 
 ## Performance Metrics
+
+**v3.0 Velocity (in progress):**
+- Plans completed: 1
+- Total duration: 3min
+- Phases completed: 0 (21 in progress)
 
 **v2.2 Velocity:**
 - Plans completed: 2
@@ -26,7 +31,7 @@ Progress: [░░░░░░░░░░] 0% (v3.0 Viewport-First Capture)
 **Cumulative:**
 - Milestones shipped: 4 (v1.0, v2.0, v2.1, v2.2)
 - Total phases completed: 20
-- Total plans completed: 42
+- Total plans completed: 43
 - Total days: 2
 
 ## Accumulated Context
@@ -34,6 +39,11 @@ Progress: [░░░░░░░░░░] 0% (v3.0 Viewport-First Capture)
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
+
+v3.0 decisions (in progress):
+- fullPage defaults to false (viewport-only) - users opt-in to full-page capture
+- CLI flag named --full-page (kebab-case) for consistency with existing flags
+- Optional boolean pattern: flag presence = true, absence = undefined
 
 v2.2 decisions marked as Good:
 - Figlet Big font for ASCII banner
@@ -63,10 +73,10 @@ From v2.2:
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: v3.0 roadmap created
+Stopped at: Completed 21-01-PLAN.md
 Resume file: None
 
 ---
 
 *State initialized: 2026-01-21*
-*Last updated: 2026-01-21 after v3.0 roadmap created*
+*Last updated: 2026-01-21 after 21-01 plan execution*

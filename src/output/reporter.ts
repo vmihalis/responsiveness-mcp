@@ -219,6 +219,19 @@ body {
   display: block;
   aspect-ratio: 16 / 10;
   overflow: hidden;
+  position: relative;
+}
+
+.thumbnail-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--fold-position, 200%);
+  height: 0;
+  border-top: 2px dashed rgba(255, 100, 100, 0.5);
+  pointer-events: none;
+  z-index: 10;
 }
 
 .thumbnail-link img {
@@ -297,6 +310,23 @@ body {
   margin-top: 1rem;
   text-align: center;
 }
+
+.lightbox-content {
+  position: relative;
+  display: inline-block;
+}
+
+.lightbox-content::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--fold-position, 200%);
+  height: 0;
+  border-top: 2px dashed rgba(255, 100, 100, 0.5);
+  pointer-events: none;
+  z-index: 10;
+}
 `;
 
 /**
@@ -324,8 +354,13 @@ function renderThumbnailCard(screenshot: ScreenshotForReport): string {
     screenshot.height
   );
 
+  // Build fold style attribute if fold is visible in thumbnail
+  const foldStyle = screenshot.foldPositionThumbnail !== null
+    ? ` style="--fold-position: ${screenshot.foldPositionThumbnail.toFixed(2)}%;"`
+    : '';
+
   return `<div class="thumbnail-card">
-    <a href="#${lightboxId}" class="thumbnail-link">
+    <a href="#${lightboxId}" class="thumbnail-link"${foldStyle}>
       <img src="${screenshot.dataUri}" alt="${escapeHtml(screenshot.deviceName)}">
     </a>
     <div class="thumbnail-info">
@@ -363,9 +398,13 @@ function renderLightbox(screenshot: ScreenshotForReport): string {
     screenshot.height
   );
 
+  const foldStyle = `--fold-position: ${screenshot.foldPositionLightbox.toFixed(2)}%;`;
+
   return `<a href="#_" class="lightbox" id="${lightboxId}">
     <span class="lightbox-close">&times;</span>
-    <img src="${screenshot.dataUri}" alt="${escapeHtml(screenshot.deviceName)} - Full Size">
+    <div class="lightbox-content" style="${foldStyle}">
+      <img src="${screenshot.dataUri}" alt="${escapeHtml(screenshot.deviceName)} - Full Size">
+    </div>
     <div class="lightbox-info">
       <strong>${escapeHtml(screenshot.deviceName)}</strong> - ${screenshot.width} x ${screenshot.height}
     </div>

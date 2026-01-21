@@ -51,7 +51,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 20-01-PLAN.md — Add width detection and font fallback to banner module
+- [x] 20-01-PLAN.md — Add width detection and font fallback to banner module ✓
 
 **Requirements covered:**
 - BRAND-04: Graceful handling of narrow terminal widths
@@ -85,4 +85,4 @@ INST-01 (postinstall banner) intentionally skipped per security best practices.
 
 ---
 *Roadmap created: 2026-01-21*
-*Last updated: 2026-01-21 after Phase 20 planning*
+*Last updated: 2026-01-21 after Phase 20 execution*

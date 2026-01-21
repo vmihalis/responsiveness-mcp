@@ -66,6 +66,7 @@ Explicitly excluded for v2.2:
 | CLI-06 | Phase 19 | Complete |
 | INST-01 | — | Skipped (security anti-pattern) |
 | INST-02 | Phase 19 | Complete |
+| BRAND-04 | Phase 20 | Complete |
 
 **Coverage:**
 - v2.2 requirements: 7 total
@@ -74,4 +75,4 @@ Explicitly excluded for v2.2:
 
 ---
 *Requirements defined: 2026-01-21*
-*Last updated: 2026-01-21 after Phase 19 completion*
+*Last updated: 2026-01-21 after Phase 20 completion*

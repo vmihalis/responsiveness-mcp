@@ -5,17 +5,17 @@ import { scrollForLazyContent } from './scroll.js';
 import { hideCookieBanners } from './cookies.js';
 
 /**
- * Capture a full-page screenshot of a URL using a specific device configuration.
+ * Capture a screenshot of a URL using a specific device configuration.
  *
  * Uses the provided BrowserManager to create an isolated context for the device,
- * navigates to the URL, waits for network idle, and captures the full page.
+ * navigates to the URL, waits for network idle, and captures the viewport or full page.
  *
  * @param manager - BrowserManager instance (allows reuse across captures)
  * @param options - Capture options including URL, device, and timeout
  * @returns ScreenshotResult with buffer on success or error message on failure
  *
  * Requirements satisfied:
- * - SHOT-01: Full-page screenshot (captures entire scrollable content)
+ * - SHOT-01: Screenshot (viewport-only by default, full-page via option)
  * - LOAD-01: Network idle wait before capture
  * - LOAD-02: Post-networkidle buffer wait for rendering stability
  * - LOAD-03: Scroll for lazy-loaded content before screenshot
@@ -34,6 +34,7 @@ export async function captureScreenshot(
     scrollForLazy = true,
     maxScrollIterations = 10,
     hideCookieBanners: shouldHideCookies = true,
+    fullPage = false,
   } = options;
 
   // Split timeout budget: 60% navigation, 25% scroll+buffer, 15% screenshot
@@ -65,9 +66,9 @@ export async function captureScreenshot(
       await scrollForLazyContent(page, maxScrollIterations, scrollTimeout);
     }
 
-    // SHOT-01 + SHOT-03: Full-page screenshot with animations disabled
+    // SHOT-01: Screenshot with configurable full-page mode (default: viewport-only)
     const buffer = await page.screenshot({
-      fullPage: true,
+      fullPage,
       type: 'png',
       scale: 'css', // Consistent file sizes across DPRs
       animations: 'disabled', // SHOT-03: Disable CSS animations for consistency

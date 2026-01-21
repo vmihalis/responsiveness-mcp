@@ -17,6 +17,15 @@ Instantly verify that a web app looks correct across all device sizes without ma
 
 The tool is complete and published. All v1.0, v2.0, and v2.1 requirements are validated.
 
+## Current Milestone: v2.2 ASCII Art Branding
+
+**Goal:** Add branded ASCII art banner for tool identity and polish.
+
+**Target features:**
+- ASCII art banner design (stylish, fits "Screenie" identity)
+- Display on `npm install -g screenie-tool` (postinstall script)
+- Display on `screenie --version` / `screenie -v`
+
 ## Requirements
 
 ### Validated

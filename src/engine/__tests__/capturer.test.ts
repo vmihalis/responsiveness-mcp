@@ -83,19 +83,49 @@ describe('captureScreenshot', () => {
       expect(result.buffer!.subarray(0, 4).equals(pngMagic)).toBe(true);
     });
 
-    it('should capture full-page content', async () => {
+    it('should capture viewport content (default)', async () => {
       // Use a page that's likely to have scrollable content
       const options: CaptureOptions = {
         url: 'https://example.com',
         device: testPhone,
         timeout: DEFAULT_TIMEOUT,
         waitBuffer: 500,
+        // fullPage defaults to false (viewport-only)
       };
 
       const result = await captureScreenshot(manager, options);
 
       expect(result.success).toBe(true);
-      // Full-page capture means buffer should exist
+      expect(result.buffer).toBeDefined();
+    });
+
+    it('should capture full-page content when fullPage: true', async () => {
+      const options: CaptureOptions = {
+        url: 'https://example.com',
+        device: testPhone,
+        timeout: DEFAULT_TIMEOUT,
+        waitBuffer: 500,
+        fullPage: true,
+      };
+
+      const result = await captureScreenshot(manager, options);
+
+      expect(result.success).toBe(true);
+      expect(result.buffer).toBeDefined();
+    });
+
+    it('should capture viewport-only when fullPage: false', async () => {
+      const options: CaptureOptions = {
+        url: 'https://example.com',
+        device: testPhone,
+        timeout: DEFAULT_TIMEOUT,
+        waitBuffer: 500,
+        fullPage: false,
+      };
+
+      const result = await captureScreenshot(manager, options);
+
+      expect(result.success).toBe(true);
       expect(result.buffer).toBeDefined();
     });
   });

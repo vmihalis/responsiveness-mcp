@@ -11,10 +11,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vmihalis/responsiveness-mcp.git"
+    "url": "git+https://github.com/vmihalis/screenie.git"
   },
   "bugs": {
-    "url": "https://github.com/vmihalis/responsiveness-mcp/issues"
+    "url": "https://github.com/vmihalis/screenie/issues"
   },
   "homepage": "https://screenie.xyz",
   "author": "memehalis",

@@ -33,10 +33,10 @@ See milestone archives for completed phase details.
   3. Modal opens centered on screen (no left-drift)
   4. Modal takes 80-90% of viewport and device iframe is centered within it
   5. Device name and dimensions are displayed in modal header
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 24-01: TBD (planning not yet complete)
+- [ ] 24-01-PLAN.md — Update preview button and modal UX in reporter.ts
 
 ## Progress
 
@@ -50,8 +50,8 @@ Phases execute in numeric order.
 | 15-18 | v2.1 | 8/8 | Complete | 2026-01-21 |
 | 19-20 | v2.2 | 5/5 | Complete | 2026-01-22 |
 | 21-23 | v3.0 | 5/5 | Complete | 2026-01-22 |
-| 24. Preview UX Polish | v3.1 | 0/? | Not started | - |
+| 24. Preview UX Polish | v3.1 | 0/1 | Ready | - |
 
 ---
 *Roadmap created: 2026-01-21*
-*Last updated: 2026-01-22 after v3.1 roadmap creation*
+*Last updated: 2026-01-22 after Phase 24 planning*

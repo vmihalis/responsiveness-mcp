@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-22)
 
 **Core value:** Instantly verify that a web app looks correct across all device sizes without manual testing - run one command, review one report.
-**Current focus:** Planning next milestone (v3.1+)
+**Current focus:** v3.1 Preview UX Improvements
 
 ## Current Position
 
-Phase: 23 of 23 (v3.0 COMPLETE)
-Plan: N/A
-Status: Ready to plan next milestone
-Last activity: 2026-01-22 — v3.0 milestone complete
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-01-22 — Milestone v3.1 started
 
-Progress: [██████████] 100% (v3.0 Viewport-First Capture SHIPPED)
+Progress: [░░░░░░░░░░] 0% (v3.1 Preview UX Improvements)
 
 ## Performance Metrics
 
@@ -63,10 +63,10 @@ From v2.2:
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: v3.0 SHIPPED — ready for next milestone planning
+Stopped at: v3.1 milestone started — defining requirements
 Resume file: None
 
 ---
 
 *State initialized: 2026-01-21*
-*Last updated: 2026-01-22 after v3.0 milestone completed*
+*Last updated: 2026-01-22 after v3.1 milestone started*

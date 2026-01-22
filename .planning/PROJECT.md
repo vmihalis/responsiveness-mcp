@@ -19,9 +19,17 @@ The tool is complete and published. All v1.0, v2.0, v2.1, v2.2, and v3.0 require
 
 v3.0 changed the default capture behavior from full-page to viewport-only. The grid view is now instantly scannable at a glance. Users who need full-page screenshots can use the `--full-page` flag.
 
-## Next Milestone Goals (v3.1+)
+## Current Milestone: v3.1 Preview UX Improvements
 
-Potential features for next milestone:
+**Goal:** Make the interactive preview more discoverable and usable with prominent buttons and proper centering.
+
+**Target features:**
+- Large centered modal that takes most of the screen with device iframe centered inside
+- Always-visible, larger/bolder preview button on every thumbnail card
+
+## Future Goals (v3.2+)
+
+Potential features for future milestones:
 - Config file support (.responsiverc.json)
 - Custom viewport definitions via config
 - Output directory flag (--output)
@@ -207,4 +215,4 @@ Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest, figlet
 | Nullish coalescing for fullPage (v3.0) | Type-safe handling of undefined/true/false | ✓ Good |
 
 ---
-*Last updated: 2026-01-22 after v3.0 milestone completed*
+*Last updated: 2026-01-22 after v3.1 milestone started*

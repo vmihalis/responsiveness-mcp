@@ -1,5 +1,33 @@
 # Project Milestones: Screenie
 
+## v3.0 Viewport-First Capture (Shipped: 2026-01-22)
+
+**Delivered:** Changed default screenshot capture from full-page to viewport-only, making the grid view instantly scannable while preserving full-page capture via `--full-page` flag.
+
+**Phases completed:** 21-23 (5 plans total)
+
+**Key accomplishments:**
+
+- Changed default capture from full-page to viewport-only (screenshots match device viewport height)
+- Added `--full-page` CLI flag to restore original full-page behavior when needed
+- Removed ~130 lines of fold line code (redundant with viewport-only capture)
+- Created CHANGELOG.md with Keep a Changelog format and explicit breaking change documentation
+- Updated all documentation (README, CLI reference, Getting Started, Examples) for viewport-first behavior
+
+**Stats:**
+
+- 37 files created/modified
+- +3,871 / -425 lines
+- 3 phases, 5 plans, 13 tasks
+- 29 commits
+- 338 tests passing
+
+**Git range:** `9cb22828` (docs: define milestone v3.0 requirements) → `e86fcc39` (docs: add v3.0 milestone audit report)
+
+**What's next:** v3.1+ enhancements (config file support, custom viewport definitions, output directory flag)
+
+---
+
 ## v2.2 ASCII Art Branding (Shipped: 2026-01-21)
 
 **Delivered:** Professional CLI identity with branded ASCII art banner displayed on `screenie --version` with graceful terminal width handling and font fallback.

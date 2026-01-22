@@ -2,34 +2,29 @@
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-01-21)
+See: .planning/PROJECT.md (updated 2026-01-22)
 
 **Core value:** Instantly verify that a web app looks correct across all device sizes without manual testing - run one command, review one report.
-**Current focus:** v3.0 Viewport-First Capture - Phase 23
+**Current focus:** Planning next milestone (v3.1+)
 
 ## Current Position
 
-Phase: 23 of 23 (Documentation Release) - COMPLETE
-Plan: 02 of 02 - COMPLETE
-Status: Phase complete - v3.0 ready for npm publish
-Last activity: 2026-01-22 - Completed 23-02-PLAN.md
+Phase: 23 of 23 (v3.0 COMPLETE)
+Plan: N/A
+Status: Ready to plan next milestone
+Last activity: 2026-01-22 — v3.0 milestone complete
 
-Progress: [█████████░] 100% (v3.0 Viewport-First Capture COMPLETE)
+Progress: [██████████] 100% (v3.0 Viewport-First Capture SHIPPED)
 
 ## Performance Metrics
 
-**v3.0 Velocity (COMPLETE):**
+**v3.0 Velocity (SHIPPED):**
 - Plans completed: 5
 - Total duration: 18min (3min + 8min + 4min + 2min + 1min)
 - Phases completed: 3 (Phase 21, Phase 22, Phase 23)
 
-**v2.2 Velocity:**
-- Plans completed: 2
-- Total duration: ~9min (5min + 4min)
-- Phases completed: 2
-
 **Cumulative:**
-- Milestones shipped: 5 (v1.0, v2.0, v2.1, v2.2, v3.0)
+- Milestones shipped: 6 (v1.0, v2.0, v2.1, v2.2, v3.0)
 - Total phases completed: 23
 - Total plans completed: 47
 - Total days: 2
@@ -40,24 +35,12 @@ Progress: [█████████░] 100% (v3.0 Viewport-First Capture COM
 
 Decisions are logged in PROJECT.md Key Decisions table.
 
-v3.0 decisions (COMPLETE):
-- fullPage defaults to false (viewport-only) - users opt-in to full-page capture
-- CLI flag named --full-page (kebab-case) for consistency with existing flags
-- Optional boolean pattern: flag presence = true, absence = undefined
-- Nullish coalescing pattern for fullPage option (options.fullPage ?? false)
-- Dynamic screenshot mode threaded through CLI -> actions -> executor -> capturer
-- Fold line removed entirely (viewport-only capture = entire screenshot IS "above the fold")
-- Lightbox outputs img directly without wrapper div
-- Keep a Changelog 1.0.0 format for version history
-- BREAKING CHANGES section with explicit migration examples
-- npm version major command for atomic version bumps
-
-v2.2 decisions marked as Good:
-- Figlet Big font for ASCII banner
-- Commander preAction hook for custom version handling
-- Width thresholds: Big/Small/Mini/plain text
-- Non-TTY always plain text
-- Skip postinstall banner (security anti-pattern)
+v3.0 decisions marked as Good:
+- Viewport-only default (v3.0) — Full-page screenshots unwieldy for long pages; grid becomes scannable
+- --full-page CLI flag (v3.0) — Preserves original behavior for users who need it
+- Remove fold line (v3.0) — Viewport-only capture = entire screenshot IS above fold
+- Keep a Changelog format (v3.0) — Industry standard for version history documentation
+- Nullish coalescing for fullPage (v3.0) — Type-safe handling of undefined/true/false
 
 ### Pending Todos
 
@@ -80,10 +63,10 @@ From v2.2:
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: v3.0 COMPLETE - ready for npm publish
+Stopped at: v3.0 SHIPPED — ready for next milestone planning
 Resume file: None
 
 ---
 
 *State initialized: 2026-01-21*
-*Last updated: 2026-01-22 after v3.0 COMPLETE*
+*Last updated: 2026-01-22 after v3.0 milestone completed*

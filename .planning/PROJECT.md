@@ -10,22 +10,23 @@ Instantly verify that a web app looks correct across all device sizes without ma
 
 ## Current State
 
-**Version:** v2.2 (shipped 2026-01-21)
+**Version:** v3.0 (shipped 2026-01-22)
 **npm:** https://www.npmjs.com/package/screenie-tool
 **Landing:** https://landing-gilt-psi-18.vercel.app
 **Docs:** https://dist-xi-virid.vercel.app
 
-The tool is complete and published. All v1.0, v2.0, v2.1, and v2.2 requirements are validated.
+The tool is complete and published. All v1.0, v2.0, v2.1, v2.2, and v3.0 requirements are validated.
 
-## Current Milestone: v3.0 Viewport-First Capture
+v3.0 changed the default capture behavior from full-page to viewport-only. The grid view is now instantly scannable at a glance. Users who need full-page screenshots can use the `--full-page` flag.
 
-**Goal:** Change default screenshot behavior from full-page to viewport-only, making the grid view actually scannable while relying on interactive preview for full page exploration.
+## Next Milestone Goals (v3.1+)
 
-**Target features:**
-- Viewport-only screenshots as default behavior
-- `--full-page` flag to restore full-page capture when needed
-- Remove fold line indicator (redundant with viewport-only capture)
-- Major version bump with clear changelog
+Potential features for next milestone:
+- Config file support (.responsiverc.json)
+- Custom viewport definitions via config
+- Output directory flag (--output)
+- Dark mode capture (--dark-mode)
+- Keyboard navigation in preview modal
 
 ## Requirements
 
@@ -105,12 +106,19 @@ The tool is complete and published. All v1.0, v2.0, v2.1, and v2.2 requirements 
 - ✓ `INST-02` Quick-start hint (in version banner) — v2.2
 - — `INST-01` Postinstall script — Skipped (security anti-pattern in 2026)
 
-### Active (v3.0)
-
-- [ ] Viewport-only screenshots as default capture mode
-- [ ] `--full-page` flag for original full-page behavior
-- [ ] Remove fold line indicator from report
-- [ ] Update documentation for new default behavior
+**v3.0 Viewport-First Capture:**
+- ✓ `CAP-01` Default capture mode is viewport-only (device viewport height, not full page) — v3.0
+- ✓ `CAP-02` `--full-page` flag enables full-page capture (original v1.0-v2.2 behavior) — v3.0
+- ✓ `CAP-03` Existing flags work unchanged (--phones-only, --concurrency, etc.) — v3.0
+- ✓ `RPT-01` Remove fold line indicator from thumbnail cards — v3.0
+- ✓ `RPT-02` Remove fold line indicator from lightbox view — v3.0
+- ✓ `RPT-03` Remove fold line CSS and related code — v3.0
+- ✓ `DOC-01` Update CLI reference with new default behavior — v3.0
+- ✓ `DOC-02` Document `--full-page` flag usage — v3.0
+- ✓ `DOC-03` README reflects viewport-only as default — v3.0
+- ✓ `DOC-04` Changelog documents breaking change clearly — v3.0
+- ✓ `VER-01` Bump major version to 3.0.0 — v3.0
+- ✓ `VER-02` Update ASCII banner version display — v3.0
 
 ### Future (v3.1+)
 
@@ -144,15 +152,16 @@ The tool is complete and published. All v1.0, v2.0, v2.1, and v2.2 requirements 
 
 ## Context
 
-v3.0 changes the fundamental capture philosophy:
+v3.0 changed the fundamental capture philosophy:
 - Full-page screenshots were the original approach (v1.0-v2.2)
 - For long pages, full-page screenshots become unwieldy (10,000px+ images)
 - Interactive preview (added v2.1) proved more useful for exploring content
 - Viewport-only screenshots enable quick visual scanning in the grid
 - `--full-page` flag preserves original behavior for users who need it
+- Fold line indicator removed — with viewport-only capture, the entire screenshot IS "above the fold"
 
 Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest, figlet.
-7,395 LOC TypeScript, 353 tests passing.
+6,979 LOC TypeScript, 338 tests passing.
 57 device presets covering flagship phones, tablets, and desktops.
 
 ## Constraints
@@ -191,6 +200,11 @@ Tech stack: Node.js 20+, Playwright (Chromium), TypeScript, tsup, Vitest, figlet
 | Width thresholds: Big/Small/Mini/plain | Graceful degradation from 80+ to <45 columns | ✓ Good |
 | Non-TTY always plain text | Pipe and CI compatibility for machine parsing | ✓ Good |
 | Skip postinstall banner | Security anti-pattern (pnpm 10+ disables by default) | ✓ Good |
+| Viewport-only default (v3.0) | Full-page screenshots unwieldy for long pages; grid becomes scannable | ✓ Good |
+| --full-page CLI flag (v3.0) | Preserves original behavior for users who need it | ✓ Good |
+| Remove fold line (v3.0) | Viewport-only capture = entire screenshot IS above fold | ✓ Good |
+| Keep a Changelog format (v3.0) | Industry standard for version history documentation | ✓ Good |
+| Nullish coalescing for fullPage (v3.0) | Type-safe handling of undefined/true/false | ✓ Good |
 
 ---
-*Last updated: 2026-01-21 after v3.0 milestone started*
+*Last updated: 2026-01-22 after v3.0 milestone completed*

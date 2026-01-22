@@ -441,6 +441,10 @@ export function generateModalTemplate(url: string): string {
   return `<dialog id="preview-modal" class="preview-modal">
   <div class="modal-content">
     <div class="modal-header">
+      <div class="modal-title">
+        <span id="modal-device-name" class="modal-device-name">Device</span>
+        <span id="modal-device-dims" class="modal-device-dims">0 x 0</span>
+      </div>
       <button id="close-modal" class="close-btn" autofocus aria-label="Close preview">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -491,8 +495,12 @@ export function generateModalTemplate(url: string): string {
   var previouslyFocusedElement = null;
   var IFRAME_TIMEOUT_MS = 10000;
 
-  function openPreview(url, width, height) {
+  function openPreview(url, width, height, deviceName) {
     previouslyFocusedElement = document.activeElement;
+
+    // Update device info in modal header
+    document.getElementById('modal-device-name').textContent = deviceName;
+    document.getElementById('modal-device-dims').textContent = width + ' x ' + height;
 
     // Reset states
     loadingState.hidden = false;
@@ -500,8 +508,8 @@ export function generateModalTemplate(url: string): string {
     errorState.hidden = true;
 
     // Set iframe dimensions with viewport constraints
-    iframe.style.width = Math.min(width, window.innerWidth * 0.9) + 'px';
-    iframe.style.height = Math.min(height, window.innerHeight * 0.8) + 'px';
+    iframe.style.width = Math.min(width, window.innerWidth * 0.75) + 'px';
+    iframe.style.height = Math.min(height, window.innerHeight * 0.65) + 'px';
     fallbackLink.href = url;
 
     // Show modal
@@ -607,7 +615,7 @@ export function renderThumbnailCard(screenshot: ScreenshotForReport, url: string
     <a href="#${lightboxId}" class="thumbnail-link">
       <img src="${screenshot.dataUri}" alt="${escapedDeviceName}">
     </a>
-    <button type="button" class="preview-btn" onclick="openPreview('${escapedUrl}', ${screenshot.width}, ${screenshot.height})" aria-label="Preview ${escapedDeviceName} at ${screenshot.width}x${screenshot.height}">Preview</button>
+    <button type="button" class="preview-btn" onclick="openPreview('${escapedUrl}', ${screenshot.width}, ${screenshot.height}, '${escapedDeviceName}')" aria-label="Preview ${escapedDeviceName} at ${screenshot.width}x${screenshot.height}">Preview</button>
     <div class="thumbnail-info">
       <div class="device-name">${escapedDeviceName}</div>
       <div class="dimensions">${screenshot.width} x ${screenshot.height}</div>

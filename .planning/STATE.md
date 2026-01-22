@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-22)
 
 **Core value:** Instantly verify that a web app looks correct across all device sizes without manual testing - run one command, review one report.
-**Current focus:** v3.1 Preview UX Improvements
+**Current focus:** v3.1 Preview UX Improvements - Phase 24
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-01-22 — Milestone v3.1 started
+Phase: 24 of 24 (Preview UX Polish)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-01-22 — Roadmap created for v3.1
 
-Progress: [░░░░░░░░░░] 0% (v3.1 Preview UX Improvements)
+Progress: [##########] 100% (v1.0-v3.0) | [░░░░░░░░░░] 0% (v3.1)
 
 ## Performance Metrics
 
@@ -24,9 +24,9 @@ Progress: [░░░░░░░░░░] 0% (v3.1 Preview UX Improvements)
 - Phases completed: 3 (Phase 21, Phase 22, Phase 23)
 
 **Cumulative:**
-- Milestones shipped: 6 (v1.0, v2.0, v2.1, v2.2, v3.0)
+- Milestones shipped: 5 (v1.0, v2.0, v2.1, v2.2, v3.0)
 - Total phases completed: 23
-- Total plans completed: 47
+- Total plans completed: 50
 - Total days: 2
 
 ## Accumulated Context
@@ -39,8 +39,6 @@ v3.0 decisions marked as Good:
 - Viewport-only default (v3.0) — Full-page screenshots unwieldy for long pages; grid becomes scannable
 - --full-page CLI flag (v3.0) — Preserves original behavior for users who need it
 - Remove fold line (v3.0) — Viewport-only capture = entire screenshot IS above fold
-- Keep a Changelog format (v3.0) — Industry standard for version history documentation
-- Nullish coalescing for fullPage (v3.0) — Type-safe handling of undefined/true/false
 
 ### Pending Todos
 
@@ -63,10 +61,10 @@ From v2.2:
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: v3.1 milestone started — defining requirements
+Stopped at: v3.1 roadmap created — ready to plan Phase 24
 Resume file: None
 
 ---
 
 *State initialized: 2026-01-21*
-*Last updated: 2026-01-22 after v3.1 milestone started*
+*Last updated: 2026-01-22 after v3.1 roadmap created*

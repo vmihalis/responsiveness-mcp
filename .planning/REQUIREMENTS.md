@@ -56,19 +56,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MODAL-01 | — | Pending |
-| MODAL-02 | — | Pending |
-| MODAL-03 | — | Pending |
-| MODAL-04 | — | Pending |
-| BTN-01 | — | Pending |
-| BTN-02 | — | Pending |
-| BTN-03 | — | Pending |
+| MODAL-01 | Phase 24 | Pending |
+| MODAL-02 | Phase 24 | Pending |
+| MODAL-03 | Phase 24 | Pending |
+| MODAL-04 | Phase 24 | Pending |
+| BTN-01 | Phase 24 | Pending |
+| BTN-02 | Phase 24 | Pending |
+| BTN-03 | Phase 24 | Pending |
 
 **Coverage:**
 - v3.1 requirements: 7 total
-- Mapped to phases: 0
-- Unmapped: 7
+- Mapped to phases: 7
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-22*
-*Last updated: 2026-01-22 after initial definition*
+*Last updated: 2026-01-22 after roadmap creation*

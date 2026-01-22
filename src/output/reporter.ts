@@ -362,30 +362,33 @@ body {
 
 .preview-btn {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: rgba(0, 102, 204, 0.9);
+  top: 0.75rem;
+  right: 0.75rem;
+  background: #0066cc;
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s;
   z-index: 5;
-}
-
-.thumbnail-card:hover .preview-btn {
-  opacity: 1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .preview-btn:hover {
-  background: rgba(0, 82, 163, 0.95);
+  background: #0052a3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.preview-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
 .preview-btn:focus-visible {
-  opacity: 1;
   outline: 2px solid white;
   outline-offset: 2px;
 }

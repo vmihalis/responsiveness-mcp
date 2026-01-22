@@ -776,7 +776,7 @@ describe('generateModalTemplate', () => {
   it('includes openPreview JavaScript function', () => {
     const html = generateModalTemplate('https://example.com');
     expect(html).toContain('window.openPreview = openPreview');
-    expect(html).toContain('function openPreview(url, width, height)');
+    expect(html).toContain('function openPreview(url, width, height, deviceName)');
   });
 
   it('includes iframe timeout detection', () => {
@@ -824,7 +824,7 @@ describe('renderThumbnailCard with preview', () => {
 
   it('preview button has correct dimensions in onclick', () => {
     const html = renderThumbnailCard(mockScreenshotForPreview, 'https://example.com');
-    expect(html).toContain("openPreview('https://example.com', 390, 844)");
+    expect(html).toContain("openPreview('https://example.com', 390, 844, 'iPhone 14')");
   });
 
   it('preview button has accessibility label', () => {
@@ -914,7 +914,7 @@ describe('buildReportHtml with modal', () => {
     await generateReport(data, screenshots, TEST_OUTPUT_DIR);
     const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
     expect(html).toContain('class="preview-btn"');
-    expect(html).toContain("openPreview('https://example.com', 375, 812)");
+    expect(html).toContain("openPreview('https://example.com', 375, 812, 'Test Device')");
   });
 
   it('includes modal CSS styles', async () => {
@@ -933,8 +933,8 @@ describe('buildReportHtml with modal', () => {
     await generateReport(mockReportData, [], TEST_OUTPUT_DIR);
     const html = await readFile(join(TEST_OUTPUT_DIR, 'report.html'), 'utf-8');
     expect(html).toContain('.preview-btn');
-    expect(html).toContain('.thumbnail-card:hover .preview-btn');
     expect(html).toContain('.preview-btn:hover');
+    expect(html).toContain('.preview-btn:active');
     expect(html).toContain('.preview-btn:focus-visible');
   });
 });

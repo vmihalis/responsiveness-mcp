@@ -235,24 +235,53 @@ body {
 
 /* Preview Modal styles */
 .preview-modal {
+  width: 85vw;
+  height: 85vh;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  position: fixed;
+  inset: 0;
+  margin: auto;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0;
-  max-width: 95vw;
-  max-height: 95vh;
   background: white;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .preview-modal::backdrop {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .modal-header {
   display: flex;
-  justify-content: flex-end;
-  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
   border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+  background: white;
+}
+
+.modal-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.modal-device-name {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #333;
+}
+
+.modal-device-dims {
+  font-size: 0.875rem;
+  color: #666;
+  font-family: ui-monospace, monospace;
 }
 
 .close-btn {
@@ -280,14 +309,21 @@ body {
 }
 
 .modal-body {
-  padding: 1rem;
-  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow: hidden;
+  background: #f0f0f0;
 }
 
 .preview-iframe {
   display: block;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
 .loading-state {

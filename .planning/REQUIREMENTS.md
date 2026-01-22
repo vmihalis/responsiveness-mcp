@@ -9,16 +9,16 @@ Requirements for v3.1 release. Focus on making the interactive preview more disc
 
 ### Preview Modal
 
-- [ ] **MODAL-01**: Modal container takes 80-90% of viewport dimensions
-- [ ] **MODAL-02**: Modal is centered horizontally and vertically (fix left-drift bug)
-- [ ] **MODAL-03**: Device iframe centered within the modal container
-- [ ] **MODAL-04**: Device name and dimensions displayed in modal header
+- [x] **MODAL-01**: Modal container takes 80-90% of viewport dimensions
+- [x] **MODAL-02**: Modal is centered horizontally and vertically (fix left-drift bug)
+- [x] **MODAL-03**: Device iframe centered within the modal container
+- [x] **MODAL-04**: Device name and dimensions displayed in modal header
 
 ### Preview Button
 
-- [ ] **BTN-01**: Preview button always visible (not hidden until hover)
-- [ ] **BTN-02**: Larger button size with increased padding and font
-- [ ] **BTN-03**: Bold styling that makes the button prominent and obviously interactive
+- [x] **BTN-01**: Preview button always visible (not hidden until hover)
+- [x] **BTN-02**: Larger button size with increased padding and font
+- [x] **BTN-03**: Bold styling that makes the button prominent and obviously interactive
 
 ## Future Requirements (v3.2+)
 
@@ -56,13 +56,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MODAL-01 | Phase 24 | Pending |
-| MODAL-02 | Phase 24 | Pending |
-| MODAL-03 | Phase 24 | Pending |
-| MODAL-04 | Phase 24 | Pending |
-| BTN-01 | Phase 24 | Pending |
-| BTN-02 | Phase 24 | Pending |
-| BTN-03 | Phase 24 | Pending |
+| MODAL-01 | Phase 24 | Complete |
+| MODAL-02 | Phase 24 | Complete |
+| MODAL-03 | Phase 24 | Complete |
+| MODAL-04 | Phase 24 | Complete |
+| BTN-01 | Phase 24 | Complete |
+| BTN-02 | Phase 24 | Complete |
+| BTN-03 | Phase 24 | Complete |
 
 **Coverage:**
 - v3.1 requirements: 7 total
@@ -71,4 +71,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-22*
-*Last updated: 2026-01-22 after roadmap creation*
+*Last updated: 2026-01-22 after Phase 24 complete*

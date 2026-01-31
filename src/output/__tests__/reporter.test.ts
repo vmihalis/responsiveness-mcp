@@ -781,7 +781,7 @@ describe('generateModalTemplate', () => {
 
   it('includes iframe timeout detection', () => {
     const html = generateModalTemplate('https://example.com');
-    expect(html).toContain('IFRAME_TIMEOUT_MS');
+    expect(html).toContain('currentTimeoutId');
     expect(html).toContain('setTimeout');
   });
 

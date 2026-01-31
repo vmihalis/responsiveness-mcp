@@ -235,32 +235,35 @@ body {
 
 /* Preview Modal styles */
 .preview-modal {
-  width: 85vw;
-  height: 85vh;
-  max-width: calc(100vw - 2rem);
-  max-height: calc(100vh - 2rem);
   position: fixed;
   inset: 0;
   margin: auto;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 0;
   background: white;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
   overflow: hidden;
 }
 
 .preview-modal::backdrop {
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid #eee;
   flex-shrink: 0;
   background: white;
@@ -287,11 +290,11 @@ body {
 .close-btn {
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   color: #666;
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -309,13 +312,12 @@ body {
 }
 
 .modal-body {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  overflow: hidden;
-  background: #f0f0f0;
+  padding: 1rem;
+  overflow: auto;
+  background: #f5f5f5;
 }
 
 .preview-iframe {
@@ -491,48 +493,70 @@ export function generateModalTemplate(url: string): string {
   var loadingState = document.getElementById('loading-state');
   var errorState = document.getElementById('error-state');
   var fallbackLink = document.getElementById('fallback-link');
+  var deviceNameEl = document.getElementById('modal-device-name');
+  var deviceDimsEl = document.getElementById('modal-device-dims');
 
   var previouslyFocusedElement = null;
-  var IFRAME_TIMEOUT_MS = 10000;
+  var currentTimeoutId = null;
 
   function openPreview(url, width, height, deviceName) {
     previouslyFocusedElement = document.activeElement;
 
     // Update device info in modal header
-    document.getElementById('modal-device-name').textContent = deviceName;
-    document.getElementById('modal-device-dims').textContent = width + ' x ' + height;
+    deviceNameEl.textContent = deviceName || 'Device';
+    deviceDimsEl.textContent = width + ' x ' + height;
 
     // Reset states
     loadingState.hidden = false;
     iframe.hidden = true;
     errorState.hidden = true;
 
-    // Set iframe dimensions with viewport constraints
-    iframe.style.width = Math.min(width, window.innerWidth * 0.75) + 'px';
-    iframe.style.height = Math.min(height, window.innerHeight * 0.65) + 'px';
+    // Clear any existing iframe src first
+    iframe.src = 'about:blank';
+
+    // Set iframe dimensions - constrain to reasonable size
+    var maxWidth = Math.min(width, window.innerWidth - 100);
+    var maxHeight = Math.min(height, window.innerHeight - 200);
+    iframe.style.width = maxWidth + 'px';
+    iframe.style.height = maxHeight + 'px';
     fallbackLink.href = url;
 
-    // Show modal
+    // Show modal first
     modal.showModal();
 
-    // Load iframe with timeout detection
-    loadIframeWithTimeout(iframe, url);
+    // Clear any previous timeout
+    if (currentTimeoutId) {
+      clearTimeout(currentTimeoutId);
+    }
+
+    // Small delay then load iframe
+    setTimeout(function() {
+      loadIframe(url);
+    }, 100);
   }
 
-  function loadIframeWithTimeout(iframe, url) {
-    var loaded = false;
+  function loadIframe(url) {
+    // Set timeout for loading
+    currentTimeoutId = setTimeout(function() {
+      showError();
+    }, 8000);
 
-    var timeoutId = setTimeout(function() {
-      if (!loaded) {
-        showError();
+    // Listen for load event
+    iframe.onload = function() {
+      if (currentTimeoutId) {
+        clearTimeout(currentTimeoutId);
+        currentTimeoutId = null;
       }
-    }, IFRAME_TIMEOUT_MS);
-
-    iframe.addEventListener('load', function() {
-      clearTimeout(timeoutId);
-      loaded = true;
       showIframe();
-    }, { once: true });
+    };
+
+    iframe.onerror = function() {
+      if (currentTimeoutId) {
+        clearTimeout(currentTimeoutId);
+        currentTimeoutId = null;
+      }
+      showError();
+    };
 
     iframe.src = url;
   }
@@ -550,8 +574,12 @@ export function generateModalTemplate(url: string): string {
   }
 
   function closeModal() {
+    if (currentTimeoutId) {
+      clearTimeout(currentTimeoutId);
+      currentTimeoutId = null;
+    }
     modal.close();
-    iframe.src = 'about:blank'; // Stop loading
+    iframe.src = 'about:blank';
     if (previouslyFocusedElement) {
       previouslyFocusedElement.focus();
     }
@@ -569,6 +597,10 @@ export function generateModalTemplate(url: string): string {
 
   // Close event handler (ESC key triggers this)
   modal.addEventListener('close', function() {
+    if (currentTimeoutId) {
+      clearTimeout(currentTimeoutId);
+      currentTimeoutId = null;
+    }
     iframe.src = 'about:blank';
     if (previouslyFocusedElement) {
       previouslyFocusedElement.focus();
